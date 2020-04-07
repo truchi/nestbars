@@ -6,11 +6,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es2018",
+    "esModuleInterop": true,
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "types": ["node", "handlebars"]
-  },
-  "exclude": ["node_modules", "dist"]
+  }
 }

@@ -1,0 +1,13 @@
+export const isDefined =
+  //
+  (x: any): boolean => x !== null && x !== undefined
+
+export const filterValues =
+  //
+  <T>(predicateFn: (o: T) => boolean) =>
+    //
+    (o: T): Partial<T> =>
+      Object.entries(o).reduce(
+        (o, [k, v]) => Object.assign(o, predicateFn(v) && { [k]: v }),
+        {},
+      )

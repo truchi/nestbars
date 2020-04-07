@@ -2,14 +2,16 @@
   "name": "nestbars",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fast-glob": "^3.2.2",
     "handlebars": "^4.7.6"
   },
   "devDependencies": {

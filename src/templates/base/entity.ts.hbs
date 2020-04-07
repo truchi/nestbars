@@ -1,0 +1,28 @@
+import {
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
+import { InterfaceType, Field, Int } from '@nestjs/graphql'
+
+const descriptions = {
+  base: `***Base type***`,
+  id: `Id`,
+  created: `Creation date`,
+  updated: `Update date`,
+}
+
+@InterfaceType({ description: descriptions.base })
+export default abstract class Base {
+  @Field(() => Int, { description: descriptions.id })
+  @PrimaryGeneratedColumn({ comment: descriptions.id })
+  id: number
+
+  @Field(() => Date, { description: descriptions.created })
+  @CreateDateColumn({ comment: descriptions.created })
+  created: Date
+
+  @Field(() => Date, { description: descriptions.updated })
+  @UpdateDateColumn({ comment: descriptions.updated })
+  updated: Date
+}
