@@ -1,20 +1,22 @@
 import { promisify } from 'util'
-import {
-  //
-  readFile as _readFile,
-  // readdir as _readDir,
-} from 'fs'
+import { readFile as _readFile } from 'fs'
+import { resolve } from 'path'
+import { PathFunction } from '../types'
 
 export const readFile = (file: string) =>
   promisify(_readFile)(file, 'utf8').then(content => ({ file, content }))
 
-// export const readDir = promisify(_readDir)
-
-// export const readDirFiles = async (dir: string) =>
-//   readDir(dir).then(files =>
-//     Promise.all(
-//       files.map(file =>
-//         readFile(dir + file).then(content => ({ [file]: content })),
-//       ),
-//     ).then(arr => Object.assign.apply(null, arr)),
-//   )
+export const toPathFunction = (
+  o: string | PathFunction,
+  { NAME, TYPE }: { NAME: string; TYPE: string },
+  path = '',
+): PathFunction =>
+  //
+  (name: string, type: string) =>
+    resolve(
+      path,
+      typeof o === 'string'
+        ? //
+          o.replace(NAME, name).replace(TYPE, type)
+        : o(name, type),
+    )

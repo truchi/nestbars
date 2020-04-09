@@ -1,72 +1,44 @@
 import { resolve } from 'path'
-import glob from 'fast-glob'
-import { UserConfig } from './types/UserConfig'
+import { Config, UserConfig } from '../types'
+import { toPathFunction } from '../lib/utils'
 
-// Config type
-export type Config = {
-  src: string[]
-  dest: (name: string, type: string) => string
-  templates: (type: string) => string
+// Anchors
+const ANCHORS = {
+  NAME: '[name]',
+  TYPE: '[type]',
 }
-
-// Path of the config file
-const CONFIG_FILE = 'nestbars.config.json'
-const NAME_ANCHOR = '[name]'
-const TYPE_ANCHOR = '[type]'
 
 // Defaults config values
-// Paths relative to user's project root
 const DEFAULTS: UserConfig = {
-  src: ['src/.nestbars/**/*.ts'],
-  dest: `src/${NAME_ANCHOR}/${TYPE_ANCHOR}.ts`,
-  templates: `${TYPE_ANCHOR}.ts.hbs`,
+  entities: [],
+  // Relative to user's project root directory
+  dest: `src/${ANCHORS.NAME}/${ANCHORS.TYPE}.ts`,
+  // Relative to nestbars template directory
+  templates: `src/${ANCHORS.NAME}/${ANCHORS.TYPE}.ts`,
 }
 
-// Retrieves full config
-export const getConfig = async (
-  // Path of nestbars templates directory
+// Sanitizes config
+export const sanitizeConfig = async (
+  // Config given to main nestbars function from user
+  userConfig: UserConfig,
+  // Absolute path to nestbars templates directory
   nestbarsTemplatesPath: string,
 ): Promise<Config> => {
-  let userConfig: UserConfig
-  let templatesPath: string
-
-  // Import config file
-  try {
-    userConfig = await import(resolve(CONFIG_FILE))
-
-    templatesPath =
-      // If the user gave a templates path
-      userConfig.templates !== undefined
-        ? //
-          resolve()
-        : nestbarsTemplatesPath
-  } catch (_) {
-    userConfig = DEFAULTS
-    templatesPath = nestbarsTemplatesPath
-  }
+  const templatesPath =
+    // If the user gave a templates path
+    userConfig.templates !== undefined
+      ? // Absolute path to his project root directory
+        resolve()
+      : // Absolute path to nestbars tempaltes directory
+        nestbarsTemplatesPath
 
   // Merge to defaults
   userConfig = Object.assign({}, DEFAULTS, userConfig)
 
-  // Deglob src
-  const src = await glob(userConfig.src.map(src => resolve(src)))
-
-  // Convert anchored paths to functions
-  const config: Config = {
-    src,
-    dest: ((dest = userConfig.dest) =>
-      //
-      (name: string, type: string) =>
-        resolve(
-          dest //
-            .replace(NAME_ANCHOR, name)
-            .replace(TYPE_ANCHOR, type),
-        ))(),
-    templates: ((templates = userConfig.templates) =>
-      //
-      (type: string) =>
-        resolve(templatesPath, templates.replace(TYPE_ANCHOR, type)))(),
-  }
-
-  return Object.assign(userConfig, config) as Config
+  // Convert anchored paths to functions,
+  // from correct directory
+  return Object.assign({}, userConfig, {
+    dest: toPathFunction(userConfig.dest, ANCHORS),
+    templates: toPathFunction(userConfig.templates, ANCHORS, templatesPath),
+  }) as Config
 }

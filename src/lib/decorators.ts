@@ -1,38 +1,11 @@
-import { EntityArgs } from './types/EntityArgs'
-import { FieldArgs } from './types/FieldArgs'
-
-export type Data = {
-  [key: string]: {
-    entity: string
-    args: EntityArgs
-    fields: {
-      [key: string]: {
-        field: string
-        args: FieldArgs
-      }
-    }
-  }
-}
-
-// Object containing info
-// about decorated classes
-export const data: Data = {}
-
-const addEntity = (entity: string, args?: EntityArgs): void =>
-  void (data[entity] = Object.assign(
-    {},
-    data[entity],
-    args ? { entity, args } : {},
-  ))
-
-const addField = (entity: string, field: string, args: FieldArgs): void =>
-  void (
-    //
-    (addEntity(entity),
-    (data[entity].fields = Object.assign({}, data[entity].fields, {
-      [field]: { field, args },
-    })))
-  )
+import {
+  EntityArgs,
+  FieldArgs,
+  // OneToManyArgs,
+  // ManyToOneArgs,
+  Class,
+} from '../types'
+import { addEntity, addField } from './data'
 
 // Entity decorator factory
 export const Entity = (args: EntityArgs = {}) =>
@@ -49,3 +22,22 @@ export const Field = (args: FieldArgs) =>
 
     addField(prototype.constructor.name, field, args)
   }
+
+// One-to-Many decorator factory
+export const OneToMany = <Many extends Class>(
+  many: Many,
+  toOne: (many: InstanceType<Many>) => any,
+) =>
+  // One-to-Many decorator
+  ({ constructor }, field: string) =>
+    console.log(constructor.name, field, many, toOne)
+
+// Many-to-One decorator factory
+export const ManyToOne = <One extends Class>(
+  //
+  one: One,
+  toMany: (one: InstanceType<One>) => any[],
+) =>
+  // One-to-Many decorator
+  ({ constructor }, field: string) =>
+    console.log(constructor.name, field, one, toMany)
