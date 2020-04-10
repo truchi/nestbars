@@ -1,45 +1,31 @@
 // TODO user documentation
-import { Class, ObjectDefinition } from '.'
+import { ObjectDefinition } from '.'
 
 //
 // Decorators arguments
 //
 
-export type EntityArgs = {
+export type FieldType =
+  | 'id'
+  | 'uuid'
+  | 'created'
+  | 'updated'
+  | 'version'
+  | Scalar
+  | Enum
+  | Set
+  | ObjectDefinition<Scalar>
+
+export type FieldOptions = {
   name?: string
-  implements?: string[]
-  description?: string
-}
-
-export type FieldArgs = {
-  type: Scalar | Enum | Set | ObjectDefinition<Scalar>
-  nullable?: boolean
   primary?: boolean
-  manyToOne?: [string, string]
-  oneToMany?: [string, string]
-}
-
-export type OneToManyArgs<
-  //
-  One,
-  // One extends (...args: any[]) => any,
-  Many extends Class
-> = {
-  type: any
-  field: (entity: any) => any
-  // type: Many
-  // field: (entity: Many) => ReturnType<One>
-}
-
-export type ManyToOneArgs<
-  Many,
-  // Many extends (...args: any[]) => any,
-  One extends Class
-> = {
-  type: any
-  field: (entity: any) => any
-  // type: One
-  // field: (entity: One) => ReturnType<Many>[]
+  unique?: boolean
+  nullable?: boolean
+  default?: any
+  description?: string
+  deprecation?: string
+  options?: object
+  data?: object
 }
 
 //

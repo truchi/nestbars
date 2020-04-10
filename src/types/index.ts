@@ -1,5 +1,4 @@
 export * from './Config'
 export * from './UserConfig'
-export * from './Data'
 export * from './decorators'
 export * from './utils'
