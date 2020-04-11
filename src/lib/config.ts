@@ -1,5 +1,6 @@
 import { resolve } from 'path'
-import { Config, UserConfig } from '../types'
+import { Config } from '../types/Config'
+import { UserConfig } from '../types/UserConfig'
 import { toPathFunction } from '../lib/utils'
 
 // Anchors

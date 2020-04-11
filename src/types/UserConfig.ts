@@ -1,5 +1,5 @@
 // TODO user documentation
-import { Class, PathFunction } from '.'
+import { Class, PathFunction } from './utils'
 
 // User config type
 export type UserConfig = {

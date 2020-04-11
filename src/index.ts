@@ -1,5 +1,6 @@
-import { UserConfig } from './types'
-import { sanitizeConfig, DATA } from './lib'
+import { UserConfig } from './types/UserConfig'
+import { sanitizeConfig } from './lib/config'
+import { DATA } from './lib/data'
 
 // Re-exports for user
 export * from './lib/decorators'

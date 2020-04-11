@@ -1,7 +1,7 @@
 import { promisify } from 'util'
 import { readFile as _readFile } from 'fs'
 import { resolve } from 'path'
-import { PathFunction } from '../types'
+import { PathFunction } from '../types/utils'
 
 export const readFile = (file: string) =>
   promisify(_readFile)(file, 'utf8').then(content => ({ file, content }))
