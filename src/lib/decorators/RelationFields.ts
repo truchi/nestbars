@@ -1,5 +1,4 @@
 import {
-  RelationType,
   RelationEntity,
   RelationField,
   RelationColumn,
