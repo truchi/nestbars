@@ -10,7 +10,6 @@ export type EntityOptions = {
   implements?: string[]
   abstract?: boolean
   description?: string
-  data?: object
 }
 
 //

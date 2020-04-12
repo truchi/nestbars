@@ -7,7 +7,6 @@ const DEFAULTS: Required<EntityOptions> = {
   implements: [],
   abstract: false,
   description: '',
-  data: {},
 }
 
 export const Entity = (options: EntityOptions = {}) =>
