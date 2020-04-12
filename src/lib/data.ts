@@ -1,5 +1,6 @@
 import { assign } from './utils'
 import {
+  EntityOptions,
   PrimaryType,
   PrimaryOptions,
   ScalarType,
@@ -19,7 +20,6 @@ import {
   RelationColumn,
   RelationTable,
 } from '../types/decorators'
-import { EntityOptions } from './decorators' // TODO
 
 export type Data = {
   [key: string]: {
