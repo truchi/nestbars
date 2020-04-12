@@ -1,5 +1,5 @@
 // TODO user documentation
-import { ObjectDefinition as GenericObjectDefinition } from './utils'
+import { Class, ObjectDefinition as GenericObjectDefinition } from './utils'
 
 //
 // Primary
@@ -102,6 +102,25 @@ export type ObjectOptions = {
   deprecation?: string
   options?: object
 }
+
+//
+// Relations
+//
+
+export enum RelationType {
+  OneToOne = 'oneToOne',
+  OneToMany = 'oneToMany',
+  ManyToOne = 'ManyToOne',
+  ManyToMany = 'ManyToMany',
+}
+
+export type RelationEntity = Class
+
+export type RelationField = string
+
+export type RelationColumn = boolean | object
+
+export type RelationTable = boolean | object
 
 // ===================================
 // ===================================
