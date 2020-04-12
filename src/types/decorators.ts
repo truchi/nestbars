@@ -1,4 +1,9 @@
 // TODO user documentation
+import { ObjectDefinition as GenericObjectDefinition } from './utils'
+
+//
+// Primary
+//
 
 export enum PrimaryType {
   Id = 'id',
@@ -11,6 +16,10 @@ export type PrimaryOptions = {
   deprecation?: string
   options?: object
 }
+
+//
+// Scalar
+//
 
 export enum ScalarType {
   Int = 'int',
@@ -31,14 +40,63 @@ export type ScalarOptions = {
   options?: object
 }
 
+//
+// Set
+//
+
 export enum SetType {
   Enum = 'enum',
   Set = 'set',
 }
 
+export type SetValues = string[]
+
+export type SetTsName = string
+
 export type SetOptions = {
   name?: string
   primary?: boolean
+  default?: any
+  description?: string
+  deprecation?: string
+  options?: object
+}
+
+//
+// Special
+//
+
+export enum SpecialType {
+  Created = 'Created',
+  Updated = 'Updated',
+  Version = 'Version',
+}
+
+export type SpecialOptions = {
+  name?: string
+  primary?: boolean
+  description?: string
+  deprecation?: string
+  options?: object
+}
+
+//
+// Object
+//
+
+export enum ObjectType {
+  Object = 'object',
+}
+
+export type ObjectDefinition = GenericObjectDefinition<
+  'int' | 'float' | 'string' | 'date' | 'boolean'
+>
+
+export type ObjectOptions = {
+  name?: string
+  primary?: boolean
+  unique?: boolean
+  nullable?: boolean
   default?: any
   description?: string
   deprecation?: string
@@ -70,7 +128,6 @@ export type SetOptions = {
 //   description?: string
 //   deprecation?: string
 //   options?: object
-//   data?: object
 // }
 
 // export type SpecialOptions = {

@@ -5,7 +5,14 @@ import {
   ScalarType,
   ScalarOptions,
   SetType,
+  SetValues,
+  SetTsName,
   SetOptions,
+  SpecialType,
+  SpecialOptions,
+  ObjectType,
+  ObjectDefinition,
+  ObjectOptions,
 } from '../types/decorators'
 import { EntityOptions } from './decorators' // TODO
 
@@ -28,9 +35,18 @@ export type Data = {
           }
         | {
             type: SetType
-            values: string[]
-            tsName: string
+            values: SetValues
+            tsName: SetTsName
             options: Required<SetOptions>
+          }
+        | {
+            type: SpecialType
+            options: Required<SpecialOptions>
+          }
+        | {
+            type: ObjectType
+            definition: ObjectDefinition
+            options: Required<ObjectOptions>
           }
       )
     }
@@ -68,8 +84,8 @@ export const addSet = (
   entity: string,
   field: string,
   type: SetType,
-  values: string[],
-  tsName: string,
+  values: SetValues,
+  tsName: SetTsName,
   options: Required<SetOptions>,
 ): void =>
   void (initEntity(entity),
@@ -81,6 +97,25 @@ export const addSet = (
     tsName,
     options,
   }))
+
+export const addSpecial = (
+  entity: string,
+  field: string,
+  type: SpecialType,
+  options: Required<SpecialOptions>,
+): void =>
+  void (initEntity(entity),
+  (DATA[entity].fields[field] = { entity, field, type, options }))
+
+export const addObject = (
+  entity: string,
+  field: string,
+  type: ObjectType,
+  definition: ObjectDefinition,
+  options: Required<ObjectOptions>,
+): void =>
+  void (initEntity(entity),
+  (DATA[entity].fields[field] = { entity, field, type, definition, options }))
 
 const initEntity = (entity: string) =>
   (DATA[entity] = DATA[entity] ?? { fields: {} })
