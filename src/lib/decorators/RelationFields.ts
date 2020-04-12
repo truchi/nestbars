@@ -8,7 +8,7 @@ import { addOneToOne, addOneToMany, addManyToOne, addManyToMany } from '../data'
 
 export const OneToOne = <
   E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<E>
+  F extends RelationField & keyof InstanceType<ReturnType<E>>
 >(
   withEntity: E,
   withField: F,
@@ -18,7 +18,7 @@ export const OneToOne = <
 
 export const OneToMany = <
   E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<E>
+  F extends RelationField & keyof InstanceType<ReturnType<E>>
 >(
   withEntity: E,
   withField: F,
@@ -27,7 +27,7 @@ export const OneToMany = <
 
 export const ManyToOne = <
   E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<E>
+  F extends RelationField & keyof InstanceType<ReturnType<E>>
 >(
   withEntity: E,
   withField: F,
@@ -37,7 +37,7 @@ export const ManyToOne = <
 
 export const ManyToMany = <
   E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<E>
+  F extends RelationField & keyof InstanceType<ReturnType<E>>
 >(
   withEntity: E,
   withField: F,

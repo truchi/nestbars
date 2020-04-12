@@ -1,10 +1,23 @@
 import { promisify } from 'util'
-import { readFile as _readFile } from 'fs'
-import { resolve } from 'path'
+import {
+  readFile as _readFile,
+  writeFile as _writeFile,
+  mkdir as _mkdir,
+} from 'fs'
+import { dirname, resolve } from 'path'
 import { PathFunction } from '../types/utils'
 
-export const readFile = (file: string) =>
-  promisify(_readFile)(file, 'utf8').then(content => ({ file, content }))
+export const readFile = (file: string) => promisify(_readFile)(file, 'utf8')
+
+export const writeFile = ((writeFile = promisify(_writeFile)) => (
+  file: string,
+  content: string,
+) =>
+  mkdir(dirname(file)) //
+    .then(() => writeFile(file, content)))()
+
+export const mkdir = (path: string) =>
+  promisify(_mkdir)(path, { recursive: true })
 
 export const toPathFunction = (
   o: string | PathFunction,
@@ -16,8 +29,7 @@ export const toPathFunction = (
     resolve(
       path,
       typeof o === 'string'
-        ? //
-          o.replace(NAME, name).replace(TYPE, type)
+        ? o.replace(NAME, name).replace(TYPE, type)
         : o(name, type),
     )
 

@@ -1,1 +1,18 @@
-export default {{ className }} {}
+import {
+Entity,
+Column,
+} from 'typeorm'
+import {
+ObjectType,
+Field,
+} from '@nestjs/graphql'
+
+@Entity()
+@ObjectType()
+export class {{ entity.name }} {
+{{#each entity.fields }}
+{{> field .. field=this }}
+
+
+{{/each}}
+}

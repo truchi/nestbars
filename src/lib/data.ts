@@ -23,12 +23,12 @@ import {
 
 export type Data = {
   [key: string]: {
-    entity?: string
-    options?: Required<EntityOptions>
+    name: string
+    options: Required<EntityOptions>
     fields: {
       [key: string]: {
         entity: string
-        field: string
+        name: string
       } & (
         | {
             type: PrimaryType
@@ -86,40 +86,40 @@ export type Data = {
 export const DATA: Data = {}
 
 export const addEntity = (
-  entity: string,
+  name: string,
   options: Required<EntityOptions>,
-): void => void (DATA[entity] = assign(DATA[entity], { entity, options }))
+): void => void (DATA[name] = assign(DATA[name], { name, options }))
 
 export const addPrimary = (
   entity: string,
-  field: string,
+  name: string,
   type: PrimaryType,
   options: Required<PrimaryOptions>,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = { entity, field, type, options }))
+  (DATA[entity].fields[name] = { entity, name, type, options }))
 
 export const addScalar = (
   entity: string,
-  field: string,
+  name: string,
   type: ScalarType,
   options: Required<ScalarOptions>,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = { entity, field, type, options }))
+  (DATA[entity].fields[name] = { entity, name, type, options }))
 
 export const addSet = (
   entity: string,
-  field: string,
+  name: string,
   type: SetType,
   values: SetValues,
   tsName: SetTsName,
   options: Required<SetOptions>,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = {
+  (DATA[entity].fields[name] = {
     entity,
-    field,
+    name,
     type,
     values,
     tsName,
@@ -128,34 +128,34 @@ export const addSet = (
 
 export const addSpecial = (
   entity: string,
-  field: string,
+  name: string,
   type: SpecialType,
   options: Required<SpecialOptions>,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = { entity, field, type, options }))
+  (DATA[entity].fields[name] = { entity, name, type, options }))
 
 export const addObject = (
   entity: string,
-  field: string,
+  name: string,
   type: ObjectType,
   definition: ObjectDefinition,
   options: Required<ObjectOptions>,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = { entity, field, type, definition, options }))
+  (DATA[entity].fields[name] = { entity, name, type, definition, options }))
 
 export const addOneToOne = (
   entity: string,
-  field: string,
+  name: string,
   withEntity: RelationEntity,
   withField: RelationField,
   column: RelationColumn,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = {
+  (DATA[entity].fields[name] = {
     entity,
-    field,
+    name,
     type: RelationType.OneToOne,
     withEntity,
     withField,
@@ -164,14 +164,14 @@ export const addOneToOne = (
 
 export const addOneToMany = (
   entity: string,
-  field: string,
+  name: string,
   withEntity: RelationEntity,
   withField: RelationField,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = {
+  (DATA[entity].fields[name] = {
     entity,
-    field,
+    name,
     type: RelationType.OneToMany,
     withEntity,
     withField,
@@ -179,15 +179,15 @@ export const addOneToMany = (
 
 export const addManyToOne = (
   entity: string,
-  field: string,
+  name: string,
   withEntity: RelationEntity,
   withField: RelationField,
   column: RelationColumn,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = {
+  (DATA[entity].fields[name] = {
     entity,
-    field,
+    name,
     type: RelationType.ManyToOne,
     withEntity,
     withField,
@@ -196,20 +196,24 @@ export const addManyToOne = (
 
 export const addManyToMany = (
   entity: string,
-  field: string,
+  name: string,
   withEntity: RelationEntity,
   withField: RelationField,
   table: RelationTable,
 ): void =>
   void (initEntity(entity),
-  (DATA[entity].fields[field] = {
+  (DATA[entity].fields[name] = {
     entity,
-    field,
+    name,
     type: RelationType.ManyToMany,
     withEntity,
     withField,
     table,
   }))
 
-const initEntity = (entity: string) =>
-  (DATA[entity] = DATA[entity] ?? { fields: {} })
+const initEntity = (name: string) =>
+  (DATA[name] = DATA[name] ?? {
+    name,
+    options: {} as Required<EntityOptions>,
+    fields: {},
+  })

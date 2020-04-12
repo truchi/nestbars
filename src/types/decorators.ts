@@ -78,9 +78,9 @@ export type SetOptions = {
 //
 
 export enum SpecialType {
-  Created = 'Created',
-  Updated = 'Updated',
-  Version = 'Version',
+  Created = 'created',
+  Updated = 'updated',
+  Version = 'version',
 }
 
 export type SpecialOptions = {
@@ -121,11 +121,11 @@ export type ObjectOptions = {
 export enum RelationType {
   OneToOne = 'oneToOne',
   OneToMany = 'oneToMany',
-  ManyToOne = 'ManyToOne',
-  ManyToMany = 'ManyToMany',
+  ManyToOne = 'manyToOne',
+  ManyToMany = 'manyToMany',
 }
 
-export type RelationEntity = Class
+export type RelationEntity = () => Class
 
 export type RelationField = string
 

@@ -14,7 +14,7 @@ const DEFAULTS: UserConfig = {
   // Relative to user's source directory
   dest: `${ANCHORS.NAME}/${ANCHORS.TYPE}.ts`,
   // Relative to nestbars template directory
-  templates: `${ANCHORS.TYPE}.ts`,
+  templates: `${ANCHORS.TYPE}.ts.hbs`,
 }
 
 // Sanitizes config
