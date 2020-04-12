@@ -1,18 +1,36 @@
 import * as HandleBars from 'handlebars'
+import { flat, objectDefinitionRecursion } from './utils'
 import { Config } from '../types/Config'
-import { readFile, writeFile } from './utils'
+import { readFile, writeFile, relativeImport } from './utils'
 import { Data, DATA } from './data'
+
+type Entity = Data[string]
+type Field = Entity['fields'][string]
+type Entities = {
+  [key: string]: Entity & { dest: string }
+}
+type EntityContext = {
+  entities: Entities
+  entity: Entity
+}
 
 export const generate = async (config: Config, templatePath: string) => {
   registerHelpers(helpers)
   await registerPartials(partials, templatePath)
 
-  const entities = toArray(DATA)
+  const entities: Entities = Object.entries(DATA)
+    //
+    .reduce(
+      (entities, [name, entity]) => ({
+        ...entities,
+        [name]: { ...entity, dest: config.dest(name, 'entity') },
+      }),
+      {},
+    )
 
   await Promise.all(
-    entities.map(async entity => {
-      const { name } = entity
-      const dest = config.dest(name, 'entity')
+    Object.values(entities).map(async entity => {
+      const { name, dest } = entity
       const template = await readFile(config.templates(name, 'entity'))
       const compiled = HandleBars.compile(template)({ entities, entity })
 
@@ -22,7 +40,46 @@ export const generate = async (config: Config, templatePath: string) => {
 }
 
 const helpers = {
-  $fieldType(field: Data[string]['fields'][string]) {
+  $values(o: object) {
+    return Object.values(o)
+  },
+  $imports(this: EntityContext, { fn }) {
+    const { entities, entity } = this
+    const { dest } = entities[entity.name]
+
+    return flat(
+      Object.values(entities[entity.name].fields)
+        .filter(({ type }) =>
+          [
+            'object',
+            'oneToOne',
+            'oneToMany',
+            'manyToOne',
+            'manyToMany',
+          ].includes(type),
+        )
+        .map(({ definition, withEntity }: any) =>
+          withEntity
+            ? withEntity().name
+            : objectDefinitionRecursion(
+                definition,
+                (xs, recur) => flat(xs.map(recur)),
+                (o, recur) => flat(Object.values(o).map(recur)),
+                () => undefined,
+                fn => fn.name,
+              ),
+        ),
+    )
+      .filter(x => x)
+      .map(entity =>
+        fn({
+          name: entity,
+          dest: relativeImport(dest, entities[entity].dest),
+        }),
+      )
+      .join('')
+  },
+  $fieldType(field: Field) {
     switch (field.type) {
       case 'id':
       case 'int':
@@ -73,41 +130,31 @@ const registerPartials = async (partials: string[], templatePath: string) =>
     ),
   )
 
-const toArray = (data: Data) =>
-  Object.values(data).map(entity => ({
-    ...entity,
-    fields: Object.values(entity.fields),
-  }))
+const toTs = (definition: any[] | object) =>
+  objectDefinitionRecursion(
+    definition,
+    (xs, recur) => '(' + xs.map(x => recur(x)).join('|') + ')[]',
+    (o, recur) =>
+      '{' +
+      Object.entries(o)
+        .map(([key, value]) => `${key}: ${recur(value)};`)
+        .join('') +
+      '}',
+    type => {
+      switch (type) {
+        case 'int':
+          return 'number'
+        case 'float':
+          return 'number'
+        case 'string':
+          return 'string'
+        case 'date':
+          return 'Date'
+        case 'boolean':
+          return 'boolean'
+      }
 
-const objectToTs = (o: object) =>
-  '{' +
-  Object.entries(o)
-    .map(([key, value]) => `${key}: ${toTs(value)};`)
-    .join('') +
-  '}'
-
-const arrayToTs = (xs: any[]) => '(' + xs.map(x => toTs(x)).join('|') + ')[]'
-
-const toTs = (definition: any[] | object | string) => {
-  //
-  if (typeof definition === 'string') {
-    switch (definition) {
-      case 'int':
-        return 'number'
-      case 'float':
-        return 'number'
-      case 'string':
-        return 'string'
-      case 'date':
-        return 'Date'
-      case 'boolean':
-        return 'boolean'
-    }
-
-    return ''
-  }
-
-  return Array.isArray(definition)
-    ? arrayToTs(definition)
-    : objectToTs(definition)
-}
+      return ''
+    },
+    fn => fn.name,
+  )

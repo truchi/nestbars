@@ -6,11 +6,16 @@ import {
 ObjectType,
 Field,
 } from '@nestjs/graphql'
+{{#$imports}}
+import {
+{{ name }}
+} from '{{ dest }}'
+{{/$imports}}
 
 @Entity()
 @ObjectType()
 export class {{ entity.name }} {
-{{#each entity.fields }}
+{{#each ($values entity.fields) }}
 {{> field .. field=this }}
 
 
