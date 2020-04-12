@@ -1,3 +1,4 @@
+import { dirname, resolve } from 'path'
 import { UserConfig } from './types/UserConfig'
 import { sanitizeConfig } from './lib/config'
 import { DATA } from './lib/data'
@@ -5,13 +6,20 @@ import { DATA } from './lib/data'
 // Re-exports for user
 export * from './lib/decorators'
 
+const userRootPath = resolve()
 const templatesPath = `${__dirname}/../src/templates`
+const userSrcPath = dirname(process.argv[1])
 
 export default async (userConfig: UserConfig) => {
-  const config = await sanitizeConfig(userConfig, templatesPath)
+  const config = await sanitizeConfig(
+    userConfig,
+    userRootPath,
+    templatesPath,
+    userSrcPath,
+  )
   console.log('dest     :', config.dest('NAME', 'TYPE'))
   console.log('templates:', config.templates('NAME', 'TYPE'))
-  console.log('DATA', JSON.stringify(DATA, null, 2))
+  // console.log('DATA', JSON.stringify(DATA, null, 2))
 }
 
 // ==========================
