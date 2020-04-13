@@ -1,61 +1,35 @@
+import {
+  SetValues,
+  SetTsName,
+  SetOptions,
+  SET_OPTIONS_DEFAULTS,
+  FieldType,
+} from '../../types/decorators'
 import { assign } from '../utils'
+import { Field, SetField } from '../data/Field'
 
-export const fieldDecorator = <Options extends object, Type extends any>(
-  type: Type,
-  defaults: Required<Options>,
-  add: (
-    entity: string,
-    field: string,
-    type: Type,
-    options: Required<Options>,
-  ) => void,
+export const makeFieldDecoratorFactory = <O extends {}>(
+  type: FieldType,
+  defaults: Required<O>,
 ) =>
   //
-  (options: Options = {} as Options) =>
+  (options: O = {} as O) =>
     //
-    ({ constructor: { name: entity } }: any, field: string): void =>
-      add(entity, field, type, assign(defaults, options))
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      Field.add(new Field(entity, name, assign(defaults, options), type))
 
-export const setDecorator = <
-  Options extends object,
-  Type extends any,
-  Values,
-  TsName
->(
-  type: Type,
-  defaults: Required<Options>,
-  add: (
-    entity: string,
-    field: string,
-    type: Type,
-    values: Values,
-    tsName: TsName,
-    options: Required<Options>,
-  ) => void,
-) =>
+export const makeSetDecoratorFactory = (type: FieldType) =>
   //
-  (values: Values, tsName: TsName, options: Options = {} as Options) =>
+  (values: SetValues, tsName: SetTsName, options: SetOptions = {}) =>
     //
-    ({ constructor: { name: entity } }: any, field: string): void =>
-      add(entity, field, type, values, tsName, assign(defaults, options))
-
-export const objectDecorator = <
-  Options extends object,
-  Type extends any,
-  Definition
->(
-  type: Type,
-  defaults: Required<Options>,
-  add: (
-    entity: string,
-    field: string,
-    type: Type,
-    definition: Definition,
-    options: Required<Options>,
-  ) => void,
-) =>
-  //
-  (definition: Definition, options: Options = {} as Options) =>
-    //
-    ({ constructor: { name: entity } }: any, field: string): void =>
-      add(entity, field, type, definition, assign(defaults, options))
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      SetField.add(
+        new SetField(
+          entity,
+          name,
+          values,
+          tsName,
+          assign(SET_OPTIONS_DEFAULTS, options),
+          type,
+        ),
+      )

@@ -1,15 +1,19 @@
-import { SpecialType, SpecialOptions } from '../../types/decorators'
-import { fieldDecorator } from './utils'
-import { addSpecial } from '../data'
+import {
+  SpecialDecorator,
+  SpecialOptions,
+  SPECIAL_OPTIONS_DEFAULTS,
+  FieldType,
+} from '../../types/decorators'
+import { makeFieldDecoratorFactory } from './utils'
 
-const DEFAULTS: Required<SpecialOptions> = {
-  name: '',
-  primary: false,
-  description: '',
-  deprecation: '',
-  options: {},
-}
+export const Created: SpecialDecorator = makeFieldDecoratorFactory<
+  SpecialOptions
+>(FieldType.Created, SPECIAL_OPTIONS_DEFAULTS)
 
-export const Created = fieldDecorator(SpecialType.Created, DEFAULTS, addSpecial)
-export const Updated = fieldDecorator(SpecialType.Updated, DEFAULTS, addSpecial)
-export const Version = fieldDecorator(SpecialType.Version, DEFAULTS, addSpecial)
+export const Updated: SpecialDecorator = makeFieldDecoratorFactory<
+  SpecialOptions
+>(FieldType.Updated, SPECIAL_OPTIONS_DEFAULTS)
+
+export const Version: SpecialDecorator = makeFieldDecoratorFactory<
+  SpecialOptions
+>(FieldType.Version, SPECIAL_OPTIONS_DEFAULTS)

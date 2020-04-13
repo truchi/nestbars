@@ -1,14 +1,14 @@
-import { EntityOptions } from '../../types/decorators'
+import {
+  EntityDecorator,
+  EntityOptions,
+  ENTITY_OPTIONS_DEFAULTS,
+} from '../../types/decorators'
 import { assign } from '../utils'
-import { addEntity } from '../data'
+import { Entity as EntityData } from '../data/Entity'
 
-const DEFAULTS: Required<EntityOptions> = {
-  name: '',
-  implements: [],
-  abstract: false,
-  description: '',
-}
-
-export const Entity = (options: EntityOptions = {}) =>
+export const Entity: EntityDecorator = (options: EntityOptions = {}) =>
   //
-  ({ name: entity }: any): void => addEntity(entity, assign(DEFAULTS, options))
+  ({ name }: any): void =>
+    EntityData.add(
+      new EntityData(name, assign(ENTITY_OPTIONS_DEFAULTS, options)),
+    )

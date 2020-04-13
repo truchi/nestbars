@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'path'
 import { UserConfig } from './types/UserConfig'
 import { sanitizeConfig } from './lib/config'
-import { generate } from './lib/generation'
+// import { generate } from './lib/generation'
 
 // Re-exports for user
 export * from './lib/decorators'
@@ -17,7 +17,8 @@ export default async (userConfig: UserConfig) => {
     templatesPath,
     userSrcPath,
   )
+  console.log(config)
 
-  await generate(config, templatesPath)
-  console.log('generated!!!!!')
+  // await generate(config, templatesPath)
+  // console.log('generated!!!!!')
 }

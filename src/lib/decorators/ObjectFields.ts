@@ -1,16 +1,22 @@
-import { ObjectType, ObjectOptions } from '../../types/decorators'
-import { objectDecorator } from './utils'
-import { addObject } from '../data'
+import {
+  ObjectDecorator,
+  ObjectDefinition,
+  ObjectOptions,
+  OBJECT_OPTIONS_DEFAULTS,
+} from '../../types/decorators'
+import { assign } from '../utils'
+import { ObjectField } from '../data/Field'
 
-const DEFAULTS: Required<ObjectOptions> = {
-  name: '',
-  primary: false,
-  unique: false,
-  nullable: false,
-  default: undefined,
-  description: '',
-  deprecation: '',
-  options: {},
-}
-
-export const Object = objectDecorator(ObjectType.Object, DEFAULTS, addObject)
+export const Object: ObjectDecorator =
+  //
+  (definition: ObjectDefinition, options: ObjectOptions = {}) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      ObjectField.add(
+        new ObjectField(
+          entity,
+          name,
+          definition,
+          assign(OBJECT_OPTIONS_DEFAULTS, options),
+        ),
+      )

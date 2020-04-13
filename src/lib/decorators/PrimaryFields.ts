@@ -1,13 +1,17 @@
-import { PrimaryType, PrimaryOptions } from '../../types/decorators'
-import { fieldDecorator } from './utils'
-import { addPrimary } from '../data'
+import {
+  PrimaryDecorator,
+  PrimaryOptions,
+  PRIMARY_OPTIONS_DEFAULTS,
+  FieldType,
+} from '../../types/decorators'
+import { makeFieldDecoratorFactory } from './utils'
 
-const DEFAULTS: Required<PrimaryOptions> = {
-  name: '',
-  description: '',
-  deprecation: '',
-  options: {},
-}
+export const Id: PrimaryDecorator = makeFieldDecoratorFactory<PrimaryOptions>(
+  FieldType.Id,
+  PRIMARY_OPTIONS_DEFAULTS,
+)
 
-export const Id = fieldDecorator(PrimaryType.Id, DEFAULTS, addPrimary)
-export const Uuid = fieldDecorator(PrimaryType.Uuid, DEFAULTS, addPrimary)
+export const Uuid: PrimaryDecorator = makeFieldDecoratorFactory<PrimaryOptions>(
+  FieldType.Uuid,
+  PRIMARY_OPTIONS_DEFAULTS,
+)

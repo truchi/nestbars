@@ -1,46 +1,64 @@
 import {
-  RelationEntity,
-  RelationField,
-  RelationColumn,
-  RelationTable,
+  OneToOneDecorator,
+  OneToManyDecorator,
+  ManyToOneDecorator,
+  ManyToManyDecorator,
+  RelationWithEntity,
+  RelationWithField,
+  RelationJoinColumn,
+  RelationJoinTable,
 } from '../../types/decorators'
-import { addOneToOne, addOneToMany, addManyToOne, addManyToMany } from '../data'
+import {
+  OneToOneField,
+  OneToManyField,
+  ManyToOneField,
+  ManyToManyField,
+} from '../data/Field'
 
-export const OneToOne = <
-  E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<ReturnType<E>>
->(
-  withEntity: E,
-  withField: F,
-  column: RelationColumn = false,
-) => ({ constructor: { name: entity } }: any, field: string): void =>
-  addOneToOne(entity, field, withEntity, withField, column)
+export const OneToOne: OneToOneDecorator =
+  //
+  (
+    withEntity: RelationWithEntity,
+    withField: RelationWithField,
+    joinColumn?: RelationJoinColumn,
+  ) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      OneToOneField.add(
+        new OneToOneField(entity, name, withEntity, withField, joinColumn),
+      )
 
-export const OneToMany = <
-  E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<ReturnType<E>>
->(
-  withEntity: E,
-  withField: F,
-) => ({ constructor: { name: entity } }: any, field: string): void =>
-  addOneToMany(entity, field, withEntity, withField)
+export const OneToMany: OneToManyDecorator =
+  //
+  (withEntity: RelationWithEntity, withField: RelationWithField) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      OneToManyField.add(
+        new OneToManyField(entity, name, withEntity, withField),
+      )
 
-export const ManyToOne = <
-  E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<ReturnType<E>>
->(
-  withEntity: E,
-  withField: F,
-  column: RelationColumn = false,
-) => ({ constructor: { name: entity } }: any, field: string): void =>
-  addManyToOne(entity, field, withEntity, withField, column)
+export const ManyToOne: ManyToOneDecorator =
+  //
+  (
+    withEntity: RelationWithEntity,
+    withField: RelationWithField,
+    joinColumn?: RelationJoinColumn,
+  ) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      ManyToOneField.add(
+        new ManyToOneField(entity, name, withEntity, withField, joinColumn),
+      )
 
-export const ManyToMany = <
-  E extends RelationEntity,
-  F extends RelationField & keyof InstanceType<ReturnType<E>>
->(
-  withEntity: E,
-  withField: F,
-  table: RelationTable = false,
-) => ({ constructor: { name: entity } }: any, field: string): void =>
-  addManyToMany(entity, field, withEntity, withField, table)
+export const ManyToMany: ManyToManyDecorator =
+  //
+  (
+    withEntity: RelationWithEntity,
+    withField: RelationWithField,
+    joinTable?: RelationJoinTable,
+  ) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      ManyToManyField.add(
+        new ManyToManyField(entity, name, withEntity, withField, joinTable),
+      )

@@ -1,15 +1,6 @@
-import { SetType, SetOptions } from '../../types/decorators'
-import { setDecorator } from './utils'
-import { addSet } from '../data'
+import { SetDecorator, FieldType } from '../../types/decorators'
+import { makeSetDecoratorFactory } from './utils'
 
-const DEFAULTS: Required<SetOptions> = {
-  name: '',
-  primary: false,
-  default: undefined,
-  description: '',
-  deprecation: '',
-  options: {},
-}
+export const Enum: SetDecorator = makeSetDecoratorFactory(FieldType.Enum)
 
-export const Enum = setDecorator(SetType.Enum, DEFAULTS, addSet)
-export const Set = setDecorator(SetType.Set, DEFAULTS, addSet)
+export const Set: SetDecorator = makeSetDecoratorFactory(FieldType.Enum)
