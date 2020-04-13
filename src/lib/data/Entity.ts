@@ -1,7 +1,7 @@
 import { EntityOptions, FieldOptions } from '../../types/decorators'
 import { Field } from './Field'
 import { Config } from 'src/types/Config'
-import { flat, unique, relativeImport } from '../utils'
+import { flat, unique } from '../utils'
 
 export class Entity {
   static all: Entity[] = []
@@ -15,16 +15,16 @@ export class Entity {
     readonly options: Required<EntityOptions>,
   ) {}
 
-  relative(entity: Entity): string {
-    return relativeImport(this.dest, entity.dest)
-  }
-
   dependencies(): string[] {
     return unique(flat(this.fields.map(field => field.dependencies())))
   }
 
   static add(entity: Entity) {
     Entity.all.push(entity)
+  }
+
+  static find(name: string): Entity | undefined {
+    return Entity.all.find(entity => entity.name === name)
   }
 
   static init(config: Config) {
@@ -45,5 +45,7 @@ export class Entity {
     )
 
     Field.all.map(field => map[field.entity].fields.push(field))
+
+    return Entity.all
   }
 }

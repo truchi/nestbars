@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'path'
 import { UserConfig } from './types/UserConfig'
 import { sanitizeConfig } from './lib/config'
-// import { generate } from './lib/generation'
+import { generate } from './lib/generation'
 import { Entity } from './lib/data/Entity'
 
 // Re-exports for user
@@ -20,9 +20,6 @@ export default async (userConfig: UserConfig) => {
   )
   console.log(config)
 
-  Entity.init(config)
-  console.log(Entity.all)
-
-  // await generate(config, templatesPath)
-  // console.log('generated!!!!!')
+  await generate(Entity.init(config), templatesPath)
+  console.log('generated!!!!!')
 }

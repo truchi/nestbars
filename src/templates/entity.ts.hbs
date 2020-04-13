@@ -7,7 +7,7 @@ import { ObjectType, Field, } from '@nestjs/graphql'
 @Entity()
 @ObjectType()
 export class {{ entity.name }} {
-{{#each ($values entity.fields) }}
+{{#each entity.fields }}
   {{> field .. field=this }}
 
 {{/each}}

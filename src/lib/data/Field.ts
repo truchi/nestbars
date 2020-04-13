@@ -116,15 +116,17 @@ export class ObjectField extends Field<ObjectOptions> {
   dependencies(): string[] {
     return unique(
       defined(
-        objectDefinitionRecursion(
-          this.definition,
-          (xs, recur) => flat(xs.map(recur)),
-          (o, recur) => flat(Object.values(o).map(recur)),
-          () => undefined,
-          () => {
-            // TODO not mechanism to import user's ojbect
-            throw new Error()
-          },
+        flat(
+          objectDefinitionRecursion(
+            this.definition,
+            (xs, recur) => flat(xs.map(recur)),
+            (o, recur) => flat(Object.values(o).map(recur)),
+            () => undefined,
+            () => {
+              // TODO not mechanism to import user's ojbect
+              throw new Error()
+            },
+          ),
         ),
       ),
     )
