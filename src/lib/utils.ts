@@ -39,6 +39,11 @@ export const toPathFunction = (
 
 export const flat = (xs: any[][]): any[] => [].concat(...xs)
 
+export const unique = (xs: any[]): any[] =>
+  xs.filter((x, i, xs) => xs.indexOf(x) === i)
+
+export const defined = (xs: any[]): any[] => xs.filter(x => x)
+
 export const assign = <T>(x: T, ...xs: object[]): T =>
   Object.assign.apply(Object, [{}, x, ...xs])
 
