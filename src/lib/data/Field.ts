@@ -1,3 +1,4 @@
+import { Class } from '../../types/utils'
 import {
   FieldType,
   FieldOptions,
@@ -53,59 +54,59 @@ export class ObjectField extends Field<ObjectOptions> {
   }
 }
 
-export class OneToOneField extends Field<{}> {
+export class OneToOneField<T extends Class> extends Field<{}> {
   static readonly options: {} = {}
   static readonly type: FieldType = FieldType.OneToOne
 
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly withEntity: RelationWithEntity,
-    readonly withField: RelationWithField,
+    readonly withEntity: RelationWithEntity<T>,
+    readonly withField: RelationWithField<T>,
     readonly joinColumn: RelationJoinColumn,
   ) {
     super(entity, name, OneToOneField.options, OneToOneField.type)
   }
 }
 
-export class OneToManyField extends Field<{}> {
+export class OneToManyField<T extends Class> extends Field<{}> {
   static readonly options: {} = {}
   static readonly type: FieldType = FieldType.OneToMany
 
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly withEntity: RelationWithEntity,
-    readonly withField: RelationWithField,
+    readonly withEntity: RelationWithEntity<T>,
+    readonly withField: RelationWithField<T>,
   ) {
     super(entity, name, OneToManyField.options, OneToManyField.type)
   }
 }
 
-export class ManyToOneField extends Field<{}> {
+export class ManyToOneField<T extends Class> extends Field<{}> {
   static readonly options: {} = {}
   static readonly type: FieldType = FieldType.ManyToOne
 
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly withEntity: RelationWithEntity,
-    readonly withField: RelationWithField,
+    readonly withEntity: RelationWithEntity<T>,
+    readonly withField: RelationWithField<T>,
     readonly joinColumn: RelationJoinColumn,
   ) {
     super(entity, name, ManyToOneField.options, ManyToOneField.type)
   }
 }
 
-export class ManyToManyField extends Field<{}> {
+export class ManyToManyField<T extends Class> extends Field<{}> {
   static readonly options: {} = {}
   static readonly type: FieldType = FieldType.ManyToMany
 
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly withEntity: RelationWithEntity,
-    readonly withField: RelationWithField,
+    readonly withEntity: RelationWithEntity<T>,
+    readonly withField: RelationWithField<T>,
     readonly joinTable: RelationJoinTable,
   ) {
     super(entity, name, ManyToManyField.options, ManyToManyField.type)

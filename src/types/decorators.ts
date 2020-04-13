@@ -193,32 +193,32 @@ export const OBJECT_OPTIONS_DEFAULTS: Required<ObjectOptions> = {
 // Relations fields
 //
 
-export type OneToOneDecorator = (
-  withEntity: RelationWithEntity,
-  withField: RelationWithField,
+export type OneToOneDecorator<T extends Class> = (
+  withEntity: RelationWithEntity<T>,
+  withField: RelationWithField<T>,
   joinColumn?: RelationJoinColumn,
 ) => Function
 
-export type OneToManyDecorator = (
-  withEntity: RelationWithEntity,
-  withField: RelationWithField,
+export type OneToManyDecorator<T extends Class> = (
+  withEntity: RelationWithEntity<T>,
+  withField: RelationWithField<T>,
 ) => Function
 
-export type ManyToOneDecorator = (
-  withEntity: RelationWithEntity,
-  withField: RelationWithField,
+export type ManyToOneDecorator<T extends Class> = (
+  withEntity: RelationWithEntity<T>,
+  withField: RelationWithField<T>,
   joinColumn?: RelationJoinColumn,
 ) => Function
 
-export type ManyToManyDecorator = (
-  withEntity: RelationWithEntity,
-  withField: RelationWithField,
+export type ManyToManyDecorator<T extends Class> = (
+  withEntity: RelationWithEntity<T>,
+  withField: RelationWithField<T>,
   joinTable?: RelationJoinTable,
 ) => Function
 
-export type RelationWithEntity = () => Class
+export type RelationWithEntity<T> = () => T
 
-export type RelationWithField = string // TODO
+export type RelationWithField<T extends Class> = keyof InstanceType<T>
 
 export type RelationJoinColumn = boolean | object
 

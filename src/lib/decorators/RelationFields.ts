@@ -1,3 +1,4 @@
+import { Class } from '../../types/utils'
 import {
   OneToOneDecorator,
   OneToManyDecorator,
@@ -15,11 +16,11 @@ import {
   ManyToManyField,
 } from '../data/Field'
 
-export const OneToOne: OneToOneDecorator =
+export const OneToOne /*: OneToOneDecorator<...> */ =
   //
-  (
-    withEntity: RelationWithEntity,
-    withField: RelationWithField,
+  <T extends Class>(
+    withEntity: RelationWithEntity<T>,
+    withField: RelationWithField<T>,
     joinColumn?: RelationJoinColumn,
   ) =>
     //
@@ -28,20 +29,23 @@ export const OneToOne: OneToOneDecorator =
         new OneToOneField(entity, name, withEntity, withField, joinColumn),
       )
 
-export const OneToMany: OneToManyDecorator =
+export const OneToMany /*: OneToManyDecorator<...> */ =
   //
-  (withEntity: RelationWithEntity, withField: RelationWithField) =>
+  <T extends Class>(
+    withEntity: RelationWithEntity<T>,
+    withField: RelationWithField<T>,
+  ) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
       OneToManyField.add(
         new OneToManyField(entity, name, withEntity, withField),
       )
 
-export const ManyToOne: ManyToOneDecorator =
+export const ManyToOne /*: ManyToOneDecorator<...> */ =
   //
-  (
-    withEntity: RelationWithEntity,
-    withField: RelationWithField,
+  <T extends Class>(
+    withEntity: RelationWithEntity<T>,
+    withField: RelationWithField<T>,
     joinColumn?: RelationJoinColumn,
   ) =>
     //
@@ -50,11 +54,11 @@ export const ManyToOne: ManyToOneDecorator =
         new ManyToOneField(entity, name, withEntity, withField, joinColumn),
       )
 
-export const ManyToMany: ManyToManyDecorator =
+export const ManyToMany /*: ManyToManyDecorator<...> */ =
   //
-  (
-    withEntity: RelationWithEntity,
-    withField: RelationWithField,
+  <T extends Class>(
+    withEntity: RelationWithEntity<T>,
+    withField: RelationWithField<T>,
     joinTable?: RelationJoinTable,
   ) =>
     //
