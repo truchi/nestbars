@@ -1,9 +1,5 @@
 import { Class } from '../../types/utils'
 import {
-  OneToOneDecorator,
-  OneToManyDecorator,
-  ManyToOneDecorator,
-  ManyToManyDecorator,
   RelationWithEntity,
   RelationWithField,
   RelationJoinColumn,
