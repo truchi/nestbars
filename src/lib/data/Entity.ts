@@ -1,4 +1,4 @@
-import { EntityOptions, FieldOptions } from '../../types/decorators'
+import { EntityOptions, FieldOptions, FieldType } from '../../types/decorators'
 import { flat, unique } from '../utils'
 import { Field } from './Field'
 import { Config } from 'src/types/Config'
@@ -17,6 +17,10 @@ export class Entity {
 
   dependencies(): string[] {
     return unique(flat(this.fields.map(field => field.dependencies())))
+  }
+
+  fieldsByType(...types: FieldType[]): Field<FieldOptions>[] {
+    return this.fields.filter(({ type }) => types.includes(type))
   }
 
   static add(entity: Entity) {

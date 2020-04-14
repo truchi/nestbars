@@ -1,5 +1,11 @@
 import { Class } from '../../types/utils'
-import { flat, unique, defined, objectDefinitionRecursion } from '../utils'
+import {
+  flat,
+  unique,
+  defined,
+  objectDefinitionRecursion,
+  assign,
+} from '../utils'
 import {
   FieldType,
   FieldOptions,
@@ -12,9 +18,12 @@ import {
   RelationWithField,
   RelationJoinColumn,
   RelationJoinTable,
+  PrimaryOptions,
+  ScalarOptions,
+  SpecialOptions,
 } from '../../types/decorators'
 
-export class Field<T extends object> {
+export class Field<T extends FieldOptions> {
   static all: Field<FieldOptions>[] = []
 
   constructor(
@@ -45,12 +54,93 @@ export class Field<T extends object> {
     throw new Error() // TODO
   }
 
+  dbType(): string | undefined {
+    switch (this.type) {
+      case FieldType.Id:
+      case FieldType.Int:
+      case FieldType.Version:
+      case FieldType.Float:
+        return 'int'
+      case FieldType.Uuid:
+      case FieldType.String:
+        return 'varchar'
+      case FieldType.Created:
+      case FieldType.Updated:
+      case FieldType.Date:
+        return 'date'
+      case FieldType.Boolean:
+        return 'boolean'
+      case FieldType.Enum:
+        return 'enum'
+      case FieldType.Set:
+        return 'set'
+      case FieldType.Object:
+        return 'simple-json'
+    }
+
+    return undefined
+  }
+
   dependencies(): string[] {
     return []
   }
 
+  columnOptions(): object {
+    return { type: this.dbType() }
+  }
+
   static add(field: Field<FieldOptions>) {
     Field.all.push(field)
+  }
+}
+
+export class PrimaryField extends Field<PrimaryOptions> {
+  constructor(
+    readonly entity: string,
+    readonly name: string,
+    readonly options: Required<PrimaryOptions>,
+    readonly type: FieldType,
+  ) {
+    super(entity, name, options, type)
+  }
+
+  columnOptions(): object {
+    // TODO deprecation?
+    const {
+      options: { description: comment },
+    } = this
+
+    return assign(super.columnOptions(), { comment }, this.options.options)
+  }
+}
+
+export class ScalarField extends Field<ScalarOptions> {
+  constructor(
+    readonly entity: string,
+    readonly name: string,
+    readonly options: Required<ScalarOptions>,
+    readonly type: FieldType,
+  ) {
+    super(entity, name, options, type)
+  }
+
+  columnOptions(): object {
+    // TODO deprecation?
+    const {
+      options: {
+        primary,
+        unique,
+        nullable,
+        default: dflt,
+        description: comment,
+      },
+    } = this
+
+    return assign(
+      super.columnOptions(),
+      { primary, unique, nullable, default: dflt, comment },
+      this.options.options,
+    )
   }
 }
 
@@ -68,6 +158,44 @@ export class SetField extends Field<SetOptions> {
 
   tsType(): string {
     return this.tsName
+  }
+
+  columnOptions(): object {
+    // TODO deprecation?
+    const {
+      tsName,
+      options: { primary, default: dflt, description: comment },
+    } = this
+
+    return assign(
+      super.columnOptions(),
+      { primary, enum: tsName, default: dflt, comment },
+      this.options.options,
+    )
+  }
+}
+
+export class SpecialField extends Field<SpecialOptions> {
+  constructor(
+    readonly entity: string,
+    readonly name: string,
+    readonly options: Required<SpecialOptions>,
+    readonly type: FieldType,
+  ) {
+    super(entity, name, options, type)
+  }
+
+  columnOptions(): object {
+    // TODO deprecation?
+    const {
+      options: { primary, description: comment },
+    } = this
+
+    return assign(
+      super.columnOptions(),
+      { primary, comment },
+      this.options.options,
+    )
   }
 }
 
@@ -129,6 +257,24 @@ export class ObjectField extends Field<ObjectOptions> {
           ),
         ),
       ),
+    )
+  }
+
+  columnOptions(): object {
+    const {
+      options: {
+        primary,
+        unique,
+        nullable,
+        default: dflt,
+        description: comment,
+      },
+    } = this
+
+    return assign(
+      super.columnOptions(),
+      { primary, unique, nullable, default: dflt, comment },
+      this.options.options,
     )
   }
 }

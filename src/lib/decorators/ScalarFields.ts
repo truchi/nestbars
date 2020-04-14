@@ -5,27 +5,29 @@ import {
   FieldType,
 } from '../../types/decorators'
 import { makeFieldDecoratorFactory } from './utils'
+import { ScalarField } from '../data/Field'
 
-export const Int: ScalarDecorator = makeFieldDecoratorFactory<ScalarOptions>(
-  FieldType.Int,
-  SCALAR_OPTIONS_DEFAULTS,
-)
+export const Int: ScalarDecorator = makeFieldDecoratorFactory<
+  ScalarOptions,
+  ScalarField
+>(FieldType.Int, ScalarField, SCALAR_OPTIONS_DEFAULTS)
 
-export const Float: ScalarDecorator = makeFieldDecoratorFactory<ScalarOptions>(
-  FieldType.Float,
-  SCALAR_OPTIONS_DEFAULTS,
-)
+export const Float: ScalarDecorator = makeFieldDecoratorFactory<
+  ScalarOptions,
+  ScalarField
+>(FieldType.Float, ScalarField, SCALAR_OPTIONS_DEFAULTS)
 
-export const String: ScalarDecorator = makeFieldDecoratorFactory<ScalarOptions>(
-  FieldType.String,
-  SCALAR_OPTIONS_DEFAULTS,
-)
+export const String: ScalarDecorator = makeFieldDecoratorFactory<
+  ScalarOptions,
+  ScalarField
+>(FieldType.String, ScalarField, SCALAR_OPTIONS_DEFAULTS)
 
-export const Date: ScalarDecorator = makeFieldDecoratorFactory<ScalarOptions>(
-  FieldType.Date,
-  SCALAR_OPTIONS_DEFAULTS,
-)
+export const Date: ScalarDecorator = makeFieldDecoratorFactory<
+  ScalarOptions,
+  ScalarField
+>(FieldType.Date, ScalarField, SCALAR_OPTIONS_DEFAULTS)
 
 export const Boolean: ScalarDecorator = makeFieldDecoratorFactory<
-  ScalarOptions
->(FieldType.Boolean, SCALAR_OPTIONS_DEFAULTS)
+  ScalarOptions,
+  ScalarField
+>(FieldType.Boolean, ScalarField, SCALAR_OPTIONS_DEFAULTS)

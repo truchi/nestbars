@@ -10,7 +10,7 @@
 {{>entity__entity_decorator}}
 export class {{entity.name}} {
 {{#each entity.fields}}
-  {{>entity__field .. field=this}}
+  {{>entity__field__field .. field=this}}
 
 {{/each}}
 }

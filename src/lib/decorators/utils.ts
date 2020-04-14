@@ -8,15 +8,16 @@ import {
 import { assign } from '../utils'
 import { Field, SetField } from '../data/Field'
 
-export const makeFieldDecoratorFactory = <O extends {}>(
+export const makeFieldDecoratorFactory = <O extends {}, C extends Field<O>>(
   type: FieldType,
+  Class: new (...args: any[]) => C,
   defaults: Required<O>,
 ) =>
   //
   (options: O = {} as O) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
-      Field.add(new Field(entity, name, assign(defaults, options), type))
+      Field.add(new Class(entity, name, assign(defaults, options), type))
 
 export const makeSetDecoratorFactory = (type: FieldType) =>
   //

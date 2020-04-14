@@ -9,6 +9,12 @@ ObjectType,
 {{#if entity.fields.length}}
   Field,
 {{/if}}
+{{#if ($entity__has_ints)}}
+  Int,
+{{/if}}
+{{#if ($entity__has_floats)}}
+  Float,
+{{/if}}
 {{#if ($entity__has_enums) }}
   registerEnumType,
 {{/if}}

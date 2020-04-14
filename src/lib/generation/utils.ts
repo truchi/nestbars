@@ -8,7 +8,7 @@ export const registerPartials = async (
   Promise.all(
     partials.map(async (partial: string) =>
       HandleBars.registerPartial(
-        partial.replace('/', '__'),
+        partial.replace(/\//g, '__'),
         await readFile(`${templatesPath}/${partial}.hbs`),
       ),
     ),
@@ -29,7 +29,5 @@ export const registerHelpers = (helpers: {
 
 const registerHelper = (prefix: string) =>
   //
-  ([name, helper]: [string, (...args: any[]) => any]) => (
-    console.log(prefix + toSnake(name)),
+  ([name, helper]: [string, (...args: any[]) => any]) =>
     HandleBars.registerHelper(prefix + toSnake(name), helper)
-  )

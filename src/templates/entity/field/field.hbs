@@ -1,0 +1,13 @@
+{{#switch field.type}}
+  {{!-- {{#case 'id'}}
+  {{/case}} --}}
+  {{#case 'int' 'float' 'string' 'date' 'boolean'}}
+    {{>entity__field__scalar_field_decorator}}
+    {{>entity__field__scalar_column_decorator}}
+  {{/case}}
+  {{#default}}
+    {{>entity__field__object_field_decorator}}
+    {{>entity__field__object_column_decorator}}
+  {{/default}}
+{{/switch}}
+{{ field.name }}: {{ $entity__field_type field }}

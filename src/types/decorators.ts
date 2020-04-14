@@ -27,19 +27,25 @@ export const ENTITY_OPTIONS_DEFAULTS: Required<EntityOptions> = {
 //
 
 export enum FieldType {
+  // Primary
   Id = 'id',
   Uuid = 'uuid',
+  // Scalar
   Int = 'int',
   Float = 'float',
   String = 'string',
   Date = 'date',
   Boolean = 'boolean',
+  // Set
   Enum = 'enum',
   Set = 'set',
+  // Special
   Created = 'created',
   Updated = 'updated',
   Version = 'version',
+  // Object
   Object = 'object',
+  // Relation
   OneToOne = 'one-to-one',
   OneToMany = 'one-to-many',
   ManyToOne = 'many-to-one',
@@ -52,7 +58,7 @@ export type FieldOptions =
   | SetOptions
   | SpecialOptions
   | ObjectOptions
-  | {}
+  | {} // TOOD void?
 
 //
 // Primary fields
@@ -61,14 +67,12 @@ export type FieldOptions =
 export type PrimaryDecorator = (options?: PrimaryOptions) => Function
 
 export type PrimaryOptions = {
-  name?: string
   description?: string
   deprecation?: string
   options?: object
 }
 
 export const PRIMARY_OPTIONS_DEFAULTS: Required<PrimaryOptions> = {
-  name: '',
   description: '',
   deprecation: '',
   options: {},
@@ -81,7 +85,6 @@ export const PRIMARY_OPTIONS_DEFAULTS: Required<PrimaryOptions> = {
 export type ScalarDecorator = (options?: ScalarOptions) => Function
 
 export type ScalarOptions = {
-  name?: string
   primary?: boolean
   unique?: boolean
   nullable?: boolean
@@ -92,7 +95,6 @@ export type ScalarOptions = {
 }
 
 export const SCALAR_OPTIONS_DEFAULTS: Required<ScalarOptions> = {
-  name: '',
   primary: false,
   unique: false,
   nullable: false,
@@ -118,7 +120,6 @@ export type SetTsName = string
 
 // TODO numeric
 export type SetOptions = {
-  name?: string
   primary?: boolean
   default?: any
   description?: string
@@ -127,7 +128,6 @@ export type SetOptions = {
 }
 
 export const SET_OPTIONS_DEFAULTS: Required<SetOptions> = {
-  name: '',
   primary: false,
   default: undefined,
   description: '',
@@ -142,7 +142,6 @@ export const SET_OPTIONS_DEFAULTS: Required<SetOptions> = {
 export type SpecialDecorator = (options?: SpecialOptions) => Function
 
 export type SpecialOptions = {
-  name?: string
   primary?: boolean
   description?: string
   deprecation?: string
@@ -150,7 +149,6 @@ export type SpecialOptions = {
 }
 
 export const SPECIAL_OPTIONS_DEFAULTS: Required<SpecialOptions> = {
-  name: '',
   primary: false,
   description: '',
   deprecation: '',
@@ -172,7 +170,6 @@ export type ObjectDefinition = GenericObjectDefinition<
 >
 
 export type ObjectOptions = {
-  name?: string
   primary?: boolean
   unique?: boolean
   nullable?: boolean
@@ -183,7 +180,6 @@ export type ObjectOptions = {
 }
 
 export const OBJECT_OPTIONS_DEFAULTS: Required<ObjectOptions> = {
-  name: '',
   primary: false,
   unique: false,
   nullable: false,
@@ -227,3 +223,6 @@ export type RelationWithField<T extends Class> = keyof InstanceType<T>
 export type RelationJoinColumn = boolean | object
 
 export type RelationJoinTable = boolean | object
+
+// TODO options: primary, nullable, cascade, ...
+// https://github.com/typeorm/typeorm/blob/a4dec02cc59d3219a29c7be0322af2253e1452dc/src/decorator/options/RelationOptions.ts
