@@ -10,7 +10,7 @@ export type Context = {
 }
 
 export const helpers = {
-  global: {
+  __noPrefix: {
     block: {
       wrap(open: string, close: string, { fn }): string {
         const ret = fn(this)

@@ -15,15 +15,15 @@ export const registerPartials = async (
   )
 
 export const registerHelpers = (helpers: {
-  global: { block: object; fn: object }
+  __noPrefix: { block: object; fn: object }
   entity: { block: object; fn: object }
 }) =>
   Object.entries(helpers).map(([context, { block, fn }]) => {
     Object.entries(block).map(
-      registerHelper(context === 'global' ? '' : `${context}__`),
+      registerHelper(context === '__noPrefix' ? '' : `${context}__`),
     )
     Object.entries(fn).map(
-      registerHelper(context === 'global' ? '$' : `$${context}__`),
+      registerHelper(context === '__noPrefix' ? '$' : `$${context}__`),
     )
   })
 
