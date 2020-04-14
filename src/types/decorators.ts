@@ -11,6 +11,7 @@ export type EntityOptions = {
   implements?: string[]
   abstract?: boolean
   description?: string
+  options?: object
 }
 
 export const ENTITY_OPTIONS_DEFAULTS: Required<EntityOptions> = {
@@ -18,6 +19,7 @@ export const ENTITY_OPTIONS_DEFAULTS: Required<EntityOptions> = {
   implements: [],
   abstract: false,
   description: '',
+  options: {},
 }
 
 //
@@ -114,6 +116,7 @@ export type SetValues = string[]
 
 export type SetTsName = string
 
+// TODO numeric
 export type SetOptions = {
   name?: string
   primary?: boolean
@@ -163,6 +166,7 @@ export type ObjectDecorator = (
   options?: ObjectOptions,
 ) => Function
 
+// TODO tuples, imports
 export type ObjectDefinition = GenericObjectDefinition<
   'int' | 'float' | 'string' | 'date' | 'boolean'
 >

@@ -52,6 +52,12 @@ export const pluralize = (s: string): string => s + 's'
 export const uncapitalize = (s: string): string =>
   s.charAt(0).toLowerCase() + s.slice(1)
 
+export const toSnake = (s: string) =>
+  s
+    .split(/(?=[A-Z])/)
+    .join('_')
+    .toLowerCase()
+
 export const objectDefinitionRecursion = (
   definition: any[] | object,
   whenArray: (

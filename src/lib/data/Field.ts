@@ -1,4 +1,5 @@
 import { Class } from '../../types/utils'
+import { flat, unique, defined, objectDefinitionRecursion } from '../utils'
 import {
   FieldType,
   FieldOptions,
@@ -12,7 +13,6 @@ import {
   RelationJoinColumn,
   RelationJoinTable,
 } from '../../types/decorators'
-import { flat, unique, defined, objectDefinitionRecursion } from '../utils'
 
 export class Field<T extends object> {
   static all: Field<FieldOptions>[] = []

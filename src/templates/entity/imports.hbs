@@ -1,0 +1,18 @@
+import {
+Entity,
+{{#if entity.fields.length}}
+  Column,
+{{/if}}
+} from 'typeorm'
+import {
+ObjectType,
+{{#if entity.fields.length}}
+  Field,
+{{/if}}
+{{#if ($entity__has_enums) }}
+  registerEnumType,
+{{/if}}
+} from '@nestjs/graphql'
+{{#entity__dependencies}}
+  import { {{name}} } from '{{from}}'
+{{/entity__dependencies}}

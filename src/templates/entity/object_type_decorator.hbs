@@ -1,0 +1,7 @@
+@ObjectType(
+{{#wrap '{' '}'}}
+  {{#if entity.options.description}}
+    description: '{{entity.options.description}}',
+  {{/if}}
+{{/wrap}}
+)

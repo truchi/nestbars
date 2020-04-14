@@ -1,0 +1,16 @@
+{{>banner}}
+
+{{>entity__imports}}
+
+{{#entity__enums}}
+  {{>entity__enum}}
+{{/entity__enums}}
+
+{{>entity__object_type_decorator}}
+{{>entity__entity_decorator}}
+export class {{entity.name}} {
+{{#each entity.fields}}
+  {{>entity__field .. field=this}}
+
+{{/each}}
+}

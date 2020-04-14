@@ -1,0 +1,8 @@
+@Entity(
+{{#if entity.options.name}}
+  '{{entity.options.name}}',
+{{/if}}
+{{#if ($is_empty entity.options.options)}}
+  {{$stringify entity.options.options}}
+{{/if}}
+)
