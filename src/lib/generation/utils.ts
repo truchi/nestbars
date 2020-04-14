@@ -14,18 +14,16 @@ export const registerPartials = async (
     ),
   )
 
-export const registerHelpers = (helpers: {
-  __noPrefix: { block: object; fn: object }
-  entity: { block: object; fn: object }
-}) =>
-  Object.entries(helpers).map(([context, { block, fn }]) => {
-    Object.entries(block).map(
-      registerHelper(context === '__noPrefix' ? '' : `${context}__`),
-    )
-    Object.entries(fn).map(
-      registerHelper(context === '__noPrefix' ? '$' : `$${context}__`),
-    )
-  })
+export const registerHelpers = ({
+  block,
+  fn,
+}: {
+  block: object
+  fn: object
+}) => (
+  Object.entries(block).map(registerHelper('')),
+  Object.entries(fn).map(registerHelper('$'))
+)
 
 const registerHelper = (prefix: string) =>
   //

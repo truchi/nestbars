@@ -1,16 +1,18 @@
-{{>banner}}
+{{>banner~}}
 
 {{>entity__imports}}
 
-{{#entity__enums}}
-  {{>entity__enum}}
-{{/entity__enums}}
+{{#each ($enums entity) as |enum|}}
+  {{>entity__enum .. enum=enum}}
+
+{{/each}}
 
 {{>entity__db_decorator}}
 {{>entity__gql_decorator}}
+
 export class {{entity.name}} {
-{{#each entity.fields}}
-  {{>entity__field__field .. field=this}}
+{{#each entity.fields as |field|}}
+  {{>entity__field__field .. field=field}}
 
 {{/each}}
 }

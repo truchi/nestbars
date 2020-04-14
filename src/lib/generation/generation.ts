@@ -2,7 +2,7 @@ import * as HandleBars from 'handlebars'
 import { readFile, writeFile } from '../utils'
 import { registerPartials, registerHelpers } from './utils'
 import { Entity } from '../data/Entity'
-import { helpers } from './helpers'
+import helpers from './helpers'
 
 export type Context = {
   entities: Entity[]

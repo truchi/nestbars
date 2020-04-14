@@ -50,11 +50,9 @@ export class Field<T extends FieldOptions> {
       case FieldType.Boolean:
         return 'boolean'
     }
-
-    throw new Error() // TODO
   }
 
-  dbType(): string | undefined {
+  dbType(): string {
     switch (this.type) {
       case FieldType.Id:
       case FieldType.Int:
@@ -77,12 +75,26 @@ export class Field<T extends FieldOptions> {
       case FieldType.Object:
         return 'simple-json'
     }
-
-    return undefined
   }
 
   gqlType(): string {
-    return '' // TODO
+    switch (this.type) {
+      case FieldType.Id:
+      case FieldType.Int:
+      case FieldType.Version:
+        return 'Int'
+      case FieldType.Float:
+        return 'Float'
+      case FieldType.Uuid:
+      case FieldType.String:
+        return 'String'
+      case FieldType.Created:
+      case FieldType.Updated:
+      case FieldType.Date:
+        return 'Date'
+      case FieldType.Boolean:
+        return 'Boolean'
+    }
   }
 
   dependencies(): string[] {
@@ -107,7 +119,7 @@ export class PrimaryField extends Field<PrimaryOptions> {
     readonly entity: string,
     readonly name: string,
     readonly options: Required<PrimaryOptions>,
-    readonly type: FieldType,
+    readonly type: FieldType.Id | FieldType.Uuid,
   ) {
     super(entity, name, options, type)
   }
@@ -132,7 +144,12 @@ export class ScalarField extends Field<ScalarOptions> {
     readonly entity: string,
     readonly name: string,
     readonly options: Required<ScalarOptions>,
-    readonly type: FieldType,
+    readonly type:
+      | FieldType.Int
+      | FieldType.Float
+      | FieldType.String
+      | FieldType.Date
+      | FieldType.Boolean,
   ) {
     super(entity, name, options, type)
   }
@@ -164,13 +181,17 @@ export class SetField extends Field<SetOptions> {
     readonly values: SetValues,
     readonly tsName: SetTsName,
     readonly options: Required<SetOptions>,
-    readonly type: FieldType,
+    readonly type: FieldType.Enum | FieldType.Set,
   ) {
     super(entity, name, options, type)
   }
 
   tsType(): string {
-    return this.tsName
+    return this.type === FieldType.Enum ? this.tsName : this.tsName + '[]'
+  }
+
+  gqlType(): string {
+    return this.type === FieldType.Enum ? this.tsName : '[' + this.tsName + ']'
   }
 
   dbOptions(): object {
@@ -198,7 +219,7 @@ export class SpecialField extends Field<SpecialOptions> {
     readonly entity: string,
     readonly name: string,
     readonly options: Required<SpecialOptions>,
-    readonly type: FieldType,
+    readonly type: FieldType.Created | FieldType.Updated | FieldType.Version,
   ) {
     super(entity, name, options, type)
   }
@@ -259,6 +280,14 @@ export class ObjectField extends Field<ObjectOptions> {
     )
   }
 
+  dbType(): string {
+    // TODO what to do here?
+    // GraphQL scalars?
+    // Serialization?
+    // Remove Object entities?
+    throw new Error('unimpemented')
+  }
+
   dependencies(): string[] {
     return unique(
       defined(
@@ -315,6 +344,10 @@ export class OneToOneField<T extends Class> extends Field<{}> {
     return this.withEntity().name
   }
 
+  dbType(): string {
+    return this.withEntity().name
+  }
+
   dependencies(): string[] {
     return [this.withEntity().name]
   }
@@ -335,6 +368,10 @@ export class OneToManyField<T extends Class> extends Field<{}> {
 
   tsType(): string {
     return this.withEntity().name + '[]'
+  }
+
+  dbType(): string {
+    return '[' + this.withEntity().name + ']'
   }
 
   dependencies(): string[] {
@@ -360,6 +397,10 @@ export class ManyToOneField<T extends Class> extends Field<{}> {
     return this.withEntity().name
   }
 
+  dbType(): string {
+    return this.withEntity().name
+  }
+
   dependencies(): string[] {
     return [this.withEntity().name]
   }
@@ -381,6 +422,10 @@ export class ManyToManyField<T extends Class> extends Field<{}> {
 
   tsType(): string {
     return this.withEntity().name + '[]'
+  }
+
+  dbType(): string {
+    return '[' + this.withEntity().name + ']'
   }
 
   dependencies(): string[] {

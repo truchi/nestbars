@@ -1,25 +1,21 @@
+{{!-- TypeORM --}}
 import {
 Entity,
 PrimaryGeneratedColumn,
-{{#if entity.fields.length}}
-  Column,
-{{/if}}
-} from 'typeorm'
+{{#if entity.fields.length}} Column, {{/if}}
+}
+from 'typeorm'
+{{!-- Nest GraphQL --}}
 import {
 ObjectType,
-{{#if entity.fields.length}}
-  Field,
-{{/if}}
-{{#if ($entity__has_ints)}}
-  Int,
-{{/if}}
-{{#if ($entity__has_floats)}}
-  Float,
-{{/if}}
-{{#if ($entity__has_enums) }}
-  registerEnumType,
-{{/if}}
-} from '@nestjs/graphql'
-{{#entity__dependencies}}
-  import { {{name}} } from '{{from}}'
-{{/entity__dependencies}}
+{{#if entity.fields.length}} Field, {{/if}}
+{{#if ($has_ints   entity)}} Int, {{/if}}
+{{#if ($has_floats entity)}} Float, {{/if}}
+{{#if ($has_enums  entity)}} registerEnumType, {{/if}}
+}
+from '@nestjs/graphql'
+{{!-- Dependencies --}}
+{{#each ($call entity 'dependencies') as |dependency|}}
+  import { {{dependency.name}} }
+  from '{{$relative_import ../entity.dest dependency.dest}}'
+{{/each}}

@@ -15,8 +15,18 @@ export class Entity {
     readonly options: Required<EntityOptions>,
   ) {}
 
-  dependencies(): string[] {
-    return unique(flat(this.fields.map(field => field.dependencies())))
+  dependencies(): Entity[] {
+    return unique(
+      flat(this.fields.map(field => field.dependencies())),
+    ).map(name => Entity.find(name))
+  }
+
+  dbOptions(): object {
+    return this.options.options
+  }
+
+  gqlOptions(): object {
+    return { description: this.options.description || undefined }
   }
 
   fieldsByType(...types: FieldType[]): Field<FieldOptions>[] {

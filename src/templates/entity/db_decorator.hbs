@@ -1,8 +1,12 @@
+{{$set 'options' ($call entity 'dbOptions')}}
+
 @Entity(
 {{#if entity.options.name}}
   '{{entity.options.name}}',
 {{/if}}
-{{#if ($is_empty entity.options.options)}}
-  {{$stringify entity.options.options}}
-{{/if}}
+{{#unless ($is_empty ($get 'options'))}}
+  {{$stringify ($get 'options')}}
+{{/unless}}
 )
+
+{{$delete 'options'}}

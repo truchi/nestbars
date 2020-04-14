@@ -1,7 +1,9 @@
+{{$set 'options' ($call entity 'gqlOptions')}}
+
 @ObjectType(
-{{#wrap '{' '}'}}
-  {{#if entity.options.description}}
-    description: '{{entity.options.description}}',
-  {{/if}}
-{{/wrap}}
+{{#unless ($is_empty ($get 'options'))}}
+  {{$stringify ($get 'options')}}
+{{/unless}}
 )
+
+{{$delete 'options'}}

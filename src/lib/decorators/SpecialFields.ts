@@ -5,7 +5,7 @@ import {
   FieldType,
 } from '../../types/decorators'
 import { makeFieldDecoratorFactory } from './utils'
-import { SpecialField, ScalarField } from '../data/Field'
+import { SpecialField } from '../data/Field'
 
 export const Created: SpecialDecorator = makeFieldDecoratorFactory<
   SpecialOptions,
@@ -15,7 +15,7 @@ export const Created: SpecialDecorator = makeFieldDecoratorFactory<
 export const Updated: SpecialDecorator = makeFieldDecoratorFactory<
   SpecialOptions,
   SpecialField
->(FieldType.Updated, ScalarField, SPECIAL_OPTIONS_DEFAULTS)
+>(FieldType.Updated, SpecialField, SPECIAL_OPTIONS_DEFAULTS)
 
 export const Version: SpecialDecorator = makeFieldDecoratorFactory<
   SpecialOptions,

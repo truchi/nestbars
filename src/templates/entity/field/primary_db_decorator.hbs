@@ -1,4 +1,4 @@
-@PrimaryGeneratedColumn(
+{{!-- @PrimaryGeneratedColumn(
 {{#switch field.type}}
   {{#case 'uuid'}}
     'uuid',
@@ -7,4 +7,4 @@
 {{#unless ($is_empty ($entity__db_options field))}}
   {{$stringify ($entity__db_options field)}}
 {{/unless}}
-)
+) --}}

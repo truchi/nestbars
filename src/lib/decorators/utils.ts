@@ -19,7 +19,7 @@ export const makeFieldDecoratorFactory = <O extends {}, C extends Field<O>>(
     ({ constructor: { name: entity } }: any, name: string): void =>
       Field.add(new Class(entity, name, assign(defaults, options), type))
 
-export const makeSetDecoratorFactory = (type: FieldType) =>
+export const makeSetDecoratorFactory = (type: FieldType.Set | FieldType.Enum) =>
   //
   (values: SetValues, tsName: SetTsName, options: SetOptions = {}) =>
     //

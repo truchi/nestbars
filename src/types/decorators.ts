@@ -8,16 +8,16 @@ export type EntityDecorator = (options?: EntityOptions) => Function
 
 export type EntityOptions = {
   name?: string
-  implements?: string[]
-  abstract?: boolean
+  // implements?: string[]
+  // abstract?: boolean
   description?: string
   options?: object
 }
 
 export const ENTITY_OPTIONS_DEFAULTS: Required<EntityOptions> = {
   name: '',
-  implements: [],
-  abstract: false,
+  // implements: [],
+  // abstract: false,
   description: '',
   options: {},
 }
@@ -88,7 +88,7 @@ export type ScalarOptions = {
   primary?: boolean
   unique?: boolean
   nullable?: boolean
-  default?: any
+  default?: any // TODO better type with generic?
   description?: string
   deprecation?: string
   options?: object
@@ -118,10 +118,10 @@ export type SetValues = string[]
 
 export type SetTsName = string
 
-// TODO numeric
+// TODO numeric, imports
 export type SetOptions = {
   primary?: boolean
-  default?: any
+  default?: any // TODO string / string[]
   description?: string
   deprecation?: string
   options?: object
