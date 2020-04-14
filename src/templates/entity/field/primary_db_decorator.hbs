@@ -1,0 +1,10 @@
+@PrimaryGeneratedColumn(
+{{#switch field.type}}
+  {{#case 'uuid'}}
+    'uuid',
+  {{/case}}
+{{/switch}}
+{{#unless ($is_empty ($entity__db_options field))}}
+  {{$stringify ($entity__db_options field)}}
+{{/unless}}
+)

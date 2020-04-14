@@ -1,0 +1,23 @@
+@Field(
+{{!-- TODO gqlType --}}
+{{#switch field.type}}
+  {{#case 'id'}}
+    () => Int
+  {{/case}}
+  {{#case 'uuid'}}
+    () => String
+  {{/case}}
+{{/switch}},
+{
+{{!-- TODO gqlOptions --}}
+{{#if ($is_truthy field.options.description)}}
+  description: '{{field.options.description}}'',
+{{/if}}
+{{#if ($is_defined field.options.default)}}
+  defaultValue: {{$stringify field.options.default}},
+{{/if}}
+{{#if ($is_truthy field.options.depration)}}
+  deprecationReason: '{{field.options.deprecation}}'',
+{{/if}}
+}
+)

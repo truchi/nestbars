@@ -81,12 +81,20 @@ export class Field<T extends FieldOptions> {
     return undefined
   }
 
+  gqlType(): string {
+    return '' // TODO
+  }
+
   dependencies(): string[] {
     return []
   }
 
-  columnOptions(): object {
+  dbOptions(): object {
     return { type: this.dbType() }
+  }
+
+  gqlOptions(): object {
+    return {} // TODO
   }
 
   static add(field: Field<FieldOptions>) {
@@ -104,13 +112,18 @@ export class PrimaryField extends Field<PrimaryOptions> {
     super(entity, name, options, type)
   }
 
-  columnOptions(): object {
+  dbOptions(): object {
     // TODO deprecation?
     const {
-      options: { description: comment },
+      options: { description },
     } = this
 
-    return assign(super.columnOptions(), { comment }, this.options.options)
+    return assign(
+      super.dbOptions(),
+      { type: undefined },
+      { comment: description || undefined },
+      this.options.options,
+    )
   }
 }
 
@@ -124,21 +137,21 @@ export class ScalarField extends Field<ScalarOptions> {
     super(entity, name, options, type)
   }
 
-  columnOptions(): object {
+  dbOptions(): object {
     // TODO deprecation?
     const {
-      options: {
+      options: { primary, unique, nullable, default: dflt, description },
+    } = this
+
+    return assign(
+      super.dbOptions(),
+      {
         primary,
         unique,
         nullable,
         default: dflt,
-        description: comment,
+        comment: description || undefined,
       },
-    } = this
-
-    return assign(
-      super.columnOptions(),
-      { primary, unique, nullable, default: dflt, comment },
       this.options.options,
     )
   }
@@ -160,16 +173,21 @@ export class SetField extends Field<SetOptions> {
     return this.tsName
   }
 
-  columnOptions(): object {
+  dbOptions(): object {
     // TODO deprecation?
     const {
       tsName,
-      options: { primary, default: dflt, description: comment },
+      options: { primary, default: dflt, description },
     } = this
 
     return assign(
-      super.columnOptions(),
-      { primary, enum: tsName, default: dflt, comment },
+      super.dbOptions(),
+      {
+        primary,
+        enum: tsName,
+        default: dflt,
+        comment: description || undefined,
+      },
       this.options.options,
     )
   }
@@ -185,15 +203,15 @@ export class SpecialField extends Field<SpecialOptions> {
     super(entity, name, options, type)
   }
 
-  columnOptions(): object {
+  dbOptions(): object {
     // TODO deprecation?
     const {
-      options: { primary, description: comment },
+      options: { primary, description },
     } = this
 
     return assign(
-      super.columnOptions(),
-      { primary, comment },
+      super.dbOptions(),
+      { primary, comment: description || undefined },
       this.options.options,
     )
   }
@@ -260,20 +278,20 @@ export class ObjectField extends Field<ObjectOptions> {
     )
   }
 
-  columnOptions(): object {
+  dbOptions(): object {
     const {
-      options: {
+      options: { primary, unique, nullable, default: dflt, description },
+    } = this
+
+    return assign(
+      super.dbOptions(),
+      {
         primary,
         unique,
         nullable,
         default: dflt,
-        description: comment,
+        comment: description || undefined,
       },
-    } = this
-
-    return assign(
-      super.columnOptions(),
-      { primary, unique, nullable, default: dflt, comment },
       this.options.options,
     )
   }

@@ -97,11 +97,14 @@ export const helpers = {
       hasEnums(this: Context): boolean {
         return !!this.entity.fieldsByType(FieldType.Enum, FieldType.Set).length
       },
-      fieldType(field: Field<FieldOptions>): string {
+      tsType(field: Field<FieldOptions>): string {
         return field.tsType()
       },
-      columnOptions(field: Field<FieldOptions>): object {
-        return field.columnOptions()
+      dbOptions(field: Field<FieldOptions>): object {
+        return field.dbOptions()
+      },
+      gqlOptions(field: Field<FieldOptions>): object {
+        return field.gqlOptions()
       },
     },
   },

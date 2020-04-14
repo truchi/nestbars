@@ -6,8 +6,8 @@
   {{>entity__enum}}
 {{/entity__enums}}
 
-{{>entity__object_type_decorator}}
-{{>entity__entity_decorator}}
+{{>entity__db_decorator}}
+{{>entity__gql_decorator}}
 export class {{entity.name}} {
 {{#each entity.fields}}
   {{>entity__field__field .. field=this}}

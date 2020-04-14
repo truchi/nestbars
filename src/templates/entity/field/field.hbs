@@ -1,13 +1,11 @@
 {{#switch field.type}}
-  {{!-- {{#case 'id'}}
-  {{/case}} --}}
-  {{#case 'int' 'float' 'string' 'date' 'boolean'}}
-    {{>entity__field__scalar_field_decorator}}
-    {{>entity__field__scalar_column_decorator}}
+  {{#case 'id' 'uuid'}}
+    {{>entity__field__primary_db_decorator}}
+    {{>entity__field__primary_gql_decorator}}
   {{/case}}
-  {{#default}}
-    {{>entity__field__object_field_decorator}}
-    {{>entity__field__object_column_decorator}}
-  {{/default}}
+  {{#case 'int' 'float' 'string' 'date' 'boolean'}}
+    {{>entity__field__scalar_db_decorator}}
+    {{>entity__field__scalar_gql_decorator}}
+  {{/case}}
 {{/switch}}
-{{ field.name }}: {{ $entity__field_type field }}
+{{field.name}}: {{$entity__ts_type field}}

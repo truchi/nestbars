@@ -12,14 +12,14 @@ export type Context = {
 const partials = [
   'banner',
   'entity/imports',
-  'entity/field/field',
-  'entity/field/object_field_decorator',
-  'entity/field/object_column_decorator',
-  'entity/field/scalar_field_decorator',
-  'entity/field/scalar_column_decorator',
   'entity/enum',
-  'entity/entity_decorator',
-  'entity/object_type_decorator',
+  'entity/db_decorator',
+  'entity/gql_decorator',
+  'entity/field/field',
+  'entity/field/primary_db_decorator',
+  'entity/field/primary_gql_decorator',
+  'entity/field/scalar_db_decorator',
+  'entity/field/scalar_gql_decorator',
 ]
 
 export const generate = async (entities: Entity[], templatesPath: string) => {
