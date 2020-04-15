@@ -4,7 +4,7 @@ import {
   SetOptions,
   FieldType,
 } from '../../types/decorators'
-import { Field, SetField } from '../data/Field'
+import { Field, SetField } from '../data'
 
 export const makeFieldDecoratorFactory = <O extends {}, C extends Field<O>>(
   type: FieldType,

@@ -1,0 +1,39 @@
+import { Class } from '../../types/utils'
+import {
+  FieldType,
+  RelationWithEntity,
+  RelationWithField,
+  RelationJoinColumn,
+} from '../../types/decorators'
+import { Field } from './Field'
+
+export class ManyToOneField<T extends Class> extends Field<{}> {
+  static readonly options: {} = {}
+  static readonly type: FieldType = FieldType.ManyToOne
+
+  constructor(
+    readonly entity: string,
+    readonly name: string,
+    readonly withEntity: RelationWithEntity<T>,
+    readonly withField: RelationWithField<T>,
+    readonly joinColumn: RelationJoinColumn,
+  ) {
+    super(entity, name, ManyToOneField.options, ManyToOneField.type)
+  }
+
+  tsType(): string {
+    return this.withEntity().name
+  }
+
+  dbType(): string {
+    return this.withEntity().name
+  }
+
+  gqlType(): string {
+    return this.withEntity().name
+  }
+
+  dependencies(): string[] {
+    return [this.withEntity().name]
+  }
+}

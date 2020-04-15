@@ -3,7 +3,7 @@ import handlebarsHelpers from 'handlebars-helpers'
 import { FieldType, FieldOptions } from '../../types/decorators'
 import { uncapitalize } from '../utils'
 import { Entity } from '../data/Entity'
-import { Field, OneToOneField, ManyToManyField } from '../data/Field'
+import { Field, OneToOneField, ManyToOneField, ManyToManyField } from '../data'
 
 export type Context = {
   entities: Entity[]
@@ -80,7 +80,10 @@ export default {
   hasJoinColumn(entity: Entity): boolean {
     return !!entity
       .fieldsByType(FieldType.OneToOne, FieldType.ManyToOne)
-      .filter(field => !!(field as OneToOneField<any>).joinColumn).length
+      .filter(
+        field =>
+          !!(field as OneToOneField<any> | ManyToOneField<any>).joinColumn,
+      ).length
   },
   hasJoinTable(entity: Entity): boolean {
     return !!entity

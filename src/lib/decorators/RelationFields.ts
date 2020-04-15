@@ -10,7 +10,7 @@ import {
   OneToManyField,
   ManyToOneField,
   ManyToManyField,
-} from '../data/Field'
+} from '../data'
 
 export const OneToOne /*: OneToOneDecorator<...> */ =
   //

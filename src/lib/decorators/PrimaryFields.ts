@@ -4,7 +4,7 @@ import {
   FieldType,
 } from '../../types/decorators'
 import { makeFieldDecoratorFactory } from './utils'
-import { PrimaryField } from '../data/Field'
+import { PrimaryField } from '../data'
 
 export const Id: PrimaryDecorator = makeFieldDecoratorFactory<
   PrimaryOptions,

@@ -4,7 +4,7 @@ import {
   FieldType,
 } from '../../types/decorators'
 import { makeFieldDecoratorFactory } from './utils'
-import { ScalarField } from '../data/Field'
+import { ScalarField } from '../data'
 
 export const Int: ScalarDecorator = makeFieldDecoratorFactory<
   ScalarOptions,
