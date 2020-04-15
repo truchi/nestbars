@@ -187,6 +187,23 @@ export class ScalarField extends Field<ScalarOptions> {
       this.options.options,
     )
   }
+
+  gqlOptions(): object {
+    const {
+      options: { nullable, default: dflt, description, deprecation },
+    } = this
+
+    return assign(
+      super.gqlOptions(),
+      {
+        nullable,
+        defaultValue: dflt,
+        description: description || undefined,
+        deprecationReason: deprecation || undefined,
+      },
+      this.options.options,
+    )
+  }
 }
 
 export class SetField extends Field<SetOptions> {

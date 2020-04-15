@@ -1,33 +1,4 @@
-{{!-- @Field(
-{{!-- TODO gqlType --}}
-{{#switch field.type}}
-  {{#case 'int'}}
-    () => Int
-  {{/case}}
-  {{#case 'float'}}
-    () => Float
-  {{/case}}
-  {{#case 'string'}}
-    () => String
-  {{/case}}
-  {{#case 'date'}}
-    () => Date
-  {{/case}}
-  {{#case 'boolean'}}
-    () => Boolean
-  {{/case}}
-{{/switch}},
-{
-{{!-- TODO gqlOptions --}}
-nullable: {{field.options.nullable}},
-{{#if ($is_truthy field.options.description)}}
-  description: '{{field.options.description}}'',
-{{/if}}
-{{#if ($is_defined field.options.default)}}
-  defaultValue: {{$stringify field.options.default}},
-{{/if}}
-{{#if ($is_truthy field.options.depration)}}
-  deprecationReason: '{{field.options.deprecation}}'',
-{{/if}}
-}
-) --}}
+@Field(
+() => {{$call field 'gqlType'}},
+{{$stringify ($call field 'gqlOptions')}},
+)

@@ -4,8 +4,8 @@
     {{>entity__field__primary_gql_decorator}}
   {{/case}}
   {{#case 'int' 'float' 'string' 'date' 'boolean'}}
-    {{!-- {{>entity__field__scalar_db_decorator}}
-    {{>entity__field__scalar_gql_decorator}} --}}
+    {{>entity__field__scalar_db_decorator}}
+    {{>entity__field__scalar_gql_decorator}}
   {{/case}}
 {{/switch}}
 {{field.name}}: {{$call field 'tsType'}}

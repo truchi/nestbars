@@ -1,1 +1,9 @@
-{{!-- @Column({{$stringify ($entity__db_options field)}}) --}}
+{{$set 'options' ($call field 'dbOptions')}}
+
+@Column(
+{{#unless ($is_empty ($get 'options'))}}
+  {{$stringify ($get 'options')}}
+{{/unless}}
+)
+
+{{$delete 'options'}}
