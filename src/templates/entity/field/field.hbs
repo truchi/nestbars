@@ -15,5 +15,9 @@
     {{>entity__field__special_db_decorator}}
     {{>entity__field__special_gql_decorator}}
   {{/case}}
+  {{#case 'one-to-one' 'one-to-many' 'many-to-one' 'many-to-many'}}
+    {{>entity__field__relation_db_decorator}}
+    {{!-- {{>entity__field__relation_gql_decorator}} --}}
+  {{/case}}
 {{/switch}}
 {{field.name}}: {{call field 'tsType'}}

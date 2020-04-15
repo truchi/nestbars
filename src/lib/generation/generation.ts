@@ -24,6 +24,8 @@ const partials = [
   'entity/field/set_gql_decorator',
   'entity/field/special_db_decorator',
   'entity/field/special_gql_decorator',
+  'entity/field/relation_db_decorator',
+  'entity/field/relation_gql_decorator',
 ]
 
 export const generate = async (entities: Entity[], templatesPath: string) => {

@@ -336,7 +336,7 @@ export class OneToManyField<T extends Class> extends Field<{}> {
   }
 
   dbType(): string {
-    return '[' + this.withEntity().name + ']'
+    return this.withEntity().name
   }
 
   dependencies(): string[] {
@@ -390,7 +390,7 @@ export class ManyToManyField<T extends Class> extends Field<{}> {
   }
 
   dbType(): string {
-    return '[' + this.withEntity().name + ']'
+    return this.withEntity().name
   }
 
   dependencies(): string[] {

@@ -43,8 +43,6 @@ export const defined = (xs: any[]): any[] => xs.filter(x => x)
 export const assign = <T>(x: T, ...xs: object[]): T =>
   Object.assign.apply(Object, [{}, x, ...xs])
 
-export const pluralize = (s: string): string => s + 's'
-
 export const uncapitalize = (s: string): string =>
   s.charAt(0).toLowerCase() + s.slice(1)
 

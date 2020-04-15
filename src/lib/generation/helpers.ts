@@ -1,8 +1,9 @@
 import * as HandleBars from 'handlebars'
 import handlebarsHelpers from 'handlebars-helpers'
 import { FieldType, FieldOptions } from '../../types/decorators'
+import { uncapitalize } from '../utils'
 import { Entity } from '../data/Entity'
-import { Field } from '../data/Field'
+import { Field, OneToOneField, ManyToManyField } from '../data/Field'
 
 export type Context = {
   entities: Entity[]
@@ -11,8 +12,12 @@ export type Context = {
 
 const SWITCHES: { value: any; break: boolean }[] = []
 
+console.log(handlebarsHelpers.utils.changecase('fooBarBaz'))
+console.log(handlebarsHelpers.utils.chop('fooBarBaz'))
+
 export default {
   ...handlebarsHelpers(),
+  // ...handlebarsHelpers.utils(),
 
   //
   // Blocks
@@ -47,6 +52,9 @@ export default {
   // Utils
   //
 
+  uncapitalize(str: string): string {
+    return uncapitalize(str)
+  },
   stringify(
     o: string | object,
     { hash: { except, trap } },
@@ -73,4 +81,18 @@ export default {
       ({ type }) => type === FieldType.Enum || type === FieldType.Set,
     )
   },
+  hasJoinColumn(entity: Entity): boolean {
+    return !!entity
+      .fieldsByType(FieldType.OneToOne, FieldType.ManyToOne)
+      .filter(field => !!(field as OneToOneField<any>).joinColumn).length
+  },
+  hasJoinTable(entity: Entity): boolean {
+    return !!entity
+      .fieldsByType(FieldType.ManyToMany)
+      .filter(field => !!(field as ManyToManyField<any>).joinTable).length
+  },
+
+  //
+  // Field
+  //
 }

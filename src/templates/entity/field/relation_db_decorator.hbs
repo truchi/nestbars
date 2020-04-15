@@ -1,0 +1,31 @@
+@
+{{#switch field.type}}
+  {{#case 'one-to-one'}}OneToOne{{/case}}
+  {{#case 'one-to-many'}}OneToMany{{/case}}
+  {{#case 'many-to-one'}}ManyToOne{{/case}}
+  {{#case 'many-to-many'}}ManyToMany{{/case}}
+{{/switch}}
+(
+() => {{call field 'dbType'}},
+{{uncapitalize (call field 'dbType')}} => {{uncapitalize (call field 'dbType')}}.{{field.withField}}
+)
+{{#switch field.type}}
+  {{#case 'one-to-one' 'many-to-one'}}
+    {{#if field.joinColumn}}
+      @JoinColumn(
+      {{#if (isObject field.joinColumn)}}
+        {{stringify field.joinColumn trap='{}'}}
+      {{/if}}
+      )
+    {{/if}}
+  {{/case}}
+  {{#case 'many-to-many'}}
+    {{#if field.joinTable}}
+      @JoinTable(
+      {{#if (isObject field.joinTable)}}
+        {{stringify field.joinTable trap='{}'}}
+      {{/if}}
+      )
+    {{/if}}
+  {{/case}}
+{{/switch}}

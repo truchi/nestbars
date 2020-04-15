@@ -3,6 +3,12 @@ import {
 Entity,
 {{#if entity.fields.length}} Column, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'id' 'uuid'))}} PrimaryGeneratedColumn, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'one-to-one'))}} OneToOne, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'one-to-many'))}} OneToMany, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'many-to-one'))}} ManyToOne, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'many-to-many'))}} ManyToMany, {{/if}}
+{{#if (hasJoinColumn entity)}} JoinColumn, {{/if}}
+{{#if (hasJoinTable entity)}} JoinTable, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'created'))}} CreateDateColumn, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'updated'))}} UpdateDateColumn, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'version'))}} VersionColumn, {{/if}}
