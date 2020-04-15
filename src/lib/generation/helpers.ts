@@ -9,7 +9,6 @@ export type Context = {
   entity: Entity
 }
 
-const VARS: { [key: string]: any } = {}
 const SWITCHES: { value: any; break: boolean }[] = []
 
 export default {
@@ -40,38 +39,14 @@ export default {
   // Variables & Functions
   //
 
-  // set(name: string, value: any): void {
-  //   VARS[name] = value
-  // },
-  // get(name: string): any {
-  //   return VARS[name]
-  // },
-  // delete(name: string): void {
-  //   delete VARS[name]
-  // },
   call(o: object, fn: string, ...args: any[]): any {
     return o[fn](...args)
   },
-  // arr(...args: any[]): any[] {
-  //   return args.slice(0, -1)
-  // },
 
   //
   // Utils
   //
 
-  // isEmpty(o: any[] | object): boolean {
-  //   return !(Array.isArray(o)
-  //     ? o.length
-  //     : Object.entries(o).filter(([, v]) => v !== undefined && v !== null)
-  //         .length)
-  // },
-  // isDefined(this: Context, o: any): boolean {
-  //   return o !== undefined && o !== null
-  // },
-  // isTruthy(this: Context, o: any): boolean {
-  //   return !!o
-  // },
   stringify(
     o: string | object,
     { hash: { except, trap } },
@@ -107,7 +82,4 @@ export default {
   hasEnums(entity: Entity): boolean {
     return !!entity.fieldsByType(FieldType.Enum, FieldType.Set).length
   },
-
-  // block: {
-  // },
 }
