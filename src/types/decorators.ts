@@ -116,13 +116,6 @@ export type SpecialOptions = {
   options?: object
 }
 
-export const SPECIAL_OPTIONS_DEFAULTS: Required<SpecialOptions> = {
-  primary: false,
-  description: '',
-  deprecation: '',
-  options: {},
-}
-
 //
 // Object fields
 //
@@ -145,16 +138,6 @@ export type ObjectOptions = {
   description?: string
   deprecation?: string
   options?: object
-}
-
-export const OBJECT_OPTIONS_DEFAULTS: Required<ObjectOptions> = {
-  primary: false,
-  unique: false,
-  nullable: false,
-  default: undefined,
-  description: '',
-  deprecation: '',
-  options: {},
 }
 
 //
