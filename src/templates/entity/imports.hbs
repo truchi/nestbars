@@ -1,8 +1,8 @@
 {{!-- TypeORM --}}
 import {
 Entity,
-PrimaryGeneratedColumn,
 {{#if entity.fields.length}} Column, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'id' 'uuid'))}} PrimaryGeneratedColumn, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'created'))}} CreateDateColumn, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'updated'))}} UpdateDateColumn, {{/if}}
 {{#if (length (call entity 'fieldsByType' 'version'))}} VersionColumn, {{/if}}
