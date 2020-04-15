@@ -14,14 +14,6 @@ export type EntityOptions = {
   options?: object
 }
 
-export const ENTITY_OPTIONS_DEFAULTS: Required<EntityOptions> = {
-  name: '',
-  // implements: [],
-  // abstract: false,
-  description: '',
-  options: {},
-}
-
 //
 // Fields
 //
@@ -72,12 +64,6 @@ export type PrimaryOptions = {
   options?: object
 }
 
-export const PRIMARY_OPTIONS_DEFAULTS: Required<PrimaryOptions> = {
-  description: '',
-  deprecation: '',
-  options: {},
-}
-
 //
 // Scalar fields
 //
@@ -92,16 +78,6 @@ export type ScalarOptions = {
   description?: string
   deprecation?: string
   options?: object
-}
-
-export const SCALAR_OPTIONS_DEFAULTS: Required<ScalarOptions> = {
-  primary: false,
-  unique: false,
-  nullable: false,
-  default: undefined,
-  description: '',
-  deprecation: '',
-  options: {},
 }
 
 //
@@ -125,14 +101,6 @@ export type SetOptions = {
   description?: string
   deprecation?: string
   options?: object
-}
-
-export const SET_OPTIONS_DEFAULTS: Required<SetOptions> = {
-  primary: false,
-  default: undefined,
-  description: '',
-  deprecation: '',
-  options: {},
 }
 
 //

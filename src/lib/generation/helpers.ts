@@ -56,12 +56,12 @@ export default {
     trap = trap.map(s => s.trim())
 
     let str = JSON.stringify(o)
-
     except.map(key => {
       str = str.replace(`\"${key}\":\"${o[key]}"`, `\"${key}\":${o[key]}`)
     })
+    str = trap.includes(str.trim()) ? '' : str
 
-    return new HandleBars.SafeString(trap.includes(str.trim()) ? '' : str)
+    return new HandleBars.SafeString(str)
   },
 
   //

@@ -29,7 +29,7 @@ export class Field<T extends FieldOptions> {
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly options: Required<T>,
+    readonly options: T,
     readonly type: FieldType,
   ) {}
 
@@ -118,7 +118,7 @@ export class PrimaryField extends Field<PrimaryOptions> {
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly options: Required<PrimaryOptions>,
+    readonly options: PrimaryOptions,
     readonly type: FieldType.Id | FieldType.Uuid,
   ) {
     super(entity, name, options, type)
@@ -133,7 +133,7 @@ export class PrimaryField extends Field<PrimaryOptions> {
     return assign(
       super.dbOptions(),
       { type: undefined },
-      { comment: description || undefined },
+      { comment: description },
       this.options.options,
     )
   }
@@ -146,8 +146,8 @@ export class PrimaryField extends Field<PrimaryOptions> {
     return assign(
       super.gqlOptions(),
       {
-        description: description || undefined,
-        deprecationReason: deprecation || undefined,
+        description,
+        deprecationReason: deprecation,
       },
       this.options.options,
     )
@@ -158,7 +158,7 @@ export class ScalarField extends Field<ScalarOptions> {
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly options: Required<ScalarOptions>,
+    readonly options: ScalarOptions,
     readonly type:
       | FieldType.Int
       | FieldType.Float
@@ -182,7 +182,7 @@ export class ScalarField extends Field<ScalarOptions> {
         unique,
         nullable,
         default: dflt,
-        comment: description || undefined,
+        comment: description,
       },
       this.options.options,
     )
@@ -198,8 +198,8 @@ export class ScalarField extends Field<ScalarOptions> {
       {
         nullable,
         defaultValue: dflt,
-        description: description || undefined,
-        deprecationReason: deprecation || undefined,
+        description,
+        deprecationReason: deprecation,
       },
       this.options.options,
     )
@@ -212,7 +212,7 @@ export class SetField extends Field<SetOptions> {
     readonly name: string,
     readonly values: SetValues,
     readonly tsName: SetTsName,
-    readonly options: Required<SetOptions>,
+    readonly options: SetOptions,
     readonly type: FieldType.Enum | FieldType.Set,
   ) {
     super(entity, name, options, type)
@@ -254,8 +254,8 @@ export class SetField extends Field<SetOptions> {
       super.gqlOptions(),
       {
         defaultValue: dflt,
-        description: description || undefined,
-        deprecationReason: deprecation || undefined,
+        description,
+        deprecationReason: deprecation,
       },
       this.options.options,
     )
@@ -266,7 +266,7 @@ export class SpecialField extends Field<SpecialOptions> {
   constructor(
     readonly entity: string,
     readonly name: string,
-    readonly options: Required<SpecialOptions>,
+    readonly options: SpecialOptions,
     readonly type: FieldType.Created | FieldType.Updated | FieldType.Version,
   ) {
     super(entity, name, options, type)
@@ -280,7 +280,7 @@ export class SpecialField extends Field<SpecialOptions> {
 
     return assign(
       super.dbOptions(),
-      { primary, comment: description || undefined },
+      { primary, comment: description },
       this.options.options,
     )
   }
@@ -293,8 +293,8 @@ export class SpecialField extends Field<SpecialOptions> {
     return assign(
       super.gqlOptions(),
       {
-        description: description || undefined,
-        deprecationReason: deprecation || undefined,
+        description,
+        deprecationReason: deprecation,
       },
       this.options.options,
     )
@@ -308,7 +308,7 @@ export class ObjectField extends Field<ObjectOptions> {
     readonly entity: string,
     readonly name: string,
     readonly definition: ObjectDefinition,
-    readonly options: Required<ObjectOptions>,
+    readonly options: ObjectOptions,
   ) {
     super(entity, name, options, ObjectField.type)
   }
@@ -382,7 +382,7 @@ export class ObjectField extends Field<ObjectOptions> {
         unique,
         nullable,
         default: dflt,
-        comment: description || undefined,
+        comment: description,
       },
       this.options.options,
     )

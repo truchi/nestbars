@@ -10,10 +10,9 @@ export class Entity {
   templatePath: string
   fields: Field<FieldOptions>[] = []
 
-  constructor(
-    readonly name: string,
-    readonly options: Required<EntityOptions>,
-  ) {}
+  constructor(readonly name: string, readonly options: EntityOptions) {
+    this.options.options = this.options.options ?? {}
+  }
 
   dependencies(): Entity[] {
     return unique(
