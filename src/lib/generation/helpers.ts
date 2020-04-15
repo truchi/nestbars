@@ -12,12 +12,8 @@ export type Context = {
 
 const SWITCHES: { value: any; break: boolean }[] = []
 
-console.log(handlebarsHelpers.utils.changecase('fooBarBaz'))
-console.log(handlebarsHelpers.utils.chop('fooBarBaz'))
-
 export default {
   ...handlebarsHelpers(),
-  // ...handlebarsHelpers.utils(),
 
   //
   // Blocks
