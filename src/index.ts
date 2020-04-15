@@ -4,11 +4,6 @@ import { sanitizeConfig } from './lib/config'
 import { generate } from './lib/generation/generation'
 import { Entity } from './lib/data/Entity'
 
-import { ColumnOptions } from 'typeorm'
-
-const a = true as ColumnOptions
-console.log(a)
-
 // Re-exports for user
 export * from './lib/decorators'
 

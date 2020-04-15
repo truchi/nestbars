@@ -1,7 +1,7 @@
 import { EntityOptions, FieldOptions, FieldType } from '../../types/decorators'
 import { flat, unique } from '../utils'
 import { Field } from './Field'
-import { Config } from 'src/types/Config'
+import { Config } from '../../types/Config'
 
 export class Entity {
   static all: Entity[] = []

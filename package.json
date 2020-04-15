@@ -1,12 +1,11 @@
 {
   "name": "nestbars",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "NestJs code generation",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch",
-    "postinstall": "npm run build"
+    "watch": "tsc --watch"
   },
   "repository": "github:truchi/nestbars",
   "keywords": [],
