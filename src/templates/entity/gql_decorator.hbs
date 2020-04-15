@@ -1,9 +1,3 @@
-{{$set 'options' ($call entity 'gqlOptions')}}
-
 @ObjectType(
-{{#unless ($is_empty ($get 'options'))}}
-  {{$stringify ($get 'options')}}
-{{/unless}}
+{{stringify (call entity 'gqlOptions') trap='{}'}}
 )
-
-{{$delete 'options'}}

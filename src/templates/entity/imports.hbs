@@ -9,13 +9,13 @@ from 'typeorm'
 import {
 ObjectType,
 {{#if entity.fields.length}} Field, {{/if}}
-{{#if ($has_ints   entity)}} Int, {{/if}}
-{{#if ($has_floats entity)}} Float, {{/if}}
-{{#if ($has_enums  entity)}} registerEnumType, {{/if}}
+{{#if (hasInts   entity)}} Int, {{/if}}
+{{#if (hasFloats entity)}} Float, {{/if}}
+{{#if (hasEnums  entity)}} registerEnumType, {{/if}}
 }
 from '@nestjs/graphql'
 {{!-- Dependencies --}}
-{{#each ($call entity 'dependencies') as |dependency|}}
+{{#each (call entity 'dependencies') as |dependency|}}
   import { {{dependency.name}} }
-  from '{{$relative_import ../entity.dest dependency.dest}}'
+  from '{{relative (dirname ../entity.dest) (dirname dependency.dest)}}/{{stem dependency.dest}}'
 {{/each}}

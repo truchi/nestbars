@@ -2,7 +2,7 @@
 
 {{>entity__imports}}
 
-{{#each ($enums entity) as |enum|}}
+{{#each (enums entity) as |enum|}}
   {{>entity__enum .. enum=enum}}
 
 {{/each}}

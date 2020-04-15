@@ -19,10 +19,6 @@ export const writeFile = ((writeFile = promisify(_writeFile)) => (
 export const mkdir = (path: string) =>
   promisify(_mkdir)(path, { recursive: true })
 
-export const relativeImport = (from: string, to: string) =>
-  (({ dir: fromDir } = parse(from), { dir: toDir, name } = parse(to)) =>
-    relative(fromDir, toDir) + '/' + name)()
-
 export const toPathFunction = (
   o: string | PathFunction,
   { NAME, TYPE }: { NAME: string; TYPE: string },
@@ -51,12 +47,6 @@ export const pluralize = (s: string): string => s + 's'
 
 export const uncapitalize = (s: string): string =>
   s.charAt(0).toLowerCase() + s.slice(1)
-
-export const toSnake = (s: string) =>
-  s
-    .split(/(?=[A-Z])/)
-    .join('_')
-    .toLowerCase()
 
 export const objectDefinitionRecursion = (
   definition: any[] | object,

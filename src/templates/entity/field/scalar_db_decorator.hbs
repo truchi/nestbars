@@ -1,9 +1,3 @@
-{{$set 'options' ($call field 'dbOptions')}}
-
 @Column(
-{{#unless ($is_empty ($get 'options'))}}
-  {{$stringify ($get 'options')}}
-{{/unless}}
+{{stringify (call field 'dbOptions') trap='{}'}}
 )
-
-{{$delete 'options'}}

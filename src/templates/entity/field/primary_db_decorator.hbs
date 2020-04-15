@@ -1,14 +1,6 @@
-{{$set 'options' ($call field 'dbOptions')}}
-
 @PrimaryGeneratedColumn(
-{{#switch field.type}}
-  {{#case 'uuid'}}
-    'uuid',
-  {{/case}}
-{{/switch}}
-{{#unless ($is_empty ($get 'options'))}}
-  {{$stringify ($get 'options')}}
-{{/unless}}
+{{#if (eq field.type 'uuid')}}
+  'uuid',
+{{/if}}
+{{stringify (call field 'dbOptions') trap='{}'}}
 )
-
-{{$delete 'options'}}

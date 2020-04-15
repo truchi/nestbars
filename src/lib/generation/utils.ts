@@ -1,5 +1,5 @@
 import * as HandleBars from 'handlebars'
-import { readFile, toSnake } from '../utils'
+import { readFile } from '../utils'
 
 export const registerPartials = async (
   partials: string[],
@@ -14,18 +14,9 @@ export const registerPartials = async (
     ),
   )
 
-export const registerHelpers = ({
-  block,
-  fn,
-}: {
-  block: object
-  fn: object
-}) => (
-  Object.entries(block).map(registerHelper('')),
-  Object.entries(fn).map(registerHelper('$'))
-)
-
-const registerHelper = (prefix: string) =>
-  //
-  ([name, helper]: [string, (...args: any[]) => any]) =>
-    HandleBars.registerHelper(prefix + toSnake(name), helper)
+export const registerHelpers = (helpers: object) =>
+  Object.entries(
+    helpers,
+  ).map(([name, helper]: [string, (...args: any[]) => any]) =>
+    HandleBars.registerHelper(name, helper),
+  )
