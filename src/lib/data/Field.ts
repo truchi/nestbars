@@ -313,6 +313,10 @@ export class OneToOneField<T extends Class> extends Field<{}> {
     return this.withEntity().name
   }
 
+  gqlType(): string {
+    return this.withEntity().name
+  }
+
   dependencies(): string[] {
     return [this.withEntity().name]
   }
@@ -337,6 +341,10 @@ export class OneToManyField<T extends Class> extends Field<{}> {
 
   dbType(): string {
     return this.withEntity().name
+  }
+
+  gqlType(): string {
+    return '[' + this.withEntity().name + ']'
   }
 
   dependencies(): string[] {
@@ -366,6 +374,10 @@ export class ManyToOneField<T extends Class> extends Field<{}> {
     return this.withEntity().name
   }
 
+  gqlType(): string {
+    return this.withEntity().name
+  }
+
   dependencies(): string[] {
     return [this.withEntity().name]
   }
@@ -391,6 +403,10 @@ export class ManyToManyField<T extends Class> extends Field<{}> {
 
   dbType(): string {
     return this.withEntity().name
+  }
+
+  gqlType(): string {
+    return '[' + this.withEntity().name + ']'
   }
 
   dependencies(): string[] {

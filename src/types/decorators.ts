@@ -148,5 +148,6 @@ export type RelationJoinColumn = boolean | object
 
 export type RelationJoinTable = boolean | object
 
+// TODO description
 // TODO options: primary, nullable, cascade, ...
 // https://github.com/typeorm/typeorm/blob/a4dec02cc59d3219a29c7be0322af2253e1452dc/src/decorator/options/RelationOptions.ts
