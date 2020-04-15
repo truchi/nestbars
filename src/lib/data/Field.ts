@@ -244,6 +244,22 @@ export class SetField extends Field<SetOptions> {
       this.options.options,
     )
   }
+
+  gqlOptions(): object {
+    const {
+      options: { default: dflt, description, deprecation },
+    } = this
+
+    return assign(
+      super.gqlOptions(),
+      {
+        defaultValue: dflt,
+        description: description || undefined,
+        deprecationReason: deprecation || undefined,
+      },
+      this.options.options,
+    )
+  }
 }
 
 export class SpecialField extends Field<SpecialOptions> {
@@ -265,6 +281,21 @@ export class SpecialField extends Field<SpecialOptions> {
     return assign(
       super.dbOptions(),
       { primary, comment: description || undefined },
+      this.options.options,
+    )
+  }
+
+  gqlOptions(): object {
+    const {
+      options: { description, deprecation },
+    } = this
+
+    return assign(
+      super.gqlOptions(),
+      {
+        description: description || undefined,
+        deprecationReason: deprecation || undefined,
+      },
       this.options.options,
     )
   }

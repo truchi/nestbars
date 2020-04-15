@@ -13,7 +13,7 @@
   {{/case}}
   {{#case 'created' 'updated' 'version'}}
     {{>entity__field__special_db_decorator}}
-    {{!-- {{>entity__field__special_gql_decorator}} --}}
+    {{>entity__field__special_gql_decorator}}
   {{/case}}
 {{/switch}}
 {{field.name}}: {{call field 'tsType'}}

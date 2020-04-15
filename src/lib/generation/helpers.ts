@@ -73,13 +73,4 @@ export default {
       ({ type }) => type === FieldType.Enum || type === FieldType.Set,
     )
   },
-  // hasInts(entity: Entity): boolean {
-  //   return !!entity.fieldsByType(FieldType.Int).length
-  // },
-  // hasFloats(entity: Entity): boolean {
-  //   return !!entity.fieldsByType(FieldType.Float).length
-  // },
-  // hasEnums(entity: Entity): boolean {
-  //   return !!entity.fieldsByType(FieldType.Enum, FieldType.Set).length
-  // },
 }
