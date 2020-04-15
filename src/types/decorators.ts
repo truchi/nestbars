@@ -1,4 +1,4 @@
-import { Class, ObjectDefinition as GenericObjectDefinition } from './utils'
+import { Class } from './utils'
 
 //
 // Entity
