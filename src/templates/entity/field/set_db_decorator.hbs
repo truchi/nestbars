@@ -1,0 +1,9 @@
+{{$set 'options' ($call field 'dbOptions')}}
+
+@Column(
+{{#unless ($is_empty ($get 'options'))}}
+  {{$stringify ($get 'options') except='enum'}}
+{{/unless}}
+)
+
+{{$delete 'options'}}

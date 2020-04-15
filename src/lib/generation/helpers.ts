@@ -3,6 +3,7 @@ import { FieldType, FieldOptions } from '../../types/decorators'
 import { relativeImport } from '../utils'
 import { Entity } from '../data/Entity'
 import { Field } from '../data/Field'
+import { type } from 'os'
 
 export type Context = {
   entities: Entity[]
@@ -14,14 +15,8 @@ const SWITCHES: { value: any; break: boolean }[] = []
 
 export default {
   block: {
-    wrap(this: Context, open: string, close: string, { fn }): string {
-      const ret = fn(this)
-
-      return ret.length ? open + ret + close : ''
-    },
     switch(value: any, { fn }): string {
       SWITCHES.push({ value, break: false })
-
       const ret = fn(this)
       SWITCHES.pop()
 
@@ -55,6 +50,9 @@ export default {
     call(o: object, fn: string, ...args: any[]): any {
       return o[fn](...args)
     },
+    arr(...args: any[]): any[] {
+      return args.slice(0, -1)
+    },
     //
     // Utils
     //
@@ -70,10 +68,20 @@ export default {
     isTruthy(this: Context, o: any): boolean {
       return !!o
     },
-    stringify(o: string | object): HandleBars.SafeString {
-      return new HandleBars.SafeString(
-        typeof o === 'string' ? `'${o}'` : JSON.stringify(o),
-      )
+    stringify(
+      o: string | object,
+      { hash: { except, trap } },
+    ): HandleBars.SafeString {
+      except = !!except ? (Array.isArray(except) ? except : [except]) : []
+      trap = !!trap ? (Array.isArray(trap) ? trap : [trap]) : []
+
+      let str = JSON.stringify(o)
+
+      except.map(key => {
+        str = str.replace(`\"${key}\":\"${o[key]}"`, `\"${key}\":${o[key]}`)
+      })
+
+      return new HandleBars.SafeString(trap.includes(str) ? '' : str)
     },
     relativeImport(from: string, to: string): string {
       return relativeImport(from, to)

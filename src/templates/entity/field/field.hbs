@@ -7,5 +7,9 @@
     {{>entity__field__scalar_db_decorator}}
     {{>entity__field__scalar_gql_decorator}}
   {{/case}}
+  {{#case 'set' 'enum'}}
+    {{>entity__field__set_db_decorator}}
+    {{>entity__field__set_gql_decorator}}
+  {{/case}}
 {{/switch}}
 {{field.name}}: {{$call field 'tsType'}}

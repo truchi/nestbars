@@ -18,9 +18,9 @@ export default async (userConfig: UserConfig) => {
     templatesPath,
     userSrcPath,
   )
-  console.log(config)
+  // console.log(config)
 
   await generate(Entity.init(config), templatesPath)
-  console.log(JSON.stringify(Entity.all, null, 2))
-  console.log('generated!!!!!')
+  // console.log(JSON.stringify(Entity.all, null, 2))
+  // console.log('generated!!!!!')
 }
