@@ -35,8 +35,6 @@ export enum FieldType {
   Created = 'created',
   Updated = 'updated',
   Version = 'version',
-  // Object
-  Object = 'object',
   // Relation
   OneToOne = 'one-to-one',
   OneToMany = 'one-to-many',
@@ -49,7 +47,6 @@ export type FieldOptions =
   | ScalarOptions
   | SetOptions
   | SpecialOptions
-  | ObjectOptions
   | {} // TOOD void?
 
 //
@@ -111,30 +108,6 @@ export type SpecialDecorator = (options?: SpecialOptions) => Function
 
 export type SpecialOptions = {
   primary?: boolean
-  description?: string
-  deprecation?: string
-  options?: object
-}
-
-//
-// Object fields
-//
-
-export type ObjectDecorator = (
-  definition: ObjectDefinition,
-  options?: ObjectOptions,
-) => Function
-
-// TODO tuples, imports
-export type ObjectDefinition = GenericObjectDefinition<
-  'int' | 'float' | 'string' | 'date' | 'boolean'
->
-
-export type ObjectOptions = {
-  primary?: boolean
-  unique?: boolean
-  nullable?: boolean
-  default?: any
   description?: string
   deprecation?: string
   options?: object

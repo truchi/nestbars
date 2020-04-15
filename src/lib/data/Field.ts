@@ -12,8 +12,6 @@ import {
   SetValues,
   SetTsName,
   SetOptions,
-  ObjectDefinition,
-  ObjectOptions,
   RelationWithEntity,
   RelationWithField,
   RelationJoinColumn,
@@ -72,8 +70,6 @@ export class Field<T extends FieldOptions> {
         return 'enum'
       case FieldType.Set:
         return 'set'
-      case FieldType.Object:
-        return 'simple-json'
     }
   }
 
@@ -295,94 +291,6 @@ export class SpecialField extends Field<SpecialOptions> {
       {
         description,
         deprecationReason: deprecation,
-      },
-      this.options.options,
-    )
-  }
-}
-
-export class ObjectField extends Field<ObjectOptions> {
-  static readonly type: FieldType = FieldType.Object
-
-  constructor(
-    readonly entity: string,
-    readonly name: string,
-    readonly definition: ObjectDefinition,
-    readonly options: ObjectOptions,
-  ) {
-    super(entity, name, options, ObjectField.type)
-  }
-
-  tsType(): string {
-    return objectDefinitionRecursion(
-      this.definition,
-      (xs, recur) => '(' + xs.map(x => recur(x)).join('|') + ')[]',
-      (o, recur) =>
-        '{' +
-        Object.entries(o)
-          .map(([key, value]) => `${key}: ${recur(value)};`)
-          .join('') +
-        '}',
-      type => {
-        switch (type) {
-          case 'int':
-            return 'number'
-          case 'float':
-            return 'number'
-          case 'string':
-            return 'string'
-          case 'date':
-            return 'Date'
-          case 'boolean':
-            return 'boolean'
-        }
-
-        throw new Error() // TODO
-      },
-      fn => fn.name,
-    )
-  }
-
-  dbType(): string {
-    // TODO what to do here?
-    // GraphQL scalars?
-    // Serialization?
-    // Remove Object entities?
-    throw new Error('unimpemented')
-  }
-
-  dependencies(): string[] {
-    return unique(
-      defined(
-        flat(
-          objectDefinitionRecursion(
-            this.definition,
-            (xs, recur) => flat(xs.map(recur)),
-            (o, recur) => flat(Object.values(o).map(recur)),
-            () => undefined,
-            () => {
-              // TODO not mechanism to import user's ojbect
-              throw new Error()
-            },
-          ),
-        ),
-      ),
-    )
-  }
-
-  dbOptions(): object {
-    const {
-      options: { primary, unique, nullable, default: dflt, description },
-    } = this
-
-    return assign(
-      super.dbOptions(),
-      {
-        primary,
-        unique,
-        nullable,
-        default: dflt,
-        comment: description,
       },
       this.options.options,
     )
