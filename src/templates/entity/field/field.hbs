@@ -11,5 +11,9 @@
     {{>entity__field__set_db_decorator}}
     {{>entity__field__set_gql_decorator}}
   {{/case}}
+  {{#case 'created' 'updated' 'version'}}
+    {{>entity__field__special_db_decorator}}
+    {{!-- {{>entity__field__special_gql_decorator}} --}}
+  {{/case}}
 {{/switch}}
 {{field.name}}: {{call field 'tsType'}}

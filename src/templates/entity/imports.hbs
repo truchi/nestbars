@@ -3,15 +3,18 @@ import {
 Entity,
 PrimaryGeneratedColumn,
 {{#if entity.fields.length}} Column, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'created'))}} CreateDateColumn, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'updated'))}} UpdateDateColumn, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'version'))}} VersionColumn, {{/if}}
 }
 from 'typeorm'
 {{!-- Nest GraphQL --}}
 import {
 ObjectType,
 {{#if entity.fields.length}} Field, {{/if}}
-{{#if (hasInts   entity)}} Int, {{/if}}
-{{#if (hasFloats entity)}} Float, {{/if}}
-{{#if (hasEnums  entity)}} registerEnumType, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'int'))}} Int, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'float'))}} Float, {{/if}}
+{{#if (length (call entity 'fieldsByType' 'enum' 'set'))}} registerEnumType, {{/if}}
 }
 from '@nestjs/graphql'
 {{!-- Dependencies --}}
