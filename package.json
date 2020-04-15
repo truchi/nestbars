@@ -1,18 +1,23 @@
 {
   "name": "nestbars",
   "version": "1.0.0",
-  "description": "",
+  "description": "NestJs code generation",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch"
   },
+  "repository": "github:truchi/nestbars",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nestjs/common": "^7.0.7",
+    "@nestjs/core": "^7.0.7",
+    "@nestjs/graphql": "^7.2.4",
     "handlebars": "^4.7.6",
-    "handlebars-helpers": "^0.10.0"
+    "handlebars-helpers": "^0.10.0",
+    "typeorm": "^0.2.24"
   },
   "devDependencies": {
     "@types/node": "^13.9.1",
@@ -24,5 +29,11 @@
     "prettier": "^1.19.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.4"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
+    "@nestjs/graphql": "^7.2.1",
+    "typeorm": "^0.2.24"
   }
 }
