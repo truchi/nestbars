@@ -106,7 +106,7 @@ export class Field<T extends FieldOptions> {
   }
 
   gqlOptions(): object {
-    return {} // TODO
+    return {}
   }
 
   static add(field: Field<FieldOptions>) {
@@ -134,6 +134,21 @@ export class PrimaryField extends Field<PrimaryOptions> {
       super.dbOptions(),
       { type: undefined },
       { comment: description || undefined },
+      this.options.options,
+    )
+  }
+
+  gqlOptions(): object {
+    const {
+      options: { description, deprecation },
+    } = this
+
+    return assign(
+      super.gqlOptions(),
+      {
+        description: description || undefined,
+        deprecationReason: deprecation || undefined,
+      },
       this.options.options,
     )
   }
