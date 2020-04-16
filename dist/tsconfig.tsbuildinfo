@@ -133,29 +133,17 @@
         "version": "26b8f2b6beef39d2d41fdcf83b52d0180cbdffcaa38d160279df695f8f97a46c",
         "signature": "1f557d69bda261d87dd2198938dfce37a306ab2d55800ff1259bee1112fda2fe"
       },
-      "../src/types/UserConfig.ts": {
-        "version": "2564400d3c8e4e4b993bfffaa07bf7eed7d09969e79cd42ed3ade71b943a5c6c",
-        "signature": "b8178cde87917de2d40dc54556bda6b241cbfcc49a9a4f866e911b8b242084cc"
+      "../src/types/nestbars.ts": {
+        "version": "d4678cf3f3a1cbecaf3098c24946d43c53cc8cbd162a7a334d79ac32cf9b3fdc",
+        "signature": "411ff94ce7483e52bee3db8be5be3a2da692b29594a44ebf9428bf8d86603828"
       },
       "../src/lib/utils.ts": {
-        "version": "c4eeced4b32b75ea8bd4df27dbe47d618ee0e1d42b6875129166b8b02556c182",
-        "signature": "8c09345171a44b8e8b44b6eef4f9197452476ee915d942e5096c25ea97cf1b34"
+        "version": "8663261e37d77de7cb3ddc912c0e279725528fb20873293ba6b4c5b592a5ae0d",
+        "signature": "c8011ffcb9a8d5dacb3f79a2fa61b011978630d3de770bc8a28cc9e6c338da10"
       },
-      "../src/types/Config.ts": {
-        "version": "085fc01e48e4725bcda33fd66144a45d6f687d54dd9aceb937c5632956b8b015",
-        "signature": "a44ced3d83b465bc679492065a76b9cac28e6b80ddae189921a46feee645e464"
-      },
-      "../src/lib/config.ts": {
-        "version": "bf4a3eff9189099255b8e6212f6a645db64cbf7acb092e0c6134d777ef21fb7e",
-        "signature": "8506d9c9c4aacc9d3a461bdac97bcb6d0a31b3bc5c2cd3483fb907affda93dd0"
-      },
-      "../node_modules/handlebars/types/index.d.ts": {
-        "version": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6",
-        "signature": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6"
-      },
-      "../src/lib/generation/utils.ts": {
-        "version": "97118334fc8c58435764299ae00de7d85c5145379cd3c07bb949010cbb651a82",
-        "signature": "bdd47fc64d8a3d50cec42de6e7b8f8e531138ba8cbd5c9e9ab462adeaff2dc8a"
+      "../src/lib/plugins/Plugin.ts": {
+        "version": "13d31884eab051e1e8571e5351ec527786adcb0ef31056aa04f4305ed8aa71ad",
+        "signature": "6a84f19bff5f39932568915778e682e41214451c90540d66114ab0202fd36d7d"
       },
       "../src/types/decorators.ts": {
         "version": "37ba28e85061bf7f79c6a8448a31b2f47a7f18b4f3102b48a4719b534efe563b",
@@ -166,8 +154,12 @@
         "signature": "b6f2f0ab56ef89ecfccb81ba1457bd04cdafe61cf0db739f4cede8d61706fa98"
       },
       "../src/lib/data/Entity.ts": {
-        "version": "aa8bc4c2aacbd7cb6d1dfff7fc3897305bdb7116100760f356909171e7127348",
-        "signature": "bd8a16be8a5cef9b3be2d645b6c535da517e7181f3eeeaa167325927cd3aa7f6"
+        "version": "0b49773968924721572f18123ae16903b247276e3f4667fea3903f912dcff6a7",
+        "signature": "fafd1949e509af7b6dd440b66cac516013110aa9880fb46667f32f28ef160e5b"
+      },
+      "../src/lib/decorators/Entity.ts": {
+        "version": "a1ae299be9ec0137cb315cb0cd5151c136ac1247a5e19baaaaf3e79397da8016",
+        "signature": "1f1853d517b8af7cc1f2580d6ed3d8f2c1bd9ce08741553bd999e999de83000e"
       },
       "../src/lib/data/PrimaryField.ts": {
         "version": "994e92f3ac82e86270d088533efa8f41ca8a287b466ef04b1c023edc96653087",
@@ -205,18 +197,6 @@
         "version": "939ed7491324a8f74dbffea24502ecfd14cc598ed95d34de9d548c913846f78b",
         "signature": "c1ef2a10052b04c39de5b86e8aa151cbe34776eaed4b6729f02424b37a4d3284"
       },
-      "../src/lib/generation/helpers.ts": {
-        "version": "0ec23ba5c7c2c950c35724d4a08886f6eda2e652217a829d4ceb3cb76ba14ea8",
-        "signature": "252dffe6cbe79083f09c3bb4b150983cba1b256b0da8ee3159ab580e10abc249"
-      },
-      "../src/lib/generation/generation.ts": {
-        "version": "45b3ef0cd39cfb6b86346682c02b77701dc355dba327b686fc4eb5fffbbf0b1c",
-        "signature": "4820a246282c123596c185d8ff42b40de4d8783156ece4d5ca28ceb85690f787"
-      },
-      "../src/lib/decorators/Entity.ts": {
-        "version": "a1ae299be9ec0137cb315cb0cd5151c136ac1247a5e19baaaaf3e79397da8016",
-        "signature": "1f1853d517b8af7cc1f2580d6ed3d8f2c1bd9ce08741553bd999e999de83000e"
-      },
       "../src/lib/decorators/utils.ts": {
         "version": "cbfe151b58e5b892fc727d2537f736aaa1038091cd26d022ef0a3144d9afa423",
         "signature": "4b680be0af1e43c90e0f978eadf6b3a656484e83c88002fb0c92d9470a1b4ce0"
@@ -245,9 +225,37 @@
         "version": "416c27ed6b276c9067d82d612ae1382c04286ce888e40d4e2dcdebaff2632ba3",
         "signature": "c9ceaa4ca1c701468e282ad4a25931a2f1e13b054887f5a85a96c28d0818f2a3"
       },
+      "../src/plugins/entities/index.ts": {
+        "version": "371a4e37ae6d9aaca7aa6d66f3f139bd223fcb43d7d4602e429866234c013b49",
+        "signature": "efd9647aca30ec0500ceb5ef899ee4687ba336327a41f8435d5d8cb592f4f65f"
+      },
+      "../src/plugins/resolvers/index.ts": {
+        "version": "2f3445e9669be1a49fd956b273fd1c61f4bcfc9f348cd9bd9c0d5425b0650c09",
+        "signature": "efd9647aca30ec0500ceb5ef899ee4687ba336327a41f8435d5d8cb592f4f65f"
+      },
       "../src/index.ts": {
-        "version": "db377757ea69f30fe1f8d149358ef7b9fa1faec9c56ed26327e4fd244b406593",
-        "signature": "88bb0ed0c64f308e67ce3e5be722ebe1dae3ed537ee94de8955f4f18683f0f94"
+        "version": "7f38bfc49afb0cf3f2bab2c86c5d6dd25764fae3b18b4c2fa234bee3508a94de",
+        "signature": "4c62a0ce997a0ef56e5072fb1df7afae120f2b45fafdfcf008c9176b1ef85ea2"
+      },
+      "../src/lib/config.ts": {
+        "version": "490c41787c4cf1ede0328503d6dac52e8a4989af756aa7f3a8b82139461f74a3",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "../node_modules/handlebars/types/index.d.ts": {
+        "version": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6",
+        "signature": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6"
+      },
+      "../src/lib/generation/utils.ts": {
+        "version": "97118334fc8c58435764299ae00de7d85c5145379cd3c07bb949010cbb651a82",
+        "signature": "bdd47fc64d8a3d50cec42de6e7b8f8e531138ba8cbd5c9e9ab462adeaff2dc8a"
+      },
+      "../src/lib/generation/helpers.ts": {
+        "version": "0ec23ba5c7c2c950c35724d4a08886f6eda2e652217a829d4ceb3cb76ba14ea8",
+        "signature": "252dffe6cbe79083f09c3bb4b150983cba1b256b0da8ee3159ab580e10abc249"
+      },
+      "../src/lib/generation/generation.ts": {
+        "version": "45b3ef0cd39cfb6b86346682c02b77701dc355dba327b686fc4eb5fffbbf0b1c",
+        "signature": "4820a246282c123596c185d8ff42b40de4d8783156ece4d5ca28ceb85690f787"
       },
       "../node_modules/@types/node/globals.d.ts": {
         "version": "1236b98326630298e0b9cd30ccecd77560ac925140b753f1b1a0ffc6e7b51ad4",
@@ -446,6 +454,7 @@
         "node",
         "handlebars"
       ],
+      "watch": true,
       "configFilePath": "../tsconfig.json"
     },
     "referencedMap": {
@@ -647,7 +656,7 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../src/types/UserConfig.ts": [
+      "../src/types/nestbars.ts": [
         "../src/types/utils.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
@@ -662,31 +671,11 @@
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../src/types/Config.ts": [
+      "../src/lib/plugins/Plugin.ts": [
+        "../node_modules/@types/node/path.d.ts",
+        "../src/types/nestbars.ts",
+        "../src/lib/utils.ts",
         "../src/types/utils.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/lib/config.ts": [
-        "../src/lib/utils.ts",
-        "../src/types/Config.ts",
-        "../src/types/UserConfig.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../node_modules/handlebars/types/index.d.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/lib/generation/utils.ts": [
-        "../node_modules/handlebars/types/index.d.ts",
-        "../src/lib/utils.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -710,7 +699,14 @@
         "../src/types/decorators.ts",
         "../src/lib/utils.ts",
         "../src/lib/data/Field.ts",
-        "../src/types/Config.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/decorators/Entity.ts": [
+        "../src/types/decorators.ts",
+        "../src/lib/data/Entity.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -804,36 +800,6 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../src/lib/generation/helpers.ts": [
-        "../node_modules/handlebars/types/index.d.ts",
-        "../src/types/decorators.ts",
-        "../src/lib/utils.ts",
-        "../src/lib/data/Entity.ts",
-        "../src/lib/data/index.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/lib/generation/generation.ts": [
-        "../node_modules/handlebars/types/index.d.ts",
-        "../src/lib/utils.ts",
-        "../src/lib/generation/utils.ts",
-        "../src/lib/data/Entity.ts",
-        "../src/lib/generation/helpers.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/lib/decorators/Entity.ts": [
-        "../src/types/decorators.ts",
-        "../src/lib/data/Entity.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "../src/lib/decorators/utils.ts": [
         "../src/types/decorators.ts",
         "../src/lib/data/index.ts",
@@ -898,13 +864,68 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../src/plugins/entities/index.ts": [
+        "../src/types/nestbars.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/plugins/resolvers/index.ts": [
+        "../src/types/nestbars.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../src/index.ts": [
-        "../node_modules/@types/node/path.d.ts",
-        "../src/types/UserConfig.ts",
-        "../src/lib/config.ts",
-        "../src/lib/generation/generation.ts",
-        "../src/lib/data/Entity.ts",
+        "../src/types/nestbars.ts",
+        "../src/lib/plugins/Plugin.ts",
         "../src/lib/decorators/index.ts",
+        "../src/plugins/entities/index.ts",
+        "../src/plugins/resolvers/index.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/config.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/handlebars/types/index.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/generation/utils.ts": [
+        "../node_modules/handlebars/types/index.d.ts",
+        "../src/lib/utils.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/generation/helpers.ts": [
+        "../node_modules/handlebars/types/index.d.ts",
+        "../src/types/decorators.ts",
+        "../src/lib/utils.ts",
+        "../src/lib/data/Entity.ts",
+        "../src/lib/data/index.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/generation/generation.ts": [
+        "../node_modules/handlebars/types/index.d.ts",
+        "../src/lib/utils.ts",
+        "../src/lib/generation/utils.ts",
+        "../src/lib/data/Entity.ts",
+        "../src/lib/generation/helpers.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -1478,7 +1499,9 @@
       ],
       "../src/index.ts": [
         "../src/lib/decorators/index.ts",
-        "../src/types/UserConfig.ts"
+        "../src/plugins/entities/index.ts",
+        "../src/plugins/resolvers/index.ts",
+        "../src/types/nestbars.ts"
       ],
       "../src/lib/data/ManyToManyField.ts": [
         "../src/types/utils.ts",
@@ -1497,6 +1520,12 @@
         "../src/lib/data/ManyToOneField.ts",
         "../src/lib/data/ManyToManyField.ts"
       ],
+      "../src/lib/generation/helpers.ts": [
+        "../src/lib/data/Entity.ts"
+      ],
+      "../src/lib/generation/generation.ts": [
+        "../src/lib/data/Entity.ts"
+      ],
       "../src/lib/decorators/SpecialFields.ts": [
         "../src/types/decorators.ts"
       ],
@@ -1512,12 +1541,6 @@
       ],
       "../src/lib/decorators/SetFields.ts": [
         "../src/types/decorators.ts"
-      ],
-      "../src/lib/generation/helpers.ts": [
-        "../src/lib/data/Entity.ts"
-      ],
-      "../src/lib/generation/generation.ts": [
-        "../src/lib/data/Entity.ts"
       ],
       "../src/lib/data/ManyToOneField.ts": [
         "../src/types/utils.ts",
@@ -1537,9 +1560,6 @@
       "../src/types/decorators.ts": [
         "../src/types/utils.ts"
       ],
-      "../src/lib/decorators/Entity.ts": [
-        "../src/types/decorators.ts"
-      ],
       "../src/lib/data/SpecialField.ts": [
         "../src/types/decorators.ts",
         "../src/lib/data/Field.ts"
@@ -1556,26 +1576,31 @@
         "../src/types/decorators.ts",
         "../src/lib/data/Field.ts"
       ],
+      "../src/lib/decorators/Entity.ts": [
+        "../src/types/decorators.ts"
+      ],
       "../src/lib/data/Entity.ts": [
         "../src/types/decorators.ts",
-        "../src/lib/data/Field.ts",
-        "../src/types/Config.ts"
+        "../src/lib/data/Field.ts"
       ],
       "../src/lib/data/Field.ts": [
         "../src/types/decorators.ts"
       ],
-      "../src/types/Config.ts": [
-        "../src/types/utils.ts"
-      ],
-      "../src/lib/config.ts": [
-        "../src/types/UserConfig.ts",
-        "../src/types/Config.ts"
+      "../src/lib/plugins/Plugin.ts": [
+        "../src/types/utils.ts",
+        "../src/types/nestbars.ts"
       ],
       "../src/lib/utils.ts": [
         "../src/types/utils.ts"
       ],
-      "../src/types/UserConfig.ts": [
+      "../src/types/nestbars.ts": [
         "../src/types/utils.ts"
+      ],
+      "../src/plugins/resolvers/index.ts": [
+        "../src/types/nestbars.ts"
+      ],
+      "../src/plugins/entities/index.ts": [
+        "../src/types/nestbars.ts"
       ],
       "../node_modules/handlebars/types/index.d.ts": [
         "../node_modules/@types/node/fs.d.ts",
@@ -1946,15 +1971,13 @@
     },
     "semanticDiagnosticsPerFile": [
       "../src/types/utils.ts",
-      "../src/types/UserConfig.ts",
+      "../src/types/nestbars.ts",
       "../src/lib/utils.ts",
-      "../src/types/Config.ts",
-      "../src/lib/config.ts",
-      "../node_modules/handlebars/types/index.d.ts",
-      "../src/lib/generation/utils.ts",
+      "../src/lib/plugins/Plugin.ts",
       "../src/types/decorators.ts",
       "../src/lib/data/Field.ts",
       "../src/lib/data/Entity.ts",
+      "../src/lib/decorators/Entity.ts",
       "../src/lib/data/PrimaryField.ts",
       "../src/lib/data/ScalarField.ts",
       "../src/lib/data/SetField.ts",
@@ -1964,9 +1987,6 @@
       "../src/lib/data/ManyToOneField.ts",
       "../src/lib/data/ManyToManyField.ts",
       "../src/lib/data/index.ts",
-      "../src/lib/generation/helpers.ts",
-      "../src/lib/generation/generation.ts",
-      "../src/lib/decorators/Entity.ts",
       "../src/lib/decorators/utils.ts",
       "../src/lib/decorators/PrimaryFields.ts",
       "../src/lib/decorators/ScalarFields.ts",
@@ -1974,7 +1994,14 @@
       "../src/lib/decorators/SpecialFields.ts",
       "../src/lib/decorators/RelationFields.ts",
       "../src/lib/decorators/index.ts",
+      "../src/plugins/entities/index.ts",
+      "../src/plugins/resolvers/index.ts",
       "../src/index.ts",
+      "../src/lib/config.ts",
+      "../node_modules/handlebars/types/index.d.ts",
+      "../src/lib/generation/utils.ts",
+      "../src/lib/generation/helpers.ts",
+      "../src/lib/generation/generation.ts",
       "../node_modules/@types/node/globals.d.ts",
       "../node_modules/@types/node/assert.d.ts",
       "../node_modules/@types/node/async_hooks.d.ts",

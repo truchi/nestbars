@@ -2,17 +2,18 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = require("path");
-const config_1 = require("./lib/config");
-const generation_1 = require("./lib/generation/generation");
-const Entity_1 = require("./lib/data/Entity");
-__export(require("./lib/decorators"));
-const userRootPath = path_1.resolve();
-const templatesPath = `${__dirname}/../src/templates`;
-const userSrcPath = path_1.dirname(process.argv[1]);
-exports.default = async (userConfig) => {
-    const config = await config_1.sanitizeConfig(userConfig, userRootPath, templatesPath, userSrcPath);
-    await generation_1.generate(Entity_1.Entity.init(config), templatesPath);
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const Plugin_1 = __importDefault(require("./lib/plugins/Plugin"));
+__export(require("./lib/decorators"));
+var entities_1 = require("./plugins/entities");
+exports.entities = entities_1.default;
+var resolvers_1 = require("./plugins/resolvers");
+exports.resolvers = resolvers_1.default;
+const nestbars = async (...plugins) => {
+    plugins.map(([plugin, options]) => Plugin_1.default.registerPlugin(plugin, options));
+};
+exports.default = nestbars;
 //# sourceMappingURL=index.js.map

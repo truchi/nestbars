@@ -1,26 +1,15 @@
-import { dirname, resolve } from 'path'
-import { UserConfig } from './types/UserConfig'
-import { sanitizeConfig } from './lib/config'
-import { generate } from './lib/generation/generation'
-import { Entity } from './lib/data/Entity'
+import { Nestbars, Plugin as PluginType, Options } from './types/nestbars'
+import Plugin from './lib/plugins/Plugin'
 
 // Re-exports for user
 export * from './lib/decorators'
+export { default as entities } from './plugins/entities'
+export { default as resolvers } from './plugins/resolvers'
 
-const userRootPath = resolve()
-const templatesPath = `${__dirname}/../src/templates`
-const userSrcPath = dirname(process.argv[1])
-
-export default async (userConfig: UserConfig) => {
-  const config = await sanitizeConfig(
-    userConfig,
-    userRootPath,
-    templatesPath,
-    userSrcPath,
-  )
-  // console.log(config)
-
-  await generate(Entity.init(config), templatesPath)
-  // console.log(JSON.stringify(Entity.all, null, 2))
-  // console.log('generated!!!!!')
+const nestbars: Nestbars = async (
+  ...plugins: [PluginType, Options][]
+): Promise<void> => {
+  plugins.map(([plugin, options]) => Plugin.registerPlugin(plugin, options))
 }
+
+export default nestbars

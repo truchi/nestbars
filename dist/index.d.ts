@@ -1,4 +1,6 @@
-import { UserConfig } from './types/UserConfig';
+import { Nestbars } from './types/nestbars';
 export * from './lib/decorators';
-declare const _default: (userConfig: UserConfig) => Promise<void>;
-export default _default;
+export { default as entities } from './plugins/entities';
+export { default as resolvers } from './plugins/resolvers';
+declare const nestbars: Nestbars;
+export default nestbars;
