@@ -81,12 +81,21 @@ export default class Plugin {
     )
   }
 
-  async generate(): Promise<void> {
+  async init(): Promise<this> {
     await this.loadTemplates()
     await this.loadPartials()
+
+    return this
   }
 
-  static registerPlugin(plugin: PluginType, options: Options): void {
+  async generate(): Promise<void> {
+    return
+  }
+
+  static async registerPlugin([plugin, options]: [
+    PluginType,
+    Options,
+  ]): Promise<void> {
     const {
       name,
       templates: pluginTemplates,
@@ -100,7 +109,7 @@ export default class Plugin {
     } = options
 
     Plugin.all.push(
-      new Plugin(
+      await new Plugin(
         name,
         entities,
         toPathFunction(dest, ANCHORS),
@@ -108,7 +117,7 @@ export default class Plugin {
         userTemplates,
         pluginHelpers,
         userHelpers,
-      ),
+      ).init(),
     )
   }
 }

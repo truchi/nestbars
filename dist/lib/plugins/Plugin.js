@@ -52,14 +52,18 @@ class Plugin {
             partial: await utils_1.readFile(file),
         })));
     }
-    async generate() {
+    async init() {
         await this.loadTemplates();
         await this.loadPartials();
+        return this;
     }
-    static registerPlugin(plugin, options) {
+    async generate() {
+        return;
+    }
+    static async registerPlugin([plugin, options]) {
         const { name, templates: pluginTemplates, helpers: pluginHelpers, } = plugin();
         const { entities, dest, templates: userTemplates, helpers: userHelpers, } = options;
-        Plugin.all.push(new Plugin(name, entities, utils_1.toPathFunction(dest, ANCHORS), pluginTemplates, userTemplates, pluginHelpers, userHelpers));
+        Plugin.all.push(await new Plugin(name, entities, utils_1.toPathFunction(dest, ANCHORS), pluginTemplates, userTemplates, pluginHelpers, userHelpers).init());
     }
 }
 exports.default = Plugin;

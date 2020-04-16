@@ -13,9 +13,8 @@ exports.entities = entities_1.default;
 var resolvers_1 = require("./plugins/resolvers");
 exports.resolvers = resolvers_1.default;
 const nestbars = async (...plugins) => {
-    plugins.map(([plugin, options]) => Plugin_1.default.registerPlugin(plugin, options));
-    await Promise.all(Plugin_1.default.all.map(plugin => plugin.generate()));
-    console.log('DONE');
+    await Promise.all(plugins.map(Plugin_1.default.registerPlugin));
+    console.log('DONE', JSON.stringify(Plugin_1.default.all, null, 2));
 };
 exports.default = nestbars;
 //# sourceMappingURL=index.js.map

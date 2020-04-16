@@ -142,8 +142,8 @@
         "signature": "e4b50307773b5e53c817ee7433a94a4dc519f481a2f7a33670106eed0a8b997f"
       },
       "../src/lib/plugins/Plugin.ts": {
-        "version": "0a6f1d5f420893493e1c8903ddac07b0a936d881544572988d10698916443ce6",
-        "signature": "eb68487aa5e93b8d85f20b8d4a463c1d30f49214a07658075c2b6c2ea9f8af70"
+        "version": "a988500b78cb5c72eb7e22988922e7de8d5a3e944f7814d4262752624f3f202f",
+        "signature": "132f9b3da80218b002ad28e7e96fe45baead02d0850ca8a5ce98b5dafb47306f"
       },
       "../src/types/decorators.ts": {
         "version": "37ba28e85061bf7f79c6a8448a31b2f47a7f18b4f3102b48a4719b534efe563b",
@@ -234,7 +234,7 @@
         "signature": "efd9647aca30ec0500ceb5ef899ee4687ba336327a41f8435d5d8cb592f4f65f"
       },
       "../src/index.ts": {
-        "version": "ba8b03118d36af4ab86b973aa079dffb2a09ba2a86288a87239c3cb485e77cbd",
+        "version": "95c9d5d3cece41ca06b1efcc091d2444841c5688c41e591fcf06b89964f7c27b",
         "signature": "4c62a0ce997a0ef56e5072fb1df7afae120f2b45fafdfcf008c9176b1ef85ea2"
       },
       "../src/lib/config.ts": {
@@ -2005,6 +2005,7 @@
       "../src/types/utils.ts",
       "../src/types/nestbars.ts",
       "../src/lib/utils.ts",
+      "../src/lib/plugins/Plugin.ts",
       "../src/types/decorators.ts",
       "../src/lib/data/Field.ts",
       "../src/lib/data/Entity.ts",
@@ -2027,7 +2028,6 @@
       "../src/lib/decorators/index.ts",
       "../src/plugins/entities/index.ts",
       "../src/plugins/resolvers/index.ts",
-      "../src/index.ts",
       "../src/lib/config.ts",
       "../node_modules/handlebars/types/index.d.ts",
       "../src/lib/generation/utils.ts",
@@ -2078,7 +2078,7 @@
       "../node_modules/@types/node/ts3.2/util.d.ts",
       "../node_modules/@types/node/ts3.2/globals.d.ts",
       "../node_modules/@types/node/ts3.2/index.d.ts",
-      "../src/lib/plugins/Plugin.ts"
+      "../src/index.ts"
     ]
   },
   "version": "3.8.3"
