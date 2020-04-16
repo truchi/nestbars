@@ -17,6 +17,7 @@
     "@nestjs/graphql": "^7.2.4",
     "handlebars": "^4.7.6",
     "handlebars-helpers": "^0.10.0",
+    "recursive-readdir": "^2.2.2",
     "typeorm": "^0.2.24"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import { PathFunction } from '../types/utils';
 export declare const readFile: (file: string) => Promise<string>;
+export declare const readDir: (dir: string) => Promise<string[]>;
 export declare const writeFile: (file: string, content: string) => Promise<void>;
 export declare const mkdir: (path: string) => Promise<string>;
 export declare const toPathFunction: (o: string | PathFunction, { NAME, TYPE }: {

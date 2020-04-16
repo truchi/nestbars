@@ -10,6 +10,9 @@ const nestbars: Nestbars = async (
   ...plugins: [PluginType, Options][]
 ): Promise<void> => {
   plugins.map(([plugin, options]) => Plugin.registerPlugin(plugin, options))
+
+  await Promise.all(Plugin.all.map(plugin => plugin.generate()))
+  console.log('DONE')
 }
 
 export default nestbars

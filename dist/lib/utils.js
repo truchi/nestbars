@@ -4,6 +4,7 @@ const util_1 = require("util");
 const fs_1 = require("fs");
 const path_1 = require("path");
 exports.readFile = (file) => util_1.promisify(fs_1.readFile)(file, 'utf8');
+exports.readDir = (dir) => util_1.promisify(fs_1.readdir)(dir, 'utf8');
 exports.writeFile = ((writeFile = util_1.promisify(fs_1.writeFile)) => (file, content) => exports.mkdir(path_1.dirname(file))
     .then(() => writeFile(file, content)))();
 exports.mkdir = (path) => util_1.promisify(fs_1.mkdir)(path, { recursive: true });

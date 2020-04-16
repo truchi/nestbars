@@ -9,6 +9,11 @@ export default class Plugin {
     pluginHelpers: ((...args: any[]) => any)[];
     userHelpers: ((...args: any[]) => any)[];
     static all: Plugin[];
+    private templates;
+    private partials;
     constructor(name: string, entities: Class[], dest: PathFunction, pluginTemplates: string, userTemplates?: string, pluginHelpers?: ((...args: any[]) => any)[], userHelpers?: ((...args: any[]) => any)[]);
+    loadTemplates(): Promise<void>;
+    loadPartials(): Promise<void>;
+    generate(): Promise<void>;
     static registerPlugin(plugin: PluginType, options: Options): void;
 }

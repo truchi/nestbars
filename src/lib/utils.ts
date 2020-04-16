@@ -1,6 +1,7 @@
 import { promisify } from 'util'
 import {
   readFile as _readFile,
+  readdir as _readDir,
   writeFile as _writeFile,
   mkdir as _mkdir,
 } from 'fs'
@@ -8,6 +9,8 @@ import { dirname, normalize } from 'path'
 import { PathFunction } from '../types/utils'
 
 export const readFile = (file: string) => promisify(_readFile)(file, 'utf8')
+
+export const readDir = (dir: string) => promisify(_readDir)(dir, 'utf8')
 
 export const writeFile = ((writeFile = promisify(_writeFile)) => (
   file: string,
