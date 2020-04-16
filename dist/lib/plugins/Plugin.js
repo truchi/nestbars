@@ -21,6 +21,8 @@ class Plugin {
         this.pluginHelpers = pluginHelpers;
         this.userHelpers = userHelpers;
         this.templates = [];
+        this.partials = [];
+        this.helpers = [];
     }
     async loadTemplates() {
         const readPlugin = (file) => async () => await utils_1.readFile(path_1.resolve(this.pluginTemplates + '/' + file));
@@ -52,9 +54,14 @@ class Plugin {
             partial: await utils_1.readFile(file),
         })));
     }
+    loadHelpers() {
+        this.helpers = [...this.userHelpers, ...this.pluginHelpers]
+            .filter(({ name }, i, xs) => xs.findIndex(({ name: _name }) => name === _name) === i);
+    }
     async init() {
         await this.loadTemplates();
         await this.loadPartials();
+        this.loadHelpers();
         return this;
     }
     async generate() {

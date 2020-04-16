@@ -3,6 +3,7 @@ import {
   Plugin as PluginType,
   Options,
   PathFunction,
+  Helpers,
 } from '../../types/nestbars'
 import { toPathFunction, readFile, readDir } from '../utils'
 import readDirRec from 'recursive-readdir'
@@ -14,11 +15,15 @@ const ANCHORS = {
   TYPE: '[type]',
 }
 
+type Template = { type: string; template: string }
+type Partial = { name: string; partial: string }
+
 export default class Plugin {
   static all: Plugin[] = []
 
-  private templates: { type: string; template: string }[] = []
-  private partials
+  private templates: Template[] = []
+  private partials: Partial[] = []
+  private helpers: Helpers = []
 
   constructor(
     public name: string,
@@ -26,8 +31,8 @@ export default class Plugin {
     public dest: PathFunction,
     public pluginTemplates: string,
     public userTemplates?: string,
-    public pluginHelpers: ((...args: any[]) => any)[] = [],
-    public userHelpers: ((...args: any[]) => any)[] = [],
+    public pluginHelpers: Helpers = [],
+    public userHelpers: Helpers = [],
   ) {}
 
   async loadTemplates(): Promise<void> {
@@ -81,9 +86,18 @@ export default class Plugin {
     )
   }
 
+  loadHelpers(): void {
+    this.helpers = [...this.userHelpers, ...this.pluginHelpers] //
+      .filter(
+        ({ name }, i, xs) =>
+          xs.findIndex(({ name: _name }) => name === _name) === i,
+      )
+  }
+
   async init(): Promise<this> {
     await this.loadTemplates()
     await this.loadPartials()
+    this.loadHelpers()
 
     return this
   }
