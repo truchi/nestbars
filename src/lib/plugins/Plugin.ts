@@ -84,8 +84,8 @@ export default class Plugin {
       ).map(async ({ file, name }) => ({
         name: (({ dir, name: _name } = parse(name)) =>
           ((dir ? dir + '/' : '') + _name)
-            .replace('/', '__')
-            .replace('.', '_'))(),
+            .replace(/\//g, '__')
+            .replace(/\./g, '_'))(),
         partial: await readFile(file),
       })),
     )

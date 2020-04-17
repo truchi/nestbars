@@ -24,7 +24,7 @@ ObjectType,
 }
 from '@nestjs/graphql'
 {{!-- Dependencies --}}
-{{#each (call entity 'dependencies') as |dependency|}}
+{{!-- {{#each (call entity 'dependencies') as |dependency|}}
   import { {{dependency.name}} }
   from '{{relative (dirname ../entity.dest) (dirname dependency.dest)}}/{{stem dependency.dest}}'
-{{/each}}
+{{/each}} --}}

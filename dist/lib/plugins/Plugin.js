@@ -57,8 +57,8 @@ class Plugin {
             ...(await read(path_1.resolve(this.pluginTemplates + '/' + PARTIALS))),
         ])).map(async ({ file, name }) => ({
             name: (({ dir, name: _name } = path_1.parse(name)) => ((dir ? dir + '/' : '') + _name)
-                .replace('/', '__')
-                .replace('.', '_'))(),
+                .replace(/\//g, '__')
+                .replace(/\./g, '_'))(),
             partial: await utils_1.readFile(file),
         })));
     }

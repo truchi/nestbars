@@ -1,1 +1,18 @@
-plugin entity
+{{>banner~}}
+
+{{>entity__imports}}
+
+{{#each (enums entity) as |enum|}}
+  {{>entity__enum .. enum=enum}}
+
+{{/each}}
+
+{{>entity__db_decorator}}
+{{>entity__gql_decorator}}
+
+export class {{entity.name}} {
+{{#each entity.fields as |field|}}
+  {{>entity__field .. field=field}}
+
+{{/each}}
+}
