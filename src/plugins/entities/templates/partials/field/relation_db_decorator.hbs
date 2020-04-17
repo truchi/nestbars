@@ -7,7 +7,9 @@
 {{/switch}}
 (
 () => {{call field 'dbType'}},
-{{uncapitalize (call field 'dbType')}} => {{uncapitalize (call field 'dbType')}}.{{field.withField}}
+(
+{{uncapitalize (call field 'dbType')}}: {{call field 'dbType'}}
+) => {{uncapitalize (call field 'dbType')}}.{{field.withField}}
 )
 {{#switch field.type}}
   {{#case 'one-to-one' 'many-to-one'}}
