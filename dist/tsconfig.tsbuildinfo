@@ -134,8 +134,8 @@
         "signature": "1f557d69bda261d87dd2198938dfce37a306ab2d55800ff1259bee1112fda2fe"
       },
       "../src/types/nestbars.ts": {
-        "version": "bbb4c5a68e45dba5665206a8e6119a58c6f2c202499fd784076816713d3d77d3",
-        "signature": "bbebc86927ca5315a8d12038af343efdccac87a776e22405238adc9668267933"
+        "version": "9bf3ab5bb8ce809344cefd524a6aeff9dcf4f3f7da536c8f384305666fe33ed8",
+        "signature": "4249341f884162461d30df6f3acd0488fa52ccefdb6754fde2c035cc25037562"
       },
       "../src/types/decorators.ts": {
         "version": "37ba28e85061bf7f79c6a8448a31b2f47a7f18b4f3102b48a4719b534efe563b",
@@ -198,8 +198,8 @@
         "signature": "448281eadd262635ce1cb6c93ff38b23a3efe7bb9f1c17e7e78584b2eb0f45d1"
       },
       "../src/lib/plugins/Plugin.ts": {
-        "version": "d4f76883fbc8264a10fd35bf1b4449f81b1bd0404f79a5716f98c611b7d1c33e",
-        "signature": "947a80f9e9e27ef4f336a8f200ca857590888cde01ee2ca50598d4d79806ced7"
+        "version": "30a6266c4cf4eeacc10879e7695f8c5810855d09653cdb41562b2e8ef337eae1",
+        "signature": "df8c1b9124f461e028b4a60a42e145d273101ca2af9da9a155f26f36645fdf8a"
       },
       "../src/lib/decorators/Entity.ts": {
         "version": "a1ae299be9ec0137cb315cb0cd5151c136ac1247a5e19baaaaf3e79397da8016",
@@ -234,7 +234,7 @@
         "signature": "c9ceaa4ca1c701468e282ad4a25931a2f1e13b054887f5a85a96c28d0818f2a3"
       },
       "../src/plugins/entities/index.ts": {
-        "version": "371a4e37ae6d9aaca7aa6d66f3f139bd223fcb43d7d4602e429866234c013b49",
+        "version": "b98a8ce03dc649eab512e1800cd971da463081678b73dd2f830cc050e029c75c",
         "signature": "efd9647aca30ec0500ceb5ef899ee4687ba336327a41f8435d5d8cb592f4f65f"
       },
       "../src/plugins/resolvers/index.ts": {
@@ -875,6 +875,7 @@
       ],
       "../src/plugins/entities/index.ts": [
         "../src/types/nestbars.ts",
+        "../src/types/utils.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -1986,6 +1987,7 @@
       "../src/lib/data/index.ts",
       "../node_modules/handlebars/types/index.d.ts",
       "../src/lib/plugins/helpers.ts",
+      "../src/lib/plugins/Plugin.ts",
       "../src/lib/decorators/Entity.ts",
       "../src/lib/decorators/utils.ts",
       "../src/lib/decorators/PrimaryFields.ts",
@@ -1994,7 +1996,6 @@
       "../src/lib/decorators/SpecialFields.ts",
       "../src/lib/decorators/RelationFields.ts",
       "../src/lib/decorators/index.ts",
-      "../src/plugins/entities/index.ts",
       "../src/plugins/resolvers/index.ts",
       "../src/index.ts",
       "../node_modules/@types/node/globals.d.ts",
@@ -2042,7 +2043,7 @@
       "../node_modules/@types/node/ts3.2/util.d.ts",
       "../node_modules/@types/node/ts3.2/globals.d.ts",
       "../node_modules/@types/node/ts3.2/index.d.ts",
-      "../src/lib/plugins/Plugin.ts"
+      "../src/plugins/entities/index.ts"
     ]
   },
   "version": "3.8.3"

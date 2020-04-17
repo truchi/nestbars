@@ -8,6 +8,7 @@ import {
   PathFunction,
   Helpers,
   Context,
+  ContextFunction,
 } from '../../types/nestbars'
 import {
   toPathFunction,
@@ -43,6 +44,7 @@ export default class Plugin {
     public userTemplates?: string,
     public pluginHelpers: Helpers = {},
     public userHelpers: Helpers = {},
+    public context: ContextFunction = () => null,
   ) {}
 
   async loadTemplates(): Promise<Template[]> {
@@ -107,6 +109,8 @@ export default class Plugin {
   }
 
   async generate(entities: Entity[]): Promise<void> {
+    const context = this.context(this.entities, this.dest)
+
     await Promise.all(
       entities.map(async entity =>
         Promise.all(
@@ -115,8 +119,11 @@ export default class Plugin {
               await writeFile(
                 this.dest(type, entity.name),
                 HandleBars.compile(template)({
+                  plugin: this.name,
+                  type,
                   entities: Entity.all,
                   entity,
+                  context,
                 } as Context<Entity>),
               ),
           ),
@@ -148,6 +155,7 @@ export default class Plugin {
       name,
       templates: pluginTemplates,
       helpers: pluginHelpers,
+      context,
     } = plugin()
     const {
       entities,
@@ -165,6 +173,7 @@ export default class Plugin {
         userTemplates,
         pluginHelpers,
         userHelpers,
+        context,
       ).init(),
     )
   }

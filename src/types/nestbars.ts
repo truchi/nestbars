@@ -1,9 +1,14 @@
 import { Class } from './utils'
 
 export type Context<T> = {
+  plugin: string
+  type: string
   entities: T[]
   entity: T
+  context: any
 }
+
+export type ContextFunction = (entities: Class[], dest: PathFunction) => any
 
 export type PathFunction = (type?: string, name?: string) => string
 
@@ -22,6 +27,7 @@ export type PluginOptions = {
   name: string
   templates: string
   helpers?: Helpers
+  context?: ContextFunction
 }
 
 export type Plugin = () => PluginOptions

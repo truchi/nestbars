@@ -1,5 +1,5 @@
 import { Class } from '../../types/utils';
-import { Plugin as PluginType, Options, PathFunction, Helpers } from '../../types/nestbars';
+import { Plugin as PluginType, Options, PathFunction, Helpers, ContextFunction } from '../../types/nestbars';
 import { Entity } from '../data';
 declare type Template = {
     type: string;
@@ -17,11 +17,12 @@ export default class Plugin {
     userTemplates?: string;
     pluginHelpers: Helpers;
     userHelpers: Helpers;
+    context: ContextFunction;
     static all: Plugin[];
     private templates;
     private partials;
     private helpers;
-    constructor(name: string, entities: Class[], dest: PathFunction, pluginTemplates: string, userTemplates?: string, pluginHelpers?: Helpers, userHelpers?: Helpers);
+    constructor(name: string, entities: Class[], dest: PathFunction, pluginTemplates: string, userTemplates?: string, pluginHelpers?: Helpers, userHelpers?: Helpers, context?: ContextFunction);
     loadTemplates(): Promise<Template[]>;
     loadPartials(): Promise<Partial[]>;
     loadHelpers(): Helpers;

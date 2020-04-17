@@ -22,7 +22,7 @@ const ANCHORS = {
     TYPE: '[type]',
 };
 class Plugin {
-    constructor(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers = {}, userHelpers = {}) {
+    constructor(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers = {}, userHelpers = {}, context = () => null) {
         this.name = name;
         this.entities = entities;
         this.dest = dest;
@@ -30,6 +30,7 @@ class Plugin {
         this.userTemplates = userTemplates;
         this.pluginHelpers = pluginHelpers;
         this.userHelpers = userHelpers;
+        this.context = context;
         this.templates = [];
         this.partials = [];
         this.helpers = {};
@@ -75,9 +76,13 @@ class Plugin {
         return this;
     }
     async generate(entities) {
+        const context = this.context(this.entities, this.dest);
         await Promise.all(entities.map(async (entity) => Promise.all(this.templates.map(async ({ type, template }) => await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
+            plugin: this.name,
+            type,
             entities: data_1.Entity.all,
             entity,
+            context,
         }))))));
     }
     static load(plugin) {
@@ -89,9 +94,9 @@ class Plugin {
         plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name));
     }
     static async register([plugin, options]) {
-        const { name, templates: pluginTemplates, helpers: pluginHelpers, } = plugin();
+        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, } = plugin();
         const { entities, dest, templates: userTemplates, helpers: userHelpers, } = options;
-        Plugin.all.push(await new Plugin(name, entities, utils_1.toPathFunction(dest, ANCHORS), pluginTemplates, userTemplates, pluginHelpers, userHelpers).init());
+        Plugin.all.push(await new Plugin(name, entities, utils_1.toPathFunction(dest, ANCHORS), pluginTemplates, userTemplates, pluginHelpers, userHelpers, context).init());
     }
     static async generate(entities) {
         Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
