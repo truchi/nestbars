@@ -8,6 +8,10 @@ import {
 import { dirname, normalize } from 'path'
 import { PathFunction } from '../types/utils'
 
+//
+// File system
+//
+
 export const readFile = (file: string) => promisify(_readFile)(file, 'utf8')
 
 export const readDir = (dir: string) => promisify(_readDir)(dir, 'utf8')
@@ -22,6 +26,36 @@ export const writeFile = ((writeFile = promisify(_writeFile)) => (
 export const mkdir = (path: string) =>
   promisify(_mkdir)(path, { recursive: true })
 
+//
+// Array
+//
+
+export const flat = (xs: any[][]): any[] => [].concat(...xs)
+
+export const unique = (xs: any[]): any[] =>
+  xs.filter((x, i, xs) => xs.indexOf(x) === i)
+
+//
+// Object
+//
+
+export const uniqueBy = (key: string) => (xs: any[]): any[] =>
+  xs.filter((x, i, xs) => xs.findIndex(y => x[key] === y[key]) === i)
+
+export const assign = <T>(x: T, ...xs: object[]): T =>
+  Object.assign.apply(Object, [{}, x, ...xs])
+
+//
+// String
+//
+
+export const uncapitalize = (s: string): string =>
+  s.charAt(0).toLowerCase() + s.slice(1)
+
+//
+// Function
+//
+
 export const toPathFunction = (
   o: string | PathFunction,
   { NAME, TYPE }: { NAME: string; TYPE: string },
@@ -35,47 +69,3 @@ export const toPathFunction = (
         .replace(NAME, name),
     )
 }
-
-export const flat = (xs: any[][]): any[] => [].concat(...xs)
-
-export const unique = (xs: any[]): any[] =>
-  xs.filter((x, i, xs) => xs.indexOf(x) === i)
-
-export const uniqueBy = (key: string) => (xs: any[]): any[] =>
-  xs.filter((x, i, xs) => xs.findIndex(y => x[key] === y[key]) === i)
-
-export const defined = (xs: any[]): any[] => xs.filter(x => x)
-
-export const assign = <T>(x: T, ...xs: object[]): T =>
-  Object.assign.apply(Object, [{}, x, ...xs])
-
-export const uncapitalize = (s: string): string =>
-  s.charAt(0).toLowerCase() + s.slice(1)
-
-// export const objectDefinitionRecursion = (
-//   definition: any[] | object,
-//   whenArray: (
-//     definition: any[],
-//     recur: (definition: any[] | object) => any,
-//   ) => any,
-//   whenObject: (
-//     definition: object,
-//     recur: (definition: any[] | object) => any,
-//   ) => any,
-//   whenString: (definition: string) => any,
-//   whenFunction: (definition: Function) => any,
-// ) => {
-//   const recur = (definition: any[] | object) => {
-//     if (typeof definition === 'string') {
-//       return whenString(definition)
-//     } else if (typeof definition === 'function') {
-//       return whenFunction(definition)
-//     }
-
-//     return Array.isArray(definition)
-//       ? whenArray(definition, recur)
-//       : whenObject(definition, recur)
-//   }
-
-//   return recur(definition)
-// }
