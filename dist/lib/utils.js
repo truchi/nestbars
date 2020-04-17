@@ -16,6 +16,7 @@ exports.toPathFunction = (o, { NAME, TYPE }) => {
 };
 exports.flat = (xs) => [].concat(...xs);
 exports.unique = (xs) => xs.filter((x, i, xs) => xs.indexOf(x) === i);
+exports.uniqueBy = (key) => (xs) => xs.filter((x, i, xs) => xs.findIndex(y => x[key] === y[key]) === i);
 exports.defined = (xs) => xs.filter(x => x);
 exports.assign = (x, ...xs) => Object.assign.apply(Object, [{}, x, ...xs]);
 exports.uncapitalize = (s) => s.charAt(0).toLowerCase() + s.slice(1);

@@ -2,7 +2,7 @@ import { Class } from './utils';
 export declare type PathFunction = (type?: string, name?: string) => string;
 export declare type Helpers = {
     [key: string]: (...args: any[]) => any;
-}[];
+};
 export declare type Options = {
     entities: Class[];
     dest: string | PathFunction;

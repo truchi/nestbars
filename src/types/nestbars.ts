@@ -4,7 +4,7 @@ export type PathFunction = (type?: string, name?: string) => string
 
 export type Helpers = {
   [key: string]: (...args: any[]) => any
-}[]
+}
 
 export type Options = {
   entities: Class[]

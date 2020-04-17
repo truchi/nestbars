@@ -9,6 +9,7 @@ export declare const toPathFunction: (o: string | PathFunction, { NAME, TYPE }: 
 }) => PathFunction;
 export declare const flat: (xs: any[][]) => any[];
 export declare const unique: (xs: any[]) => any[];
+export declare const uniqueBy: (key: string) => (xs: any[]) => any[];
 export declare const defined: (xs: any[]) => any[];
 export declare const assign: <T>(x: T, ...xs: object[]) => T;
 export declare const uncapitalize: (s: string) => string;

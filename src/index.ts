@@ -11,7 +11,7 @@ const nestbars: Nestbars = async (
 ): Promise<void> => {
   await Promise.all(plugins.map(Plugin.registerPlugin))
 
-  console.log('DONE', JSON.stringify(Plugin.all, null, 2))
+  console.log('DONE', Plugin.all)
 }
 
 export default nestbars
