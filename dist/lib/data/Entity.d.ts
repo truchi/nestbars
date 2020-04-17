@@ -14,4 +14,5 @@ export declare class Entity {
     fieldsByType(...types: FieldType[]): Field<FieldOptions>[];
     static add(entity: Entity): void;
     static find(name: string): Entity | undefined;
+    static init(): Entity[];
 }

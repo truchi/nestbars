@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -6,14 +9,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
+const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
 const HandleBars = __importStar(require("handlebars"));
 const utils_1 = require("../utils");
-const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
+const helpers_1 = __importDefault(require("./helpers"));
+const data_1 = require("../data");
 const PARTIALS = 'partials';
 const ANCHORS = {
     NAME: '[name]',
@@ -72,10 +74,11 @@ class Plugin {
         this.helpers = this.loadHelpers();
         return this;
     }
-    async generate() {
-        Plugin.load(this);
-        Plugin.unload(this);
-        return;
+    async generate(entities) {
+        await Promise.all(entities.map(async (entity) => Promise.all(this.templates.map(async ({ type, template }) => await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
+            entities: data_1.Entity.all,
+            entity,
+        }))))));
     }
     static load(plugin) {
         Object.entries(plugin.helpers).map(([name, helper]) => HandleBars.registerHelper(name, helper));
@@ -89,6 +92,15 @@ class Plugin {
         const { name, templates: pluginTemplates, helpers: pluginHelpers, } = plugin();
         const { entities, dest, templates: userTemplates, helpers: userHelpers, } = options;
         Plugin.all.push(await new Plugin(name, entities, utils_1.toPathFunction(dest, ANCHORS), pluginTemplates, userTemplates, pluginHelpers, userHelpers).init());
+    }
+    static async generate(entities) {
+        Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
+        Plugin.all.map(plugin => {
+            const names = plugin.entities.map(({ name }) => name);
+            Plugin.load(plugin);
+            plugin.generate(entities.filter(({ name }) => names.includes(name)));
+            Plugin.unload(plugin);
+        });
     }
 }
 exports.default = Plugin;

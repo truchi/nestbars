@@ -1,5 +1,10 @@
 import { Class } from './utils'
 
+export type Context<T> = {
+  entities: T[]
+  entity: T
+}
+
 export type PathFunction = (type?: string, name?: string) => string
 
 export type Helpers = {

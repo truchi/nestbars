@@ -1,5 +1,6 @@
+import { Class } from '../../types/utils';
 import { Plugin as PluginType, Options, PathFunction, Helpers } from '../../types/nestbars';
-import { Class } from 'src/types/utils';
+import { Entity } from '../data';
 declare type Template = {
     type: string;
     template: string;
@@ -25,9 +26,10 @@ export default class Plugin {
     loadPartials(): Promise<Partial[]>;
     loadHelpers(): Helpers;
     init(): Promise<this>;
-    generate(): Promise<void>;
+    generate(entities: Entity[]): Promise<void>;
     static load(plugin: Plugin): void;
     static unload(plugin: Plugin): void;
     static register([plugin, options]: [PluginType, Options]): Promise<void>;
+    static generate(entities: Entity[]): Promise<void>;
 }
 export {};

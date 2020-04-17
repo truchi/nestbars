@@ -134,36 +134,24 @@
         "signature": "1f557d69bda261d87dd2198938dfce37a306ab2d55800ff1259bee1112fda2fe"
       },
       "../src/types/nestbars.ts": {
-        "version": "35359ec6f031c8a6235390775bb39e68e92de59ce4c6812bf6860291b6c3c6de",
-        "signature": "c38489d9e6760dc6f72cb722c33e8267138e3206ab4d74e0c4bac176a8ce5416"
-      },
-      "../node_modules/handlebars/types/index.d.ts": {
-        "version": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6",
-        "signature": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6"
-      },
-      "../src/lib/utils.ts": {
-        "version": "c8686588a55722adeb3d97a44f235fc2d567eb9e151e6b2b92a78a72a949f0de",
-        "signature": "c16665bd7631f0483fd7c1c58061f7e928782f72f360757616474c65db37dfc5"
-      },
-      "../src/lib/plugins/Plugin.ts": {
-        "version": "06c5ff9100bb4b4b410d70d3e21ba678404d17256cc9d5117a05342d80e8831b",
-        "signature": "f48b70a361645c642303849f1a51b4bb7ec149a0ca905c57139ef72a3bee2ef7"
+        "version": "bbb4c5a68e45dba5665206a8e6119a58c6f2c202499fd784076816713d3d77d3",
+        "signature": "bbebc86927ca5315a8d12038af343efdccac87a776e22405238adc9668267933"
       },
       "../src/types/decorators.ts": {
         "version": "37ba28e85061bf7f79c6a8448a31b2f47a7f18b4f3102b48a4719b534efe563b",
         "signature": "d4bf5ce485ebac7e32a66fc3d8aa40a2dfd88d1d82e15d5ce62a91848208a457"
+      },
+      "../src/lib/utils.ts": {
+        "version": "c8686588a55722adeb3d97a44f235fc2d567eb9e151e6b2b92a78a72a949f0de",
+        "signature": "c16665bd7631f0483fd7c1c58061f7e928782f72f360757616474c65db37dfc5"
       },
       "../src/lib/data/Field.ts": {
         "version": "0df34aa97f84ae8d98349dd5b85589c6209f667f5d868fbbb698cdd079f64e64",
         "signature": "b6f2f0ab56ef89ecfccb81ba1457bd04cdafe61cf0db739f4cede8d61706fa98"
       },
       "../src/lib/data/Entity.ts": {
-        "version": "0b49773968924721572f18123ae16903b247276e3f4667fea3903f912dcff6a7",
-        "signature": "fafd1949e509af7b6dd440b66cac516013110aa9880fb46667f32f28ef160e5b"
-      },
-      "../src/lib/decorators/Entity.ts": {
-        "version": "a1ae299be9ec0137cb315cb0cd5151c136ac1247a5e19baaaaf3e79397da8016",
-        "signature": "1f1853d517b8af7cc1f2580d6ed3d8f2c1bd9ce08741553bd999e999de83000e"
+        "version": "6fcb16a986e72947cc8c16a0ca0c8af865603df7450b2cc7a6b6f656bd0e5a6d",
+        "signature": "8407f35572dd9517fac8592b44bdb25ef240cdc79721ad8657842ccd9b0a92a5"
       },
       "../src/lib/data/PrimaryField.ts": {
         "version": "994e92f3ac82e86270d088533efa8f41ca8a287b466ef04b1c023edc96653087",
@@ -200,6 +188,22 @@
       "../src/lib/data/index.ts": {
         "version": "939ed7491324a8f74dbffea24502ecfd14cc598ed95d34de9d548c913846f78b",
         "signature": "c1ef2a10052b04c39de5b86e8aa151cbe34776eaed4b6729f02424b37a4d3284"
+      },
+      "../node_modules/handlebars/types/index.d.ts": {
+        "version": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6",
+        "signature": "f3a68054f682f21cec1eb6bc37d3c4c7f73b7723c7256f8a1ccc75873024aaa6"
+      },
+      "../src/lib/plugins/helpers.ts": {
+        "version": "c36dfe14cb950b5d84a1d24bea03a47ecd33412309adfa625a0517d14e7df282",
+        "signature": "448281eadd262635ce1cb6c93ff38b23a3efe7bb9f1c17e7e78584b2eb0f45d1"
+      },
+      "../src/lib/plugins/Plugin.ts": {
+        "version": "58ef0b7a51b3acbb14bfd83bc656becb1386de9bed3e952b9bd7766da3b8afb8",
+        "signature": "947a80f9e9e27ef4f336a8f200ca857590888cde01ee2ca50598d4d79806ced7"
+      },
+      "../src/lib/decorators/Entity.ts": {
+        "version": "a1ae299be9ec0137cb315cb0cd5151c136ac1247a5e19baaaaf3e79397da8016",
+        "signature": "1f1853d517b8af7cc1f2580d6ed3d8f2c1bd9ce08741553bd999e999de83000e"
       },
       "../src/lib/decorators/utils.ts": {
         "version": "cbfe151b58e5b892fc727d2537f736aaa1038091cd26d022ef0a3144d9afa423",
@@ -238,7 +242,7 @@
         "signature": "efd9647aca30ec0500ceb5ef899ee4687ba336327a41f8435d5d8cb592f4f65f"
       },
       "../src/index.ts": {
-        "version": "629c387a268619e3671352c026b8ff9d8f2e61dfc60b6a127830bc629d270526",
+        "version": "c8526ce793409d3e63900f4b3faad85c138407d8a8fa73f7f351136c932248bf",
         "signature": "4c62a0ce997a0ef56e5072fb1df7afae120f2b45fafdfcf008c9176b1ef85ea2"
       },
       "../src/lib/config.ts": {
@@ -254,8 +258,8 @@
         "signature": "252dffe6cbe79083f09c3bb4b150983cba1b256b0da8ee3159ab580e10abc249"
       },
       "../src/lib/generation/generation.ts": {
-        "version": "45b3ef0cd39cfb6b86346682c02b77701dc355dba327b686fc4eb5fffbbf0b1c",
-        "signature": "4820a246282c123596c185d8ff42b40de4d8783156ece4d5ca28ceb85690f787"
+        "version": "52553ceb5bb3a5ae0de69949ad9f0f2ce217ce9cc25d464a7ed5f7c52901c445",
+        "signature": "ab72cc020b1804230a1f798c7467b043675adf73ccab0f70c78b88dcf22c7de4"
       },
       "../node_modules/@types/node/globals.d.ts": {
         "version": "1236b98326630298e0b9cd30ccecd77560ac925140b753f1b1a0ffc6e7b51ad4",
@@ -663,7 +667,8 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../node_modules/handlebars/types/index.d.ts": [
+      "../src/types/decorators.ts": [
+        "../src/types/utils.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -677,24 +682,6 @@
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../src/lib/plugins/Plugin.ts": [
-        "../node_modules/@types/node/path.d.ts",
-        "../node_modules/handlebars/types/index.d.ts",
-        "../src/types/nestbars.ts",
-        "../src/lib/utils.ts",
-        "../src/types/utils.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/types/decorators.ts": [
-        "../src/types/utils.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "../src/lib/data/Field.ts": [
         "../src/types/decorators.ts",
         "../node_modules/@types/node/fs.d.ts",
@@ -706,14 +693,6 @@
         "../src/types/decorators.ts",
         "../src/lib/utils.ts",
         "../src/lib/data/Field.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/lib/decorators/Entity.ts": [
-        "../src/types/decorators.ts",
-        "../src/lib/data/Entity.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -807,6 +786,45 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../node_modules/handlebars/types/index.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/plugins/helpers.ts": [
+        "../node_modules/handlebars/types/index.d.ts",
+        "../src/types/decorators.ts",
+        "../src/types/nestbars.ts",
+        "../src/lib/utils.ts",
+        "../src/lib/data/Entity.ts",
+        "../src/lib/data/index.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/plugins/Plugin.ts": [
+        "../node_modules/@types/node/path.d.ts",
+        "../node_modules/handlebars/types/index.d.ts",
+        "../src/types/utils.ts",
+        "../src/types/nestbars.ts",
+        "../src/lib/utils.ts",
+        "../src/lib/plugins/helpers.ts",
+        "../src/lib/data/index.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/decorators/Entity.ts": [
+        "../src/types/decorators.ts",
+        "../src/lib/data/Entity.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../src/lib/decorators/utils.ts": [
         "../src/types/decorators.ts",
         "../src/lib/data/index.ts",
@@ -887,6 +905,7 @@
       ],
       "../src/index.ts": [
         "../src/types/nestbars.ts",
+        "../src/lib/data/index.ts",
         "../src/lib/plugins/Plugin.ts",
         "../src/lib/decorators/index.ts",
         "../src/plugins/entities/index.ts",
@@ -1489,20 +1508,10 @@
       "../src/types/nestbars.ts": [
         "../src/types/utils.ts"
       ],
-      "../node_modules/handlebars/types/index.d.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/lib/utils.ts": [
+      "../src/types/decorators.ts": [
         "../src/types/utils.ts"
       ],
-      "../src/lib/plugins/Plugin.ts": [
-        "../src/types/utils.ts",
-        "../src/types/nestbars.ts"
-      ],
-      "../src/types/decorators.ts": [
+      "../src/lib/utils.ts": [
         "../src/types/utils.ts"
       ],
       "../src/lib/data/Field.ts": [
@@ -1511,9 +1520,6 @@
       "../src/lib/data/Entity.ts": [
         "../src/types/decorators.ts",
         "../src/lib/data/Field.ts"
-      ],
-      "../src/lib/decorators/Entity.ts": [
-        "../src/types/decorators.ts"
       ],
       "../src/lib/data/PrimaryField.ts": [
         "../src/types/decorators.ts",
@@ -1562,6 +1568,24 @@
         "../src/lib/data/OneToManyField.ts",
         "../src/lib/data/ManyToOneField.ts",
         "../src/lib/data/ManyToManyField.ts"
+      ],
+      "../node_modules/handlebars/types/index.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../src/lib/plugins/helpers.ts": [
+        "../src/lib/data/Entity.ts",
+        "../src/types/nestbars.ts"
+      ],
+      "../src/lib/plugins/Plugin.ts": [
+        "../src/types/utils.ts",
+        "../src/types/nestbars.ts",
+        "../src/lib/data/index.ts"
+      ],
+      "../src/lib/decorators/Entity.ts": [
+        "../src/types/decorators.ts"
       ],
       "../src/lib/decorators/utils.ts": [
         "../src/lib/data/index.ts",
@@ -2005,12 +2029,10 @@
       "../node_modules/typescript/lib/lib.es2018.full.d.ts",
       "../src/types/utils.ts",
       "../src/types/nestbars.ts",
-      "../node_modules/handlebars/types/index.d.ts",
-      "../src/lib/utils.ts",
       "../src/types/decorators.ts",
+      "../src/lib/utils.ts",
       "../src/lib/data/Field.ts",
       "../src/lib/data/Entity.ts",
-      "../src/lib/decorators/Entity.ts",
       "../src/lib/data/PrimaryField.ts",
       "../src/lib/data/ScalarField.ts",
       "../src/lib/data/SetField.ts",
@@ -2020,6 +2042,9 @@
       "../src/lib/data/ManyToOneField.ts",
       "../src/lib/data/ManyToManyField.ts",
       "../src/lib/data/index.ts",
+      "../node_modules/handlebars/types/index.d.ts",
+      "../src/lib/plugins/helpers.ts",
+      "../src/lib/decorators/Entity.ts",
       "../src/lib/decorators/utils.ts",
       "../src/lib/decorators/PrimaryFields.ts",
       "../src/lib/decorators/ScalarFields.ts",
@@ -2029,6 +2054,7 @@
       "../src/lib/decorators/index.ts",
       "../src/plugins/entities/index.ts",
       "../src/plugins/resolvers/index.ts",
+      "../src/index.ts",
       "../src/lib/config.ts",
       "../src/lib/generation/utils.ts",
       "../src/lib/generation/helpers.ts",
@@ -2078,20 +2104,7 @@
       "../node_modules/@types/node/ts3.2/util.d.ts",
       "../node_modules/@types/node/ts3.2/globals.d.ts",
       "../node_modules/@types/node/ts3.2/index.d.ts",
-      "../src/lib/plugins/Plugin.ts",
-      [
-        "../src/index.ts",
-        [
-          {
-            "file": "../src/index.ts",
-            "start": 425,
-            "length": 14,
-            "code": 2339,
-            "category": 1,
-            "messageText": "Property 'registerPlugin' does not exist on type 'typeof Plugin'."
-          }
-        ]
-      ]
+      "../src/lib/plugins/Plugin.ts"
     ]
   },
   "version": "3.8.3"

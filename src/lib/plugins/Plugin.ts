@@ -1,14 +1,23 @@
 import { resolve, parse } from 'path'
+import readDirRec from 'recursive-readdir'
 import * as HandleBars from 'handlebars'
+import { Class } from '../../types/utils'
 import {
   Plugin as PluginType,
   Options,
   PathFunction,
   Helpers,
+  Context,
 } from '../../types/nestbars'
-import { toPathFunction, readFile, readDir, uniqueBy } from '../utils'
-import readDirRec from 'recursive-readdir'
-import { Class } from 'src/types/utils'
+import {
+  toPathFunction,
+  readFile,
+  readDir,
+  writeFile,
+  uniqueBy,
+} from '../utils'
+import helpers from './helpers'
+import { Entity } from '../data'
 
 const PARTIALS = 'partials'
 const ANCHORS = {
@@ -97,10 +106,23 @@ export default class Plugin {
     return this
   }
 
-  async generate(): Promise<void> {
-    Plugin.load(this)
-    Plugin.unload(this)
-    return
+  async generate(entities: Entity[]): Promise<void> {
+    await Promise.all(
+      entities.map(async entity =>
+        Promise.all(
+          this.templates.map(
+            async ({ type, template }) =>
+              await writeFile(
+                this.dest(type, entity.name),
+                HandleBars.compile(template)({
+                  entities: Entity.all,
+                  entity,
+                } as Context<Entity>),
+              ),
+          ),
+        ),
+      ),
+    )
   }
 
   static load(plugin: Plugin): void {
@@ -145,5 +167,20 @@ export default class Plugin {
         userHelpers,
       ).init(),
     )
+  }
+
+  static async generate(entities: Entity[]): Promise<void> {
+    // Register global helpers
+    Object.entries(helpers).map(([name, helper]) =>
+      HandleBars.registerHelper(name, helper),
+    )
+
+    Plugin.all.map(plugin => {
+      const names = plugin.entities.map(({ name }) => name)
+
+      Plugin.load(plugin)
+      plugin.generate(entities.filter(({ name }) => names.includes(name)))
+      Plugin.unload(plugin)
+    })
   }
 }

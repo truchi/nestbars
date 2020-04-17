@@ -1,4 +1,8 @@
 import { Class } from './utils';
+export declare type Context<T> = {
+    entities: T[];
+    entity: T;
+};
 export declare type PathFunction = (type?: string, name?: string) => string;
 export declare type Helpers = {
     [key: string]: (...args: any[]) => any;
