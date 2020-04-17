@@ -234,7 +234,7 @@
         "signature": "c9ceaa4ca1c701468e282ad4a25931a2f1e13b054887f5a85a96c28d0818f2a3"
       },
       "../src/plugins/entities/index.ts": {
-        "version": "b98a8ce03dc649eab512e1800cd971da463081678b73dd2f830cc050e029c75c",
+        "version": "3369f83a3da0899412194c10bd5ffc2d8d0223809afca18f7c94d2ac7703ebf4",
         "signature": "efd9647aca30ec0500ceb5ef899ee4687ba336327a41f8435d5d8cb592f4f65f"
       },
       "../src/plugins/resolvers/index.ts": {

@@ -5,9 +5,10 @@ const entity: Plugin = (): PluginOptions => ({
   name: 'Nestbars Entities Plugin',
   templates: (__dirname + '/templates').replace('/dist/', '/src/'),
   context: (entities: Class[], dest: PathFunction) => {
-    return {
-      test: 'test',
-    }
+    return entities.reduce(
+      (o, { name }) => ({ ...o, [name]: dest('entity', name) }),
+      {},
+    )
   },
 })
 

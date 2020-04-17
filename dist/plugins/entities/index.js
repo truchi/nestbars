@@ -4,9 +4,7 @@ const entity = () => ({
     name: 'Nestbars Entities Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     context: (entities, dest) => {
-        return {
-            test: 'test',
-        };
+        return entities.reduce((o, { name }) => ({ ...o, [name]: dest('entity', name) }), {});
     },
 });
 exports.default = entity;
