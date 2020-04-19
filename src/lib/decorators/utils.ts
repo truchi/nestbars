@@ -1,24 +1,92 @@
+import { Class } from '../../types/utils'
 import {
-  SetValues,
-  SetTsName,
-  SetOptions,
+  FieldOptions,
   FieldType,
+  SetOptions,
+  RelationOptions,
+  EntityOptions,
 } from '../../types/decorators'
-import { Field, SetField } from '../data'
+import { assign } from '../utils'
+import { Field, Entity } from '../data'
 
-export const makeFieldDecoratorFactory = <O extends {}, C extends Field<O>>(
+export const makeEntityDecoratorFactory = () =>
+  //
+  (options: EntityOptions = {}) =>
+    //
+    ({ name }: any): void => Entity.add(new Entity(name, options))
+
+export const makeFieldDecoratorFactory = <Options extends FieldOptions>(
   type: FieldType,
-  Class: new (...args: any[]) => C,
 ) =>
   //
-  (options: O = {} as O) =>
+  (options: Options = {} as Options) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
-      Field.add(new Class(entity, name, options, type))
+      Field.add(new Field(entity, name, type, options))
 
-export const makeSetDecoratorFactory = (type: FieldType.Set | FieldType.Enum) =>
+export const makeSetFieldDecoratorFactory = (type: FieldType) =>
   //
-  (values: SetValues, tsName: SetTsName, options: SetOptions = {}) =>
+  (
+    values: SetOptions['values'],
+    tsName: SetOptions['name'],
+    options: Omit<SetOptions, 'values' | 'name'> = {},
+  ) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
-      SetField.add(new SetField(entity, name, values, tsName, options, type))
+      Field.add(
+        new Field(
+          entity,
+          name,
+          type,
+          assign(options, { values, name: tsName }),
+        ),
+      )
+
+export const makeRelationDecoratorFactory = (type: FieldType) =>
+  //
+  <T extends Class>(
+    withEntity: RelationOptions<T>['withEntity'],
+    withField: RelationOptions<T>['withField'],
+  ) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      Field.add(
+        new Field(entity, name, type, {
+          withEntity,
+          withField,
+        }),
+      )
+
+export const makeJoinColumnRelationDecoratorFactory = (type: FieldType) =>
+  //
+  <T extends Class>(
+    withEntity: RelationOptions<T>['withEntity'],
+    withField: RelationOptions<T>['withField'],
+    joinColumn: RelationOptions<T>['joinColumn'] = false,
+  ) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      Field.add(
+        new Field(entity, name, type, {
+          withEntity,
+          withField,
+          joinColumn,
+        }),
+      )
+
+export const makeJoinTableRelationDecoratorFactory = (type: FieldType) =>
+  //
+  <T extends Class>(
+    withEntity: RelationOptions<T>['withEntity'],
+    withField: RelationOptions<T>['withField'],
+    joinTable: RelationOptions<T>['joinTable'] = false,
+  ) =>
+    //
+    ({ constructor: { name: entity } }: any, name: string): void =>
+      Field.add(
+        new Field(entity, name, type, {
+          withEntity,
+          withField,
+          joinTable,
+        }),
+      )

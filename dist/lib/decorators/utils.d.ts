@@ -1,4 +1,8 @@
-import { SetValues, SetOptions, FieldType } from '../../types/decorators';
-import { Field } from '../data';
-export declare const makeFieldDecoratorFactory: <O extends {}, C extends Field<O>>(type: FieldType, Class: new (...args: any[]) => C) => (options?: O) => ({ constructor: { name: entity } }: any, name: string) => void;
-export declare const makeSetDecoratorFactory: (type: FieldType.Enum | FieldType.Set) => (values: SetValues, tsName: string, options?: SetOptions) => ({ constructor: { name: entity } }: any, name: string) => void;
+import { Class } from '../../types/utils';
+import { FieldOptions, FieldType, SetOptions, EntityOptions } from '../../types/decorators';
+export declare const makeEntityDecoratorFactory: () => (options?: EntityOptions) => ({ name }: any) => void;
+export declare const makeFieldDecoratorFactory: <Options extends FieldOptions>(type: FieldType) => (options?: Options) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const makeSetFieldDecoratorFactory: (type: FieldType) => (values: string[], tsName: string, options?: Pick<SetOptions, "primary" | "default" | "description" | "deprecation" | "options">) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const makeRelationDecoratorFactory: (type: FieldType) => <T extends Class>(withEntity: () => T, withField: keyof InstanceType<T>) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const makeJoinColumnRelationDecoratorFactory: (type: FieldType) => <T extends Class>(withEntity: () => T, withField: keyof InstanceType<T>, joinColumn?: boolean | object) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const makeJoinTableRelationDecoratorFactory: (type: FieldType) => <T extends Class>(withEntity: () => T, withField: keyof InstanceType<T>, joinTable?: boolean | object) => ({ constructor: { name: entity } }: any, name: string) => void;

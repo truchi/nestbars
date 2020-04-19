@@ -6,7 +6,6 @@ export declare type Context<T> = {
     entity: T;
     context: any;
 };
-export declare type ContextFunction = (entities: Class[], dest: PathFunction) => any;
 export declare type PathFunction = (type?: string, name?: string) => string;
 export declare type Helpers = {
     [key: string]: (...args: any[]) => any;
@@ -21,7 +20,7 @@ export declare type PluginOptions = {
     name: string;
     templates: string;
     helpers?: Helpers;
-    context?: ContextFunction;
+    context?: () => any;
 };
-export declare type Plugin = () => PluginOptions;
+export declare type Plugin = (entities: Class[], dest: PathFunction) => PluginOptions;
 export declare type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>;

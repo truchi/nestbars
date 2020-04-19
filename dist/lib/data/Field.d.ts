@@ -1,16 +1,11 @@
+import { Type } from './Type';
 import { FieldType, FieldOptions } from '../../types/decorators';
-export declare class Field<T extends FieldOptions> {
+export declare class Field {
     readonly entity: string;
     readonly name: string;
-    readonly options: T;
-    readonly type: FieldType;
-    static all: Field<FieldOptions>[];
-    constructor(entity: string, name: string, options: T, type: FieldType);
-    tsType(): string;
-    dbType(): string;
-    gqlType(): string;
-    dependencies(): string[];
-    dbOptions(): object;
-    gqlOptions(): object;
-    static add(field: Field<FieldOptions>): void;
+    readonly options: FieldOptions;
+    static all: Field[];
+    type: Type;
+    constructor(entity: string, name: string, type: FieldType, options: FieldOptions);
+    static add(field: Field): void;
 }

@@ -1,0 +1,22 @@
+{{>banner~}}
+
+{{>imports}}
+
+
+@Injectable()
+export class BaseService {
+constructor(
+@InjectRepository({{entity.name}})
+protected readonly repository: Repository<{{entity.name}}>
+  ) {}
+
+  async all(): Promise<{{entity.name}}[]> {
+    return this.repository.find()
+    }
+
+    async get(
+    id: number,
+    ): Promise<{{entity.name}} | null> {
+      return await this.repository.findOne(id)
+      }
+      }

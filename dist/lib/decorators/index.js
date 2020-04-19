@@ -1,12 +1,22 @@
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./Entity"));
-__export(require("./PrimaryFields"));
-__export(require("./ScalarFields"));
-__export(require("./SetFields"));
-__export(require("./SpecialFields"));
-__export(require("./RelationFields"));
+const decorators_1 = require("../../types/decorators");
+const utils_1 = require("./utils");
+exports.Entity = utils_1.makeEntityDecoratorFactory();
+exports.Int = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Int);
+exports.Float = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Float);
+exports.String = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.String);
+exports.Date = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Date);
+exports.Boolean = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Boolean);
+exports.Id = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Id);
+exports.Uuid = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Uuid);
+exports.Created = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Created);
+exports.Updated = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Updated);
+exports.Version = utils_1.makeFieldDecoratorFactory(decorators_1.FieldType.Version);
+exports.Enum = utils_1.makeSetFieldDecoratorFactory(decorators_1.FieldType.Enum);
+exports.Set = utils_1.makeSetFieldDecoratorFactory(decorators_1.FieldType.Set);
+exports.OneToOne = utils_1.makeJoinColumnRelationDecoratorFactory(decorators_1.FieldType.OneToOne);
+exports.OneToMany = utils_1.makeRelationDecoratorFactory(decorators_1.FieldType.OneToMany);
+exports.ManyToOne = utils_1.makeJoinColumnRelationDecoratorFactory(decorators_1.FieldType.ManyToOne);
+exports.ManyToMany = utils_1.makeJoinTableRelationDecoratorFactory(decorators_1.FieldType.ManyToMany);
 //# sourceMappingURL=index.js.map

@@ -19,22 +19,22 @@ export type EntityOptions = {
 //
 
 export enum FieldType {
-  // Primary
-  Id = 'id',
-  Uuid = 'uuid',
   // Scalar
   Int = 'int',
   Float = 'float',
   String = 'string',
   Date = 'date',
   Boolean = 'boolean',
-  // Set
-  Enum = 'enum',
-  Set = 'set',
+  // Primary
+  Id = 'id',
+  Uuid = 'uuid',
   // Special
   Created = 'created',
   Updated = 'updated',
   Version = 'version',
+  // Set
+  Enum = 'enum',
+  Set = 'set',
   // Relation
   OneToOne = 'one-to-one',
   OneToMany = 'one-to-many',
@@ -48,18 +48,6 @@ export type FieldOptions =
   | SetOptions
   | SpecialOptions
   | {} // TOOD void?
-
-//
-// Primary fields
-//
-
-export type PrimaryDecorator = (options?: PrimaryOptions) => Function
-
-export type PrimaryOptions = {
-  description?: string
-  deprecation?: string
-  options?: object
-}
 
 //
 // Scalar fields
@@ -78,23 +66,12 @@ export type ScalarOptions = {
 }
 
 //
-// Set fields
+// Primary fields
 //
 
-export type SetDecorator = (
-  values: SetValues,
-  tsName: SetTsName,
-  options?: SetOptions,
-) => Function
+export type PrimaryDecorator = (options?: PrimaryOptions) => Function
 
-export type SetValues = string[]
-
-export type SetTsName = string
-
-// TODO numeric, imports
-export type SetOptions = {
-  primary?: boolean
-  default?: any // TODO string / string[]
+export type PrimaryOptions = {
   description?: string
   deprecation?: string
   options?: object
@@ -114,39 +91,59 @@ export type SpecialOptions = {
 }
 
 //
+// Set fields
+//
+
+export type SetDecorator = (
+  values: SetOptions['values'],
+  name: SetOptions['name'],
+  options?: Omit<SetOptions, 'values' | 'name'>,
+) => Function
+
+// TODO numeric, imports
+export type SetOptions = {
+  values: string[]
+  name: string
+  primary?: boolean
+  default?: any // TODO string / string[]
+  description?: string
+  deprecation?: string
+  options?: object
+}
+
+//
 // Relations fields
 //
 
 export type OneToOneDecorator<T extends Class> = (
-  withEntity: RelationWithEntity<T>,
-  withField: RelationWithField<T>,
-  joinColumn?: RelationJoinColumn,
+  withEntity: RelationOptions<T>['withEntity'],
+  withField: RelationOptions<T>['withField'],
+  joinColumn?: RelationOptions<T>['joinColumn'],
 ) => Function
 
 export type OneToManyDecorator<T extends Class> = (
-  withEntity: RelationWithEntity<T>,
-  withField: RelationWithField<T>,
+  withEntity: RelationOptions<T>['withEntity'],
+  withField: RelationOptions<T>['withField'],
 ) => Function
 
 export type ManyToOneDecorator<T extends Class> = (
-  withEntity: RelationWithEntity<T>,
-  withField: RelationWithField<T>,
-  joinColumn?: RelationJoinColumn,
+  withEntity: RelationOptions<T>['withEntity'],
+  withField: RelationOptions<T>['withField'],
+  joinColumn?: RelationOptions<T>['joinColumn'],
 ) => Function
 
 export type ManyToManyDecorator<T extends Class> = (
-  withEntity: RelationWithEntity<T>,
-  withField: RelationWithField<T>,
-  joinTable?: RelationJoinTable,
+  withEntity: RelationOptions<T>['withEntity'],
+  withField: RelationOptions<T>['withField'],
+  joinTable?: RelationOptions<T>['joinTable'],
 ) => Function
 
-export type RelationWithEntity<T> = () => T
-
-export type RelationWithField<T extends Class> = keyof InstanceType<T>
-
-export type RelationJoinColumn = boolean | object
-
-export type RelationJoinTable = boolean | object
+export type RelationOptions<T extends Class> = {
+  withEntity: () => T
+  withField: keyof InstanceType<T>
+  joinColumn?: boolean | object
+  joinTable?: boolean | object
+}
 
 // TODO description
 // TODO options: primary, nullable, cascade, ...

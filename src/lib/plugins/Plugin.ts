@@ -8,7 +8,6 @@ import {
   PathFunction,
   Helpers,
   Context,
-  ContextFunction,
 } from '../../types/nestbars'
 import {
   toPathFunction,
@@ -20,8 +19,8 @@ import {
 import helpers from './helpers'
 import { Entity } from '../data'
 
-const PARTIALS = 'partials'
-const ANCHORS = {
+export const PARTIALS = 'partials'
+export const ANCHORS = {
   NAME: '[name]',
   TYPE: '[type]',
 }
@@ -44,7 +43,7 @@ export default class Plugin {
     public userTemplates?: string,
     public pluginHelpers: Helpers = {},
     public userHelpers: Helpers = {},
-    public context: ContextFunction = () => null,
+    public context: () => any = () => null,
   ) {}
 
   async loadTemplates(): Promise<Template[]> {
@@ -109,7 +108,7 @@ export default class Plugin {
   }
 
   async generate(entities: Entity[]): Promise<void> {
-    const context = this.context(this.entities, this.dest)
+    const context = this.context()
 
     await Promise.all(
       entities.map(async entity =>
@@ -152,23 +151,24 @@ export default class Plugin {
     void
   > {
     const {
-      name,
-      templates: pluginTemplates,
-      helpers: pluginHelpers,
-      context,
-    } = plugin()
-    const {
       entities,
       dest,
       templates: userTemplates,
       helpers: userHelpers,
     } = options
+    const destFn = toPathFunction(dest, ANCHORS)
+    const {
+      name,
+      templates: pluginTemplates,
+      helpers: pluginHelpers,
+      context,
+    } = plugin(entities, destFn)
 
     Plugin.all.push(
       await new Plugin(
         name,
         entities,
-        toPathFunction(dest, ANCHORS),
+        destFn,
         pluginTemplates,
         userTemplates,
         pluginHelpers,

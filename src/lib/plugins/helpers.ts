@@ -1,10 +1,10 @@
 import * as HandleBars from 'handlebars'
 import handlebarsHelpers from 'handlebars-helpers'
-import { FieldType, FieldOptions } from '../../types/decorators'
+import { FieldType, RelationOptions } from '../../types/decorators'
 import { Helpers } from '../../types/nestbars'
 import { uncapitalize } from '../utils'
 import { Entity } from '../data/Entity'
-import { Field, OneToOneField, ManyToOneField, ManyToManyField } from '../data'
+import { Field } from '../data'
 
 export type Context = {
   entities: Entity[]
@@ -73,23 +73,22 @@ const helpers: Helpers = {
   // Entity
   //
 
-  enums(entity: Entity): Field<FieldOptions>[] {
+  enums(entity: Entity): Field[] {
     return entity.fields.filter(
-      ({ type }) => type === FieldType.Enum || type === FieldType.Set,
+      ({ type: { type } }) => type === FieldType.Enum || type === FieldType.Set,
     )
   },
   hasJoinColumn(entity: Entity): boolean {
     return !!entity
       .fieldsByType(FieldType.OneToOne, FieldType.ManyToOne)
-      .filter(
-        field =>
-          !!(field as OneToOneField<any> | ManyToOneField<any>).joinColumn,
-      ).length
+      .filter(({ options }) => !!(options as RelationOptions<any>).joinColumn)
+      .length
   },
   hasJoinTable(entity: Entity): boolean {
     return !!entity
       .fieldsByType(FieldType.ManyToMany)
-      .filter(field => !!(field as ManyToManyField<any>).joinTable).length
+      .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
+      .length
   },
 
   //

@@ -6,30 +6,24 @@ export declare type EntityOptions = {
     options?: object;
 };
 export declare enum FieldType {
-    Id = "id",
-    Uuid = "uuid",
     Int = "int",
     Float = "float",
     String = "string",
     Date = "date",
     Boolean = "boolean",
-    Enum = "enum",
-    Set = "set",
+    Id = "id",
+    Uuid = "uuid",
     Created = "created",
     Updated = "updated",
     Version = "version",
+    Enum = "enum",
+    Set = "set",
     OneToOne = "one-to-one",
     OneToMany = "one-to-many",
     ManyToOne = "many-to-one",
     ManyToMany = "many-to-many"
 }
 export declare type FieldOptions = PrimaryOptions | ScalarOptions | SetOptions | SpecialOptions | {};
-export declare type PrimaryDecorator = (options?: PrimaryOptions) => Function;
-export declare type PrimaryOptions = {
-    description?: string;
-    deprecation?: string;
-    options?: object;
-};
 export declare type ScalarDecorator = (options?: ScalarOptions) => Function;
 export declare type ScalarOptions = {
     primary?: boolean;
@@ -40,12 +34,8 @@ export declare type ScalarOptions = {
     deprecation?: string;
     options?: object;
 };
-export declare type SetDecorator = (values: SetValues, tsName: SetTsName, options?: SetOptions) => Function;
-export declare type SetValues = string[];
-export declare type SetTsName = string;
-export declare type SetOptions = {
-    primary?: boolean;
-    default?: any;
+export declare type PrimaryDecorator = (options?: PrimaryOptions) => Function;
+export declare type PrimaryOptions = {
     description?: string;
     deprecation?: string;
     options?: object;
@@ -57,11 +47,23 @@ export declare type SpecialOptions = {
     deprecation?: string;
     options?: object;
 };
-export declare type OneToOneDecorator<T extends Class> = (withEntity: RelationWithEntity<T>, withField: RelationWithField<T>, joinColumn?: RelationJoinColumn) => Function;
-export declare type OneToManyDecorator<T extends Class> = (withEntity: RelationWithEntity<T>, withField: RelationWithField<T>) => Function;
-export declare type ManyToOneDecorator<T extends Class> = (withEntity: RelationWithEntity<T>, withField: RelationWithField<T>, joinColumn?: RelationJoinColumn) => Function;
-export declare type ManyToManyDecorator<T extends Class> = (withEntity: RelationWithEntity<T>, withField: RelationWithField<T>, joinTable?: RelationJoinTable) => Function;
-export declare type RelationWithEntity<T> = () => T;
-export declare type RelationWithField<T extends Class> = keyof InstanceType<T>;
-export declare type RelationJoinColumn = boolean | object;
-export declare type RelationJoinTable = boolean | object;
+export declare type SetDecorator = (values: SetOptions['values'], name: SetOptions['name'], options?: Omit<SetOptions, 'values' | 'name'>) => Function;
+export declare type SetOptions = {
+    values: string[];
+    name: string;
+    primary?: boolean;
+    default?: any;
+    description?: string;
+    deprecation?: string;
+    options?: object;
+};
+export declare type OneToOneDecorator<T extends Class> = (withEntity: RelationOptions<T>['withEntity'], withField: RelationOptions<T>['withField'], joinColumn?: RelationOptions<T>['joinColumn']) => Function;
+export declare type OneToManyDecorator<T extends Class> = (withEntity: RelationOptions<T>['withEntity'], withField: RelationOptions<T>['withField']) => Function;
+export declare type ManyToOneDecorator<T extends Class> = (withEntity: RelationOptions<T>['withEntity'], withField: RelationOptions<T>['withField'], joinColumn?: RelationOptions<T>['joinColumn']) => Function;
+export declare type ManyToManyDecorator<T extends Class> = (withEntity: RelationOptions<T>['withEntity'], withField: RelationOptions<T>['withField'], joinTable?: RelationOptions<T>['joinTable']) => Function;
+export declare type RelationOptions<T extends Class> = {
+    withEntity: () => T;
+    withField: keyof InstanceType<T>;
+    joinColumn?: boolean | object;
+    joinTable?: boolean | object;
+};

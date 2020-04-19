@@ -48,17 +48,19 @@ const helpers = {
         return new HandleBars.SafeString(str);
     },
     enums(entity) {
-        return entity.fields.filter(({ type }) => type === decorators_1.FieldType.Enum || type === decorators_1.FieldType.Set);
+        return entity.fields.filter(({ type: { type } }) => type === decorators_1.FieldType.Enum || type === decorators_1.FieldType.Set);
     },
     hasJoinColumn(entity) {
         return !!entity
             .fieldsByType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne)
-            .filter(field => !!field.joinColumn).length;
+            .filter(({ options }) => !!options.joinColumn)
+            .length;
     },
     hasJoinTable(entity) {
         return !!entity
             .fieldsByType(decorators_1.FieldType.ManyToMany)
-            .filter(field => !!field.joinTable).length;
+            .filter(({ options }) => !!options.joinTable)
+            .length;
     },
 };
 exports.default = helpers;

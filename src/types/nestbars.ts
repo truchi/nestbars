@@ -8,8 +8,6 @@ export type Context<T> = {
   context: any
 }
 
-export type ContextFunction = (entities: Class[], dest: PathFunction) => any
-
 export type PathFunction = (type?: string, name?: string) => string
 
 export type Helpers = {
@@ -27,9 +25,9 @@ export type PluginOptions = {
   name: string
   templates: string
   helpers?: Helpers
-  context?: ContextFunction
+  context?: () => any
 }
 
-export type Plugin = () => PluginOptions
+export type Plugin = (entities: Class[], dest: PathFunction) => PluginOptions
 
 export type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>

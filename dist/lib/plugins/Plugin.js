@@ -16,8 +16,8 @@ const HandleBars = __importStar(require("handlebars"));
 const utils_1 = require("../utils");
 const helpers_1 = __importDefault(require("./helpers"));
 const data_1 = require("../data");
-const PARTIALS = 'partials';
-const ANCHORS = {
+exports.PARTIALS = 'partials';
+exports.ANCHORS = {
     NAME: '[name]',
     TYPE: '[type]',
 };
@@ -39,7 +39,7 @@ class Plugin {
         const readPlugin = (file) => async () => await utils_1.readFile(path_1.resolve(this.pluginTemplates + '/' + file));
         const readUser = async (file) => await utils_1.readFile(path_1.resolve(this.userTemplates + '/' + file));
         return await Promise.all((await utils_1.readDir(this.pluginTemplates))
-            .filter(file => file !== PARTIALS)
+            .filter(file => file !== exports.PARTIALS)
             .map(async (file) => ({
             type: path_1.parse(file).name,
             template: this.userTemplates
@@ -53,9 +53,9 @@ class Plugin {
             .then((files) => files.map(file => ({ file, name: file.replace(dir + '/', '') })));
         return await Promise.all(utils_1.uniqueBy('name')(await Promise.all([
             ...(await read(this.userTemplates
-                ? path_1.resolve(this.userTemplates + '/' + PARTIALS)
+                ? path_1.resolve(this.userTemplates + '/' + exports.PARTIALS)
                 : undefined)),
-            ...(await read(path_1.resolve(this.pluginTemplates + '/' + PARTIALS))),
+            ...(await read(path_1.resolve(this.pluginTemplates + '/' + exports.PARTIALS))),
         ])).map(async ({ file, name }) => ({
             name: (({ dir, name: _name } = path_1.parse(name)) => ((dir ? dir + '/' : '') + _name)
                 .replace(/\//g, '__')
@@ -76,7 +76,7 @@ class Plugin {
         return this;
     }
     async generate(entities) {
-        const context = this.context(this.entities, this.dest);
+        const context = this.context();
         await Promise.all(entities.map(async (entity) => Promise.all(this.templates.map(async ({ type, template }) => await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
             plugin: this.name,
             type,
@@ -94,9 +94,10 @@ class Plugin {
         plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name));
     }
     static async register([plugin, options]) {
-        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, } = plugin();
         const { entities, dest, templates: userTemplates, helpers: userHelpers, } = options;
-        Plugin.all.push(await new Plugin(name, entities, utils_1.toPathFunction(dest, ANCHORS), pluginTemplates, userTemplates, pluginHelpers, userHelpers, context).init());
+        const destFn = utils_1.toPathFunction(dest, exports.ANCHORS);
+        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, } = plugin(entities, destFn);
+        Plugin.all.push(await new Plugin(name, entities, destFn, pluginTemplates, userTemplates, pluginHelpers, userHelpers, context).init());
     }
     static async generate(entities) {
         Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));

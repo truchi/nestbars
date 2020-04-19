@@ -1,11 +1,11 @@
-export enum {{enum.tsName}} {
-{{#each enum.values as |value|}}
+export enum {{enum.options.name}} {
+{{#each enum.options.values as |value|}}
   {{value}} = '{{value}}',
 {{/each}}
 }
 
-registerEnumType({{enum.tsName}}, {
-name: '{{enum.tsName}}',
+registerEnumType({{enum.options.name}}, {
+name: '{{enum.options.name}}',
 {{#if enum.options.description}}
   description: '{{enum.options.description}}',
 {{/if}}
