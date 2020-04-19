@@ -10,6 +10,8 @@ const entity = (entities, dest) => ({
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     context: context_1.default(entities, dest),
     helpers: helpers_1.default,
+    entityData: (entity) => entity.name,
+    fieldData: (field) => field.name,
 });
 exports.default = entity;
 //# sourceMappingURL=index.js.map

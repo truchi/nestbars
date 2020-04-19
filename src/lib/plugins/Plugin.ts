@@ -16,7 +16,8 @@ import {
   uniqueBy,
 } from '../utils'
 import helpers from './helpers'
-import { Entity } from '../data/Entity'
+import { Entity, ENTITY_DATA } from '../data/Entity'
+import { Field, FIELD_DATA } from '../data/Field'
 
 export const PARTIALS = 'partials'
 export const ANCHORS = {
@@ -44,6 +45,8 @@ export default class Plugin {
     public pluginHelpers: Helpers = {},
     public userHelpers: Helpers = {},
     public context: () => any = () => null,
+    public entityData: (entity: Entity) => any = (entity: Entity) => null,
+    public fieldData: (field: Field) => any = (field: Field) => null,
   ) {}
 
   async loadTemplates(): Promise<Template[]> {
@@ -131,22 +134,6 @@ export default class Plugin {
     )
   }
 
-  static load(plugin: Plugin): void {
-    Object.entries(plugin.helpers).map(([name, helper]) =>
-      HandleBars.registerHelper(name, helper),
-    )
-    plugin.partials.map(({ name, partial }) =>
-      HandleBars.registerPartial(name, partial),
-    )
-  }
-
-  static unload(plugin: Plugin): void {
-    Object.entries(plugin.helpers).map(([name]) =>
-      HandleBars.unregisterHelper(name),
-    )
-    plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name))
-  }
-
   static async register([plugin, options]: [PluginType, Options]): Promise<
     void
   > {
@@ -166,6 +153,8 @@ export default class Plugin {
       templates: pluginTemplates,
       helpers: pluginHelpers,
       context,
+      entityData,
+      fieldData,
     } = plugin(entities, dest)
 
     Plugin.all.push(
@@ -178,6 +167,8 @@ export default class Plugin {
         pluginHelpers,
         userHelpers,
         context,
+        entityData,
+        fieldData,
       ).init(),
     )
   }
@@ -189,9 +180,47 @@ export default class Plugin {
         HandleBars.registerHelper(name, helper),
       )
 
+      // Register plugin data for entities and fields
+      ENTITY_DATA.empty()
+      FIELD_DATA.empty()
+      plugin.entities.map(
+        entity => (
+          ENTITY_DATA.set(entity.name, plugin.entityData(entity)),
+          entity.fields.map(field =>
+            FIELD_DATA.set(
+              `${entity.name}:${field.name}`,
+              plugin.fieldData(field),
+            ),
+          )
+        ),
+      )
+
+      console.log(
+        // JSON
+        ENTITY_DATA,
+        FIELD_DATA,
+      )
+
+      // Run generation
       Plugin.load(plugin)
       plugin.generate()
       Plugin.unload(plugin)
     })
+  }
+
+  static load(plugin: Plugin): void {
+    Object.entries(plugin.helpers).map(([name, helper]) =>
+      HandleBars.registerHelper(name, helper),
+    )
+    plugin.partials.map(({ name, partial }) =>
+      HandleBars.registerPartial(name, partial),
+    )
+  }
+
+  static unload(plugin: Plugin): void {
+    Object.entries(plugin.helpers).map(([name]) =>
+      HandleBars.unregisterHelper(name),
+    )
+    plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name))
   }
 }

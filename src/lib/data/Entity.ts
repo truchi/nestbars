@@ -1,6 +1,9 @@
 import deepFreeze from 'deep-freeze'
 import { EntityOptions, FieldType } from '../../types/decorators'
+import { Data } from './Data'
 import { Field } from './Field'
+
+export const ENTITY_DATA = new Data()
 
 export class Entity {
   static all: Entity[] = []
@@ -15,12 +18,12 @@ export class Entity {
     return this.fields.filter(({ type }) => types.includes(type))
   }
 
-  static add(entity: Entity) {
-    Entity.all.push(entity)
+  data(): any {
+    return ENTITY_DATA.get(this.name)
   }
 
-  static find(name: string): Entity | undefined {
-    return Entity.all.find(entity => entity.name === name)
+  static add(entity: Entity) {
+    Entity.all.push(entity)
   }
 
   static init() {

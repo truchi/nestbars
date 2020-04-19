@@ -1,5 +1,6 @@
 import { Class } from './utils'
 import { Entity } from '../lib/data/Entity'
+import { Field } from '../lib/data/Field'
 
 export type Context<T> = {
   plugin: string
@@ -27,6 +28,8 @@ export type PluginOptions = {
   templates: string
   helpers?: Helpers
   context?: () => any
+  entityData?: (entity: Entity) => any
+  fieldData?: (field: Field) => any
 }
 
 export type Plugin = (entities: Entity[], dest: PathFunction) => PluginOptions

@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const deep_freeze_1 = __importDefault(require("deep-freeze"));
+const Data_1 = require("./Data");
 const Field_1 = require("./Field");
+exports.ENTITY_DATA = new Data_1.Data();
 class Entity {
     constructor(name, options) {
         var _a;
@@ -16,11 +18,11 @@ class Entity {
     fieldsByType(...types) {
         return this.fields.filter(({ type }) => types.includes(type));
     }
+    data() {
+        return exports.ENTITY_DATA.get(this.name);
+    }
     static add(entity) {
         Entity.all.push(entity);
-    }
-    static find(name) {
-        return Entity.all.find(entity => entity.name === name);
     }
     static init() {
         const map = Entity.all.reduce((map, entity) => ({

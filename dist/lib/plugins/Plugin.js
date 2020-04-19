@@ -16,13 +16,14 @@ const HandleBars = __importStar(require("handlebars"));
 const utils_1 = require("../utils");
 const helpers_1 = __importDefault(require("./helpers"));
 const Entity_1 = require("../data/Entity");
+const Field_1 = require("../data/Field");
 exports.PARTIALS = 'partials';
 exports.ANCHORS = {
     NAME: '[name]',
     TYPE: '[type]',
 };
 class Plugin {
-    constructor(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers = {}, userHelpers = {}, context = () => null) {
+    constructor(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers = {}, userHelpers = {}, context = () => null, entityData = (entity) => null, fieldData = (field) => null) {
         this.name = name;
         this.entities = entities;
         this.dest = dest;
@@ -31,6 +32,8 @@ class Plugin {
         this.pluginHelpers = pluginHelpers;
         this.userHelpers = userHelpers;
         this.context = context;
+        this.entityData = entityData;
+        this.fieldData = fieldData;
         this.templates = [];
         this.partials = [];
         this.helpers = {};
@@ -85,6 +88,27 @@ class Plugin {
             context,
         }))))));
     }
+    static async register([plugin, options]) {
+        const { classes, dest: _dest, templates: userTemplates, helpers: userHelpers, } = options;
+        const names = classes.map(({ name }) => name);
+        const entities = Plugin.entities.filter(({ name }) => names.includes(name));
+        const dest = utils_1.toPathFunction(_dest, exports.ANCHORS);
+        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, entityData, fieldData, } = plugin(entities, dest);
+        Plugin.all.push(await new Plugin(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers, userHelpers, context, entityData, fieldData).init());
+    }
+    static async generate() {
+        Plugin.all.map(plugin => {
+            Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
+            Entity_1.ENTITY_DATA.empty();
+            Field_1.FIELD_DATA.empty();
+            plugin.entities.map(entity => (Entity_1.ENTITY_DATA.set(entity.name, plugin.entityData(entity)),
+                entity.fields.map(field => Field_1.FIELD_DATA.set(`${entity.name}:${field.name}`, plugin.fieldData(field)))));
+            console.log(Entity_1.ENTITY_DATA, Field_1.FIELD_DATA);
+            Plugin.load(plugin);
+            plugin.generate();
+            Plugin.unload(plugin);
+        });
+    }
     static load(plugin) {
         Object.entries(plugin.helpers).map(([name, helper]) => HandleBars.registerHelper(name, helper));
         plugin.partials.map(({ name, partial }) => HandleBars.registerPartial(name, partial));
@@ -92,22 +116,6 @@ class Plugin {
     static unload(plugin) {
         Object.entries(plugin.helpers).map(([name]) => HandleBars.unregisterHelper(name));
         plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name));
-    }
-    static async register([plugin, options]) {
-        const { classes, dest: _dest, templates: userTemplates, helpers: userHelpers, } = options;
-        const names = classes.map(({ name }) => name);
-        const entities = Plugin.entities.filter(({ name }) => names.includes(name));
-        const dest = utils_1.toPathFunction(_dest, exports.ANCHORS);
-        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, } = plugin(entities, dest);
-        Plugin.all.push(await new Plugin(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers, userHelpers, context).init());
-    }
-    static async generate() {
-        Plugin.all.map(plugin => {
-            Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
-            Plugin.load(plugin);
-            plugin.generate();
-            Plugin.unload(plugin);
-        });
     }
 }
 exports.default = Plugin;

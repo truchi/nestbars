@@ -8,11 +8,14 @@
 {{/each}}
 
 {{>entity__db_decorator}}
-{{>entity__gql_decorator}}
+{{>entity__gql_decorator}} --}}
 
-export class {{entity.name}} {
+{{call entity 'data'}}
+
+{{!-- export class {{entity.name}} { --}}
 {{#each entity.fields as |field|}}
-  {{>entity__field .. field=field}}
+  {{!-- {{>entity__field .. field=field}} --}}
+  {{call field 'data'}}
 
 {{/each}}
-} --}}
+{{!-- } --}}

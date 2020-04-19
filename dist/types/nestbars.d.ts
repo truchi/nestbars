@@ -1,5 +1,6 @@
 import { Class } from './utils';
 import { Entity } from '../lib/data/Entity';
+import { Field } from '../lib/data/Field';
 export declare type Context<T> = {
     plugin: string;
     type: string;
@@ -22,6 +23,8 @@ export declare type PluginOptions = {
     templates: string;
     helpers?: Helpers;
     context?: () => any;
+    entityData?: (entity: Entity) => any;
+    fieldData?: (field: Field) => any;
 };
 export declare type Plugin = (entities: Entity[], dest: PathFunction) => PluginOptions;
 export declare type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>;
