@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const HandleBars = __importStar(require("handlebars"));
 const handlebars_helpers_1 = __importDefault(require("handlebars-helpers"));
-const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../utils");
 const SWITCHES = [];
 const helpers = {
@@ -46,21 +45,6 @@ const helpers = {
         });
         str = trap.includes(str.trim()) ? '' : str;
         return new HandleBars.SafeString(str);
-    },
-    enums(entity) {
-        return entity.fields.filter(({ type: { type } }) => type === decorators_1.FieldType.Enum || type === decorators_1.FieldType.Set);
-    },
-    hasJoinColumn(entity) {
-        return !!entity
-            .fieldsByType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne)
-            .filter(({ options }) => !!options.joinColumn)
-            .length;
-    },
-    hasJoinTable(entity) {
-        return !!entity
-            .fieldsByType(decorators_1.FieldType.ManyToMany)
-            .filter(({ options }) => !!options.joinTable)
-            .length;
     },
 };
 exports.default = helpers;

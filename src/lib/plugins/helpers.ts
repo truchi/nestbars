@@ -1,15 +1,7 @@
 import * as HandleBars from 'handlebars'
 import handlebarsHelpers from 'handlebars-helpers'
-import { FieldType, RelationOptions } from '../../types/decorators'
 import { Helpers } from '../../types/nestbars'
 import { uncapitalize } from '../utils'
-import { Entity } from '../data/Entity'
-import { Field } from '../data'
-
-export type Context = {
-  entities: Entity[]
-  entity: Entity
-}
 
 const SWITCHES: { value: any; break: boolean }[] = []
 
@@ -68,32 +60,6 @@ const helpers: Helpers = {
 
     return new HandleBars.SafeString(str)
   },
-
-  //
-  // Entity
-  //
-
-  enums(entity: Entity): Field[] {
-    return entity.fields.filter(
-      ({ type: { type } }) => type === FieldType.Enum || type === FieldType.Set,
-    )
-  },
-  hasJoinColumn(entity: Entity): boolean {
-    return !!entity
-      .fieldsByType(FieldType.OneToOne, FieldType.ManyToOne)
-      .filter(({ options }) => !!(options as RelationOptions<any>).joinColumn)
-      .length
-  },
-  hasJoinTable(entity: Entity): boolean {
-    return !!entity
-      .fieldsByType(FieldType.ManyToMany)
-      .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
-      .length
-  },
-
-  //
-  // Field
-  //
 }
 
 export default helpers

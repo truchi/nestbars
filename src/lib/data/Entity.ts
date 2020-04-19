@@ -1,6 +1,5 @@
 import deepFreeze from 'deep-freeze'
 import { EntityOptions, FieldType } from '../../types/decorators'
-import { flat, unique } from '../utils'
 import { Field } from './Field'
 
 export class Entity {
@@ -14,21 +13,8 @@ export class Entity {
     this.options.options = this.options.options ?? {}
   }
 
-  dependencies(): Entity[] {
-    return unique(flat(this.fields.map(field => field.type.deps))) //
-      .map(name => Entity.find(name))
-  }
-
-  dbOptions(): object {
-    return this.options.options
-  }
-
-  gqlOptions(): object {
-    return { description: this.options.description || undefined }
-  }
-
   fieldsByType(...types: FieldType[]): Field[] {
-    return this.fields.filter(({ type: { type } }) => types.includes(type))
+    return this.fields.filter(({ type }) => types.includes(type))
   }
 
   static add(entity: Entity) {

@@ -47,7 +47,7 @@ export type FieldOptions =
   | ScalarOptions
   | SetOptions
   | SpecialOptions
-  | {} // TOOD void?
+  | RelationOptions<any>
 
 //
 // Scalar fields

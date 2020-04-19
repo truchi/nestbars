@@ -8,9 +8,6 @@ export declare class Entity {
     templatePath: string;
     fields: Field[];
     constructor(name: string, options: EntityOptions);
-    dependencies(): Entity[];
-    dbOptions(): object;
-    gqlOptions(): object;
     fieldsByType(...types: FieldType[]): Field[];
     static add(entity: Entity): void;
     static find(name: string): Entity | undefined;

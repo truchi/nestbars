@@ -1,5 +1,7 @@
+import { Class, PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { Class, PathFunction } from 'src/types/utils'
+import context from './context'
+import helpers from './helpers'
 
 const entity: Plugin = (
   entities: Class[],
@@ -7,11 +9,8 @@ const entity: Plugin = (
 ): PluginOptions => ({
   name: 'Nestbars Entities Plugin',
   templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-  context: () =>
-    entities.reduce(
-      (o, { name }) => ({ ...o, [name]: dest('entity', name) }),
-      {},
-    ),
+  context: context(entities, dest),
+  helpers: helpers(entities, dest),
 })
 
 export default entity

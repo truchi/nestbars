@@ -1,5 +1,5 @@
 @
-{{#switch field.type}}
+{{#switch field.type.type}}
   {{#case 'one-to-one'}}OneToOne{{/case}}
   {{#case 'one-to-many'}}OneToMany{{/case}}
   {{#case 'many-to-one'}}ManyToOne{{/case}}
@@ -7,25 +7,25 @@
 {{/switch}}
 (
 () => {{call field 'dbType'}},
-(
+{{!-- (
 {{uncapitalize (call field 'dbType')}}: {{call field 'dbType'}}
-) => {{uncapitalize (call field 'dbType')}}.{{field.withField}}
+) => {{uncapitalize (call field 'dbType')}}.{{field.withField}} --}}
 )
-{{#switch field.type}}
+{{#switch field.type.type}}
   {{#case 'one-to-one' 'many-to-one'}}
-    {{#if field.joinColumn}}
+    {{#if field.options.options.joinColumn}}
       @JoinColumn(
-      {{#if (isObject field.joinColumn)}}
-        {{stringify field.joinColumn trap='{}'}}
+      {{#if (isObject field.options.options.joinColumn)}}
+        {{stringify field.options.options.joinColumn trap='{}'}}
       {{/if}}
       )
     {{/if}}
   {{/case}}
   {{#case 'many-to-many'}}
-    {{#if field.joinTable}}
+    {{#if field.options.options.joinTable}}
       @JoinTable(
-      {{#if (isObject field.joinTable)}}
-        {{stringify field.joinTable trap='{}'}}
+      {{#if (isObject field.options.options.joinTable)}}
+        {{stringify field.options.options.joinTable trap='{}'}}
       {{/if}}
       )
     {{/if}}

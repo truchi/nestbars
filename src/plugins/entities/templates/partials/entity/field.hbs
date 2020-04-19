@@ -1,4 +1,4 @@
-{{#switch field.type}}
+{{#switch field.type.type}}
   {{#case 'id' 'uuid'}}
     {{>field__primary_db_decorator}}
     {{>field__primary_gql_decorator}}

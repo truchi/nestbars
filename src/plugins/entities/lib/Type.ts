@@ -1,5 +1,5 @@
-import { Class } from '../../types/utils'
-import { FieldType } from '../../types/decorators'
+import { Class } from '../../../types/utils'
+import { FieldType } from '../../../types/decorators'
 
 export type Type = {
   type: FieldType
