@@ -28,11 +28,4 @@ export default {
   //
   // Field
   //
-
-  // types(field: Field): Types {
-  //   return typesTo(field)
-  // },
-  // options(field: Field) {
-  //   return
-  // },
 }

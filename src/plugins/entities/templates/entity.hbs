@@ -10,12 +10,12 @@
 {{>entity__db_decorator}}
 {{>entity__gql_decorator}} --}}
 
-{{call entity 'data'}}
+{{lookup (call entity 'data') 'dbDecorator'}}
 
 {{!-- export class {{entity.name}} { --}}
 {{#each entity.fields as |field|}}
   {{!-- {{>entity__field .. field=field}} --}}
-  {{call field 'data'}}
+  {{lookup (call field 'data') 'dbDecorator'}}
 
 {{/each}}
 {{!-- } --}}
