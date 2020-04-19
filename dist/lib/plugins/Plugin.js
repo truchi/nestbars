@@ -101,8 +101,8 @@ class Plugin {
             Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
             Entity_1.ENTITY_DATA.empty();
             Field_1.FIELD_DATA.empty();
-            plugin.entities.map(entity => (Entity_1.ENTITY_DATA.set(entity.name, plugin.entityData(entity)),
-                entity.fields.map(field => Field_1.FIELD_DATA.set(`${entity.name}:${field.name}`, plugin.fieldData(field)))));
+            plugin.entities.map(entity => (Entity_1.ENTITY_DATA.set(plugin.entityData(entity), entity.name),
+                entity.fields.map(field => Field_1.FIELD_DATA.set(plugin.fieldData(field), `${entity.name}:${field.name}`))));
             console.log(Entity_1.ENTITY_DATA, Field_1.FIELD_DATA);
             Plugin.load(plugin);
             plugin.generate();

@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const name = (keys) => keys.join(':');
 class Data {
     constructor() {
         this.data = {};
     }
-    set(name, data) {
-        this.data[name] = data;
+    set(data, ...keys) {
+        this.data[name(keys)] = data;
     }
-    get(name) {
-        return this.data[name];
+    get(...keys) {
+        return this.data[name(keys)];
     }
     empty() {
         this.data = {};

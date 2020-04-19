@@ -185,11 +185,11 @@ export default class Plugin {
       FIELD_DATA.empty()
       plugin.entities.map(
         entity => (
-          ENTITY_DATA.set(entity.name, plugin.entityData(entity)),
+          ENTITY_DATA.set(plugin.entityData(entity), entity.name),
           entity.fields.map(field =>
             FIELD_DATA.set(
-              `${entity.name}:${field.name}`,
               plugin.fieldData(field),
+              `${entity.name}:${field.name}`,
             ),
           )
         ),

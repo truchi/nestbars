@@ -1,12 +1,14 @@
+const name = (keys: string[]): string => keys.join(':')
+
 export class Data {
   data: { [key: string]: any } = {}
 
-  set(name: string, data: any): void {
-    this.data[name] = data
+  set(data: any, ...keys: string[]): void {
+    this.data[name(keys)] = data
   }
 
-  get(name: string): any {
-    return this.data[name]
+  get(...keys: string[]): any {
+    return this.data[name(keys)]
   }
 
   empty(): void {
