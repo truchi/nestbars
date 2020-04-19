@@ -1,6 +1,6 @@
-import { Class, PathFunction } from '../../types/utils';
-import { Entity, Field } from '../../lib/data';
-declare const _default: (entities: Class[], dest: PathFunction) => {
+import { Entity } from '../../lib/data/Entity';
+import { Field } from '../../lib/data/Field';
+declare const _default: {
     enums(entity: Entity): Field[];
     hasJoinColumn(entity: Entity): boolean;
     hasJoinTable(entity: Entity): boolean;

@@ -1,8 +1,9 @@
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { Class, PathFunction } from 'src/types/utils'
+import { PathFunction } from 'src/types/utils'
+import { Entity } from '../../lib/data/Entity'
 
 const entity: Plugin = (
-  entities: Class[],
+  entities: Entity[],
   dest: PathFunction,
 ): PluginOptions => ({
   name: 'Nestbars Resolvers Plugin',

@@ -9,7 +9,7 @@ const entity = (entities, dest) => ({
     name: 'Nestbars Entities Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     context: context_1.default(entities, dest),
-    helpers: helpers_1.default(entities, dest),
+    helpers: helpers_1.default,
 });
 exports.default = entity;
 //# sourceMappingURL=index.js.map

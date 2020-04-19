@@ -1,7 +1,10 @@
 import { FieldOptions } from '../../../types/decorators';
 export declare type Options = {
-    options: FieldOptions;
-    db: object;
-    gql: object;
+    dbOptions: object;
+    gqlOptions: object;
 };
-export declare const OptionsFactory: (options: FieldOptions) => Options;
+export declare type dbScalarOptions = {
+    type: string;
+};
+declare const _default: (options: FieldOptions, dbType: string) => Options;
+export default _default;

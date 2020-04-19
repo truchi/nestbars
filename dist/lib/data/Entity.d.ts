@@ -4,8 +4,6 @@ export declare class Entity {
     readonly name: string;
     readonly options: EntityOptions;
     static all: Entity[];
-    dest: string;
-    templatePath: string;
     fields: Field[];
     constructor(name: string, options: EntityOptions);
     fieldsByType(...types: FieldType[]): Field[];

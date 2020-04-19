@@ -15,7 +15,7 @@ const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
 const HandleBars = __importStar(require("handlebars"));
 const utils_1 = require("../utils");
 const helpers_1 = __importDefault(require("./helpers"));
-const data_1 = require("../data");
+const Entity_1 = require("../data/Entity");
 exports.PARTIALS = 'partials';
 exports.ANCHORS = {
     NAME: '[name]',
@@ -75,12 +75,12 @@ class Plugin {
         this.helpers = this.loadHelpers();
         return this;
     }
-    async generate(entities) {
+    async generate() {
         const context = this.context();
-        await Promise.all(entities.map(async (entity) => Promise.all(this.templates.map(async ({ type, template }) => await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
+        await Promise.all(this.entities.map(async (entity) => Promise.all(this.templates.map(async ({ type, template }) => await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
             plugin: this.name,
             type,
-            entities: data_1.Entity.all,
+            entities: Entity_1.Entity.all,
             entity,
             context,
         }))))));
@@ -94,21 +94,23 @@ class Plugin {
         plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name));
     }
     static async register([plugin, options]) {
-        const { entities, dest, templates: userTemplates, helpers: userHelpers, } = options;
-        const destFn = utils_1.toPathFunction(dest, exports.ANCHORS);
-        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, } = plugin(entities, destFn);
-        Plugin.all.push(await new Plugin(name, entities, destFn, pluginTemplates, userTemplates, pluginHelpers, userHelpers, context).init());
+        const { classes, dest: _dest, templates: userTemplates, helpers: userHelpers, } = options;
+        const names = classes.map(({ name }) => name);
+        const entities = Plugin.entities.filter(({ name }) => names.includes(name));
+        const dest = utils_1.toPathFunction(_dest, exports.ANCHORS);
+        const { name, templates: pluginTemplates, helpers: pluginHelpers, context, } = plugin(entities, dest);
+        Plugin.all.push(await new Plugin(name, entities, dest, pluginTemplates, userTemplates, pluginHelpers, userHelpers, context).init());
     }
-    static async generate(entities) {
-        Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
+    static async generate() {
         Plugin.all.map(plugin => {
-            const names = plugin.entities.map(({ name }) => name);
+            Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
             Plugin.load(plugin);
-            plugin.generate(entities.filter(({ name }) => names.includes(name)));
+            plugin.generate();
             Plugin.unload(plugin);
         });
     }
 }
 exports.default = Plugin;
 Plugin.all = [];
+Plugin.entities = [];
 //# sourceMappingURL=Plugin.js.map

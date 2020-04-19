@@ -1,7 +1,6 @@
 import { resolve, parse } from 'path'
 import readDirRec from 'recursive-readdir'
 import * as HandleBars from 'handlebars'
-import { Class } from '../../types/utils'
 import {
   Plugin as PluginType,
   Options,
@@ -17,7 +16,7 @@ import {
   uniqueBy,
 } from '../utils'
 import helpers from './helpers'
-import { Entity } from '../data'
+import { Entity } from '../data/Entity'
 
 export const PARTIALS = 'partials'
 export const ANCHORS = {
@@ -30,6 +29,7 @@ type Partial = { name: string; partial: string }
 
 export default class Plugin {
   static all: Plugin[] = []
+  static entities: Entity[] = []
 
   private templates: Template[] = []
   private partials: Partial[] = []
@@ -37,7 +37,7 @@ export default class Plugin {
 
   constructor(
     public name: string,
-    public entities: Class[],
+    public entities: Entity[],
     public dest: PathFunction,
     public pluginTemplates: string,
     public userTemplates?: string,
@@ -107,11 +107,11 @@ export default class Plugin {
     return this
   }
 
-  async generate(entities: Entity[]): Promise<void> {
+  async generate(): Promise<void> {
     const context = this.context()
 
     await Promise.all(
-      entities.map(async entity =>
+      this.entities.map(async entity =>
         Promise.all(
           this.templates.map(
             async ({ type, template }) =>
@@ -151,24 +151,28 @@ export default class Plugin {
     void
   > {
     const {
-      entities,
-      dest,
+      classes,
+      dest: _dest,
       templates: userTemplates,
       helpers: userHelpers,
     } = options
-    const destFn = toPathFunction(dest, ANCHORS)
+
+    const names = classes.map(({ name }) => name)
+    const entities = Plugin.entities.filter(({ name }) => names.includes(name))
+    const dest = toPathFunction(_dest, ANCHORS)
+
     const {
       name,
       templates: pluginTemplates,
       helpers: pluginHelpers,
       context,
-    } = plugin(entities, destFn)
+    } = plugin(entities, dest)
 
     Plugin.all.push(
       await new Plugin(
         name,
         entities,
-        destFn,
+        dest,
         pluginTemplates,
         userTemplates,
         pluginHelpers,
@@ -178,17 +182,15 @@ export default class Plugin {
     )
   }
 
-  static async generate(entities: Entity[]): Promise<void> {
-    // Register global helpers
-    Object.entries(helpers).map(([name, helper]) =>
-      HandleBars.registerHelper(name, helper),
-    )
-
+  static async generate(): Promise<void> {
     Plugin.all.map(plugin => {
-      const names = plugin.entities.map(({ name }) => name)
+      // Register global helpers
+      Object.entries(helpers).map(([name, helper]) =>
+        HandleBars.registerHelper(name, helper),
+      )
 
       Plugin.load(plugin)
-      plugin.generate(entities.filter(({ name }) => names.includes(name)))
+      plugin.generate()
       Plugin.unload(plugin)
     })
   }

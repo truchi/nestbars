@@ -45,6 +45,21 @@ export const uniqueBy = (key: string) => (xs: any[]): any[] =>
 export const assign = <T>(x: T, ...xs: object[]): T =>
   Object.assign.apply(Object, [{}, x, ...xs])
 
+export const pick = <T extends object, K extends keyof T>(
+  o: T,
+  keys: K[],
+): Partial<T> =>
+  Object.entries(o).reduce(
+    (o, [k, v]) => (keys.includes(k as K) ? { ...o, [k]: v } : o),
+    {},
+  )
+
+export const rename = <T extends object, K extends keyof T>(
+  o: T,
+  names: { [key in K]: string },
+): object =>
+  Object.entries(o).reduce((o, [k, v]) => ({ o, [names[k] ?? k]: v }), {})
+
 //
 // String
 //
@@ -68,4 +83,18 @@ export const toPathFunction = (
         .replace(TYPE, type)
         .replace(NAME, name),
     )
+}
+
+//
+// Typescript
+//
+
+export const assertNever = (x: never, file: string, reason: string): never => {
+  throw new Error(
+    `Missing case in ${file} (${reason}) for:\n${x}\n${JSON.stringify(
+      x,
+      null,
+      2,
+    )}`,
+  )
 }

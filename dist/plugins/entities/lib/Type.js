@@ -1,6 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../../types/decorators");
+exports.tsType = (type, name = '') => {
+    switch (type) {
+        case decorators_1.FieldType.Id:
+        case decorators_1.FieldType.Int:
+        case decorators_1.FieldType.Float:
+        case decorators_1.FieldType.Version:
+            return 'number';
+        case decorators_1.FieldType.String:
+        case decorators_1.FieldType.Uuid:
+            return 'string';
+        case decorators_1.FieldType.Date:
+        case decorators_1.FieldType.Created:
+        case decorators_1.FieldType.Updated:
+            return 'Date';
+        case decorators_1.FieldType.Boolean:
+            return 'boolean';
+        case decorators_1.FieldType.Enum:
+        case decorators_1.FieldType.OneToOne:
+        case decorators_1.FieldType.ManyToOne:
+            return name;
+        case decorators_1.FieldType.Set:
+        case decorators_1.FieldType.OneToMany:
+        case decorators_1.FieldType.ManyToMany:
+            return `${name}[]`;
+        default:
+            return assertNever(type);
+    }
+};
 exports.TypeFactory = (type, name) => ({
     type,
     deps: [],

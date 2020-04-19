@@ -1,4 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (entities, dest) => () => entities.reduce((o, { name }) => ({ ...o, [name]: dest('entity', name) }), {});
+const EntityData_1 = require("./lib/EntityData");
+exports.default = (entities, dest) => () => entities.map(entity => new EntityData_1.EntityData(entity, dest('entity', entity.name)));
 //# sourceMappingURL=context.js.map

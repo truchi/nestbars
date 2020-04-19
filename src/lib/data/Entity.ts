@@ -5,8 +5,6 @@ import { Field } from './Field'
 export class Entity {
   static all: Entity[] = []
 
-  dest: string
-  templatePath: string
   fields: Field[] = []
 
   constructor(readonly name: string, readonly options: EntityOptions) {

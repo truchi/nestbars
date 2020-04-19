@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../types/decorators");
-exports.default = (entities, dest) => ({
+exports.default = {
     enums(entity) {
         return entity.fields.filter(({ type }) => type === decorators_1.FieldType.Enum || type === decorators_1.FieldType.Set);
     },
@@ -17,5 +17,5 @@ exports.default = (entities, dest) => ({
             .filter(({ options }) => !!options.joinTable)
             .length;
     },
-});
+};
 //# sourceMappingURL=helpers.js.map

@@ -1,9 +1,8 @@
-import { Class, PathFunction } from '../../types/utils'
+import { PathFunction } from '../../types/utils'
+import { Entity } from '../../lib/data/Entity'
+import { EntityData } from './lib/EntityData'
 
-export default (entities: Class[], dest: PathFunction) =>
+export default (entities: Entity[], dest: PathFunction) =>
   //
   () =>
-    entities.reduce(
-      (o, { name }) => ({ ...o, [name]: dest('entity', name) }),
-      {},
-    )
+    entities.map(entity => new EntityData(entity, dest('entity', entity.name)))

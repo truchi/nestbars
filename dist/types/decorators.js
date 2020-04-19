@@ -19,4 +19,19 @@ var FieldType;
     FieldType["ManyToOne"] = "many-to-one";
     FieldType["ManyToMany"] = "many-to-many";
 })(FieldType = exports.FieldType || (exports.FieldType = {}));
+class ScalarOptions {
+}
+exports.ScalarOptions = ScalarOptions;
+class PrimaryOptions {
+}
+exports.PrimaryOptions = PrimaryOptions;
+class SpecialOptions {
+}
+exports.SpecialOptions = SpecialOptions;
+class SetOptions {
+}
+exports.SetOptions = SetOptions;
+class RelationOptions {
+}
+exports.RelationOptions = RelationOptions;
 //# sourceMappingURL=decorators.js.map

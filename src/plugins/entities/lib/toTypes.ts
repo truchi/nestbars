@@ -1,18 +1,14 @@
-import { Class } from '../../../types/utils'
 import { FieldType } from '../../../types/decorators'
+import { assertNever } from '../../../lib/utils'
 
-export type Type = {
-  type: FieldType
-  ts: string
-  db: string
-  gql: string
-  deps: Class[]
+type Types = {
+  tsType: string
+  dbType: string
+  gqlType: string
 }
 
-export const TypeFactory = (type: FieldType, name: string): Type => ({
-  type,
-  deps: [],
-  ts: (() => {
+export default (type: FieldType, name = ''): Types => ({
+  tsType: (() => {
     switch (type) {
       case FieldType.Id:
       case FieldType.Int:
@@ -37,10 +33,10 @@ export const TypeFactory = (type: FieldType, name: string): Type => ({
       case FieldType.ManyToMany:
         return `${name}[]`
       default:
-        return assertNever(type)
+        return assertNever(type, __filename, 'tsType')
     }
   })(),
-  db: (() => {
+  dbType: (() => {
     switch (type) {
       case FieldType.Id:
       case FieldType.Int:
@@ -67,10 +63,10 @@ export const TypeFactory = (type: FieldType, name: string): Type => ({
       case FieldType.ManyToMany:
         return name
       default:
-        return assertNever(type)
+        return assertNever(type, __filename, 'dbType')
     }
   })(),
-  gql: (() => {
+  gqlType: (() => {
     switch (type) {
       case FieldType.Id:
       case FieldType.Int:
@@ -96,11 +92,7 @@ export const TypeFactory = (type: FieldType, name: string): Type => ({
       case FieldType.ManyToMany:
         return `[${name}]`
       default:
-        return assertNever(type)
+        return assertNever(type, __filename, 'gqlType')
     }
   })(),
 })
-
-const assertNever = (x: never): never => {
-  throw new Error('Missing case for: ' + x)
-}

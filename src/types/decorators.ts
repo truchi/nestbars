@@ -8,10 +8,10 @@ export type EntityDecorator = (options?: EntityOptions) => Function
 
 export type EntityOptions = {
   name?: string
-  // implements?: string[]
-  // abstract?: boolean
   description?: string
   options?: object
+  // implements?: string[] // TODO
+  // abstract?: boolean
 }
 
 //
@@ -55,7 +55,7 @@ export type FieldOptions =
 
 export type ScalarDecorator = (options?: ScalarOptions) => Function
 
-export type ScalarOptions = {
+export class ScalarOptions {
   primary?: boolean
   unique?: boolean
   nullable?: boolean
@@ -71,7 +71,7 @@ export type ScalarOptions = {
 
 export type PrimaryDecorator = (options?: PrimaryOptions) => Function
 
-export type PrimaryOptions = {
+export class PrimaryOptions {
   description?: string
   deprecation?: string
   options?: object
@@ -83,7 +83,7 @@ export type PrimaryOptions = {
 
 export type SpecialDecorator = (options?: SpecialOptions) => Function
 
-export type SpecialOptions = {
+export class SpecialOptions {
   primary?: boolean
   description?: string
   deprecation?: string
@@ -101,7 +101,7 @@ export type SetDecorator = (
 ) => Function
 
 // TODO numeric, imports
-export type SetOptions = {
+export class SetOptions {
   values: string[]
   name: string
   primary?: boolean
@@ -138,11 +138,13 @@ export type ManyToManyDecorator<T extends Class> = (
   joinTable?: RelationOptions<T>['joinTable'],
 ) => Function
 
-export type RelationOptions<T extends Class> = {
+export class RelationOptions<T extends Class> {
   withEntity: () => T
   withField: keyof InstanceType<T>
   joinColumn?: boolean | object
   joinTable?: boolean | object
+  description?: string
+  deprecation?: string
 }
 
 // TODO description

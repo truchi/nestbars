@@ -1,13 +1,12 @@
 import { Class } from '../../types/utils'
 import {
-  FieldOptions,
   FieldType,
   SetOptions,
   RelationOptions,
   EntityOptions,
 } from '../../types/decorators'
-import { assign } from '../utils'
-import { Field, Entity } from '../data'
+import { Entity } from '../data/Entity'
+import { Field } from '../data/Field'
 
 export const makeEntityDecoratorFactory = () =>
   //
@@ -15,14 +14,22 @@ export const makeEntityDecoratorFactory = () =>
     //
     ({ name }: any): void => Entity.add(new Entity(name, options))
 
-export const makeFieldDecoratorFactory = <Options extends FieldOptions>(
+export const makeFieldDecoratorFactory = (
   type: FieldType,
+  OptionsClass: Class,
 ) =>
   //
-  (options: Options = {} as Options) =>
+  (options: InstanceType<Class> = {}) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
-      Field.add(new Field(entity, name, type, options))
+      Field.add(
+        new Field(
+          entity,
+          name,
+          type,
+          Object.assign(new OptionsClass(), options),
+        ),
+      )
 
 export const makeSetFieldDecoratorFactory = (type: FieldType) =>
   //
@@ -38,7 +45,7 @@ export const makeSetFieldDecoratorFactory = (type: FieldType) =>
           entity,
           name,
           type,
-          assign(options, { values, name: tsName }),
+          Object.assign(new SetOptions(), options, { values, name: tsName }),
         ),
       )
 
@@ -51,10 +58,15 @@ export const makeRelationDecoratorFactory = (type: FieldType) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
       Field.add(
-        new Field(entity, name, type, {
-          withEntity,
-          withField,
-        }),
+        new Field(
+          entity,
+          name,
+          type,
+          Object.assign(new RelationOptions(), {
+            withEntity,
+            withField,
+          }),
+        ),
       )
 
 export const makeJoinColumnRelationDecoratorFactory = (type: FieldType) =>
@@ -67,11 +79,16 @@ export const makeJoinColumnRelationDecoratorFactory = (type: FieldType) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
       Field.add(
-        new Field(entity, name, type, {
-          withEntity,
-          withField,
-          joinColumn,
-        }),
+        new Field(
+          entity,
+          name,
+          type,
+          Object.assign(new RelationOptions(), {
+            withEntity,
+            withField,
+            joinColumn,
+          }),
+        ),
       )
 
 export const makeJoinTableRelationDecoratorFactory = (type: FieldType) =>
@@ -84,9 +101,14 @@ export const makeJoinTableRelationDecoratorFactory = (type: FieldType) =>
     //
     ({ constructor: { name: entity } }: any, name: string): void =>
       Field.add(
-        new Field(entity, name, type, {
-          withEntity,
-          withField,
-          joinTable,
-        }),
+        new Field(
+          entity,
+          name,
+          type,
+          Object.assign(new RelationOptions(), {
+            withEntity,
+            withField,
+            joinTable,
+          }),
+        ),
       )

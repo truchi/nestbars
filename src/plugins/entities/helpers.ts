@@ -1,8 +1,12 @@
-import { Class, PathFunction } from '../../types/utils'
 import { FieldType, RelationOptions } from '../../types/decorators'
-import { Entity, Field } from '../../lib/data'
+import { Entity } from '../../lib/data/Entity'
+import { Field } from '../../lib/data/Field'
 
-export default (entities: Class[], dest: PathFunction) => ({
+export default {
+  //
+  // Entity
+  //
+
   enums(entity: Entity): Field[] {
     return entity.fields.filter(
       ({ type }) => type === FieldType.Enum || type === FieldType.Set,
@@ -20,4 +24,15 @@ export default (entities: Class[], dest: PathFunction) => ({
       .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
       .length
   },
-})
+
+  //
+  // Field
+  //
+
+  // types(field: Field): Types {
+  //   return typesTo(field)
+  // },
+  // options(field: Field) {
+  //   return
+  // },
+}

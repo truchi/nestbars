@@ -1,4 +1,5 @@
 import { Class } from './utils'
+import { Entity } from '../lib/data/Entity'
 
 export type Context<T> = {
   plugin: string
@@ -15,7 +16,7 @@ export type Helpers = {
 }
 
 export type Options = {
-  entities: Class[]
+  classes: Class[]
   dest: string | PathFunction
   templates?: string
   helpers?: Helpers
@@ -28,6 +29,6 @@ export type PluginOptions = {
   context?: () => any
 }
 
-export type Plugin = (entities: Class[], dest: PathFunction) => PluginOptions
+export type Plugin = (entities: Entity[], dest: PathFunction) => PluginOptions
 
 export type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>
