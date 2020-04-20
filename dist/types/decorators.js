@@ -32,6 +32,7 @@ exports.RelationFields = [
     FieldType.ManyToOne,
     FieldType.ManyToMany,
 ];
+exports.DataFields = Object.values(FieldType).filter(type => !exports.GeneratedFields.includes(type) && !exports.RelationFields.includes(type));
 class ScalarOptions {
 }
 exports.ScalarOptions = ScalarOptions;

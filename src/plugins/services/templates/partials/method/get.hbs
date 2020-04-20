@@ -1,0 +1,6 @@
+// Returns an entity by id from the database
+async get(
+primary: {{entity.name}}Primary,
+): Promise<{{entity.name}}> {
+  return await this.repository.findOne(primary)
+  }

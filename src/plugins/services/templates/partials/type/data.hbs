@@ -1,0 +1,5 @@
+export type {{entity.name}}Data = {
+{{#each ($get 'entity.dataFields') as |field|}}
+  {{field.name}}{{#if field.nullable}}?{{/if}}:{{call field 'tsType'}}
+{{/each}}
+}

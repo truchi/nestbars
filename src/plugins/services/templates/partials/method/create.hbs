@@ -1,0 +1,6 @@
+// Stores an entity with data in the database
+async create(
+data: {{entity.name}}Data,
+): Promise<{{entity.name}}> {
+  return this.get(await this.repository.save(data as any))
+  }

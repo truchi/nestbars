@@ -11,11 +11,26 @@ const entity = ({ entities: entitiesDest }) => (entities, servicesDest) => ({
         const serviceDest = servicesDest('service', entity.name);
         const importPath = utils_1.relativeImport(serviceDest, entityDest);
         const generatedFields = entity.byType(...decorators_1.GeneratedFields);
+        const primaryFields = utils_1.uniqueBy('name')([
+            ...entity.byType(decorators_1.FieldType.Id, decorators_1.FieldType.Uuid),
+            ...entity.filter(({ options }) => options.primary),
+        ]);
+        const primaryObject = '{' + primaryFields.map(({ name }) => name).join(',') + '}';
+        const dataFields = utils_1.uniqueBy('name')(entity.byType(...decorators_1.DataFields));
+        const dependencies = [
+            entity.name,
+            ...entity
+                .byType(decorators_1.FieldType.Enum, decorators_1.FieldType.Set)
+                .map(field => field.options.name),
+        ];
         return {
             entityDest,
             serviceDest,
             importPath,
+            dependencies,
             generatedFields,
+            primaryFields,
+            dataFields,
         };
     },
 });

@@ -1,4 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { {{entity.name}} } from '{{$get 'entity.importPath'}}'
+import {
+{{#each ($get 'entity.dependencies') as |dependency|}}
+  {{dependency}},
+{{/each}}
+} from '{{$get 'entity.importPath'}}'

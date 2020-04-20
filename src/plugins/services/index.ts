@@ -1,7 +1,7 @@
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { GeneratedFields } from '../../types/decorators'
+import { GeneratedFields, FieldType, DataFields } from '../../types/decorators'
 import { PathFunction } from '../../types/utils'
-import { toPathFunction, relativeImport } from '../../lib/utils'
+import { toPathFunction, relativeImport, uniqueBy } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { ANCHORS } from '../../lib/plugins/Plugin'
 
@@ -24,12 +24,29 @@ const entity: (options: ServiceOptions) => Plugin =
         const serviceDest = servicesDest('service', entity.name)
         const importPath = relativeImport(serviceDest, entityDest)
         const generatedFields = entity.byType(...GeneratedFields)
+        const primaryFields = uniqueBy('name')([
+          ...entity.byType(FieldType.Id, FieldType.Uuid),
+          ...entity.filter(({ options }) => (options as any).primary),
+        ])
+        const primaryObject =
+          '{' + primaryFields.map(({ name }) => name).join(',') + '}'
+        const dataFields = uniqueBy('name')(entity.byType(...DataFields))
+        const dependencies = [
+          entity.name,
+          ...entity
+            .byType(FieldType.Enum, FieldType.Set)
+            .map(field => (field.options as any).name),
+        ]
 
         return {
           entityDest,
           serviceDest,
           importPath,
+          dependencies,
           generatedFields,
+          primaryFields,
+          // primaryObject,
+          dataFields,
         }
       },
     })

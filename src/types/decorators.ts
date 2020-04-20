@@ -57,6 +57,10 @@ export const RelationFields = [
   FieldType.ManyToMany,
 ]
 
+export const DataFields = Object.values(FieldType).filter(
+  type => !GeneratedFields.includes(type) && !RelationFields.includes(type),
+)
+
 export type FieldOptions =
   | PrimaryOptions
   | ScalarOptions
