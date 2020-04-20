@@ -14,7 +14,7 @@ const path_1 = require("path");
 const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
 const HandleBars = __importStar(require("handlebars"));
 const utils_1 = require("../utils");
-const helpers_1 = __importDefault(require("./helpers"));
+const helpers_1 = __importStar(require("./helpers"));
 const Entity_1 = require("../data/Entity");
 const Field_1 = require("../data/Field");
 exports.PARTIALS = 'partials';
@@ -80,13 +80,15 @@ class Plugin {
     }
     async generate() {
         const context = this.context();
-        await Promise.all(this.entities.map(async (entity) => Promise.all(this.templates.map(async ({ type, template }) => await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
-            plugin: this.name,
-            type,
-            entities: Entity_1.Entity.all,
-            entity,
-            context,
-        }))))));
+        const generate = (entity) => async ({ type, template }) => (helpers_1.reset(),
+            await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
+                plugin: this.name,
+                type,
+                entities: Entity_1.Entity.all,
+                entity,
+                context,
+            })));
+        await Promise.all(this.entities.map(async (entity) => Promise.all(this.templates.map(generate(entity)))));
     }
     static async register([plugin, options]) {
         const { classes, dest: _dest, templates: userTemplates, helpers: userHelpers, } = options;

@@ -15,7 +15,7 @@ import {
   writeFile,
   uniqueBy,
 } from '../utils'
-import helpers from './helpers'
+import helpers, { reset as resetHelpersData } from './helpers'
 import {
   Entity,
   set as setEntityData,
@@ -121,23 +121,23 @@ export default class Plugin {
   async generate(): Promise<void> {
     const context = this.context()
 
+    const generate = (entity: Entity) => async ({ type, template }) => (
+      resetHelpersData(),
+      await writeFile(
+        this.dest(type, entity.name),
+        HandleBars.compile(template)({
+          plugin: this.name,
+          type,
+          entities: Entity.all,
+          entity,
+          context,
+        } as Context<Entity>),
+      )
+    )
+
     await Promise.all(
       this.entities.map(async entity =>
-        Promise.all(
-          this.templates.map(
-            async ({ type, template }) =>
-              await writeFile(
-                this.dest(type, entity.name),
-                HandleBars.compile(template)({
-                  plugin: this.name,
-                  type,
-                  entities: Entity.all,
-                  entity,
-                  context,
-                } as Context<Entity>),
-              ),
-          ),
-        ),
+        Promise.all(this.templates.map(generate(entity))),
       ),
     )
   }
