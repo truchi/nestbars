@@ -15,6 +15,11 @@ exports.assign = (x, ...xs) => Object.assign.apply(Object, [{}, x, ...xs]);
 exports.pick = (o, keys) => Object.entries(o).reduce((o, [k, v]) => (keys.includes(k) ? { ...o, [k]: v } : o), {});
 exports.rename = (o, names) => Object.entries(o).reduce((o, [k, v]) => { var _a; return ({ ...o, [(_a = names[k]) !== null && _a !== void 0 ? _a : k]: v }); }, {});
 exports.uncapitalize = (s) => s.charAt(0).toLowerCase() + s.slice(1);
+exports.relativeImport = (from, to) => {
+    const { dir: fromDir } = path_1.parse(from);
+    const { dir: toDir, name: toName } = path_1.parse(to);
+    return path_1.resolve(path_1.relative(fromDir, '/' + toDir), toName);
+};
 exports.toPathFunction = (o, { NAME, TYPE }) => {
     const fn = typeof o === 'string' ? (() => o) : o;
     return (type, name) => path_1.normalize(fn(type, name)

@@ -1,7 +1,6 @@
-import { parse, relative } from 'path'
 import { FieldType, RelationOptions } from '../../types/decorators'
 import { Context } from '../../types/nestbars'
-import { unique, uniqueBy } from '../../lib/utils'
+import { unique, uniqueBy, relativeImport } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { Field } from '../../lib/data/Field'
 
@@ -46,11 +45,10 @@ export default {
         )
         .map(field => {
           const name = (field.options as RelationOptions<any>).withEntity().name
-          const { dir: fromDir } = parse(this.entity.data().dest)
-          const { dir: toDir, name: toName } = parse(
+          const from = relativeImport(
+            this.entity.data().dest,
             Entity.find(name).data().dest,
           )
-          const from = relative(fromDir, toDir) + '/' + toName
 
           return { name, from }
         }),
