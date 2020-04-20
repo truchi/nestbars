@@ -1,6 +1,6 @@
 import { PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { SetOptions, RelationOptions, FieldType } from '../../types/decorators'
+import { RelationOptions, FieldType } from '../../types/decorators'
 import { pick } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { Field } from '../../lib/data/Field'
