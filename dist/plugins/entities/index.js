@@ -7,7 +7,7 @@ const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../../lib/utils");
 const toOptions_1 = __importDefault(require("./lib/toOptions"));
 const toDecorators_1 = __importDefault(require("./lib/toDecorators"));
-const entity = (entities, path) => ({
+exports.default = ((entities, path) => ({
     name: 'Nestbars Entities Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity) => {
@@ -52,6 +52,5 @@ const entity = (entities, path) => ({
             gqlOptions,
         };
     },
-});
-exports.default = entity;
+}));
 //# sourceMappingURL=index.js.map

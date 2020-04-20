@@ -7,10 +7,7 @@ import { Field } from '../../lib/data/Field'
 import toOptions from './lib/toOptions'
 import toDecorator from './lib/toDecorators'
 
-const entity: Plugin = (
-  entities: Entity[],
-  path: PathFunction,
-): PluginOptions => ({
+export default ((entities: Entity[], path: PathFunction): PluginOptions => ({
   name: 'Nestbars Entities Plugin',
   templates: (__dirname + '/templates').replace('/dist/', '/src/'),
   entityData: (entity: Entity) => {
@@ -67,6 +64,4 @@ const entity: Plugin = (
       gqlOptions,
     }
   },
-})
-
-export default entity
+})) as Plugin

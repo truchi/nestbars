@@ -17,7 +17,7 @@ const utils_1 = require("../utils");
 let SWITCHES = [];
 let VARS = {};
 exports.reset = () => void ((SWITCHES = []), (VARS = {}));
-const helpers = {
+exports.default = {
     ...handlebars_helpers_1.default(),
     switch(value, { fn }) {
         SWITCHES.push({ value, break: false });
@@ -77,5 +77,4 @@ const helpers = {
         return new HandleBars.SafeString(indent ? JSON.stringify(o, null, indent) : JSON.stringify(o));
     },
 };
-exports.default = helpers;
 //# sourceMappingURL=helpers.js.map

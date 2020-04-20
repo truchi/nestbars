@@ -1,3 +1,3 @@
 import { Plugin } from '../../types/nestbars';
-declare const entity: Plugin;
-export default entity;
+declare const _default: Plugin;
+export default _default;

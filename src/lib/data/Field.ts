@@ -10,10 +10,8 @@ let FIELD_DATA = {}
 
 export const get = (field: Field): any =>
   FIELD_DATA[`${field.entity}:${field.name}`]
-
 export const set = (field: Field, data: any): void =>
   void (FIELD_DATA[`${field.entity}:${field.name}`] = data)
-
 export const reset = (): void => void (FIELD_DATA = {})
 
 export class Field {

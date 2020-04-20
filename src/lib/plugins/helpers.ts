@@ -16,9 +16,10 @@ import { uncapitalize, relativeImport } from '../utils'
 
 let SWITCHES: { value: any; break: boolean }[] = []
 let VARS = {}
+
 export const reset = (): void => void ((SWITCHES = []), (VARS = {}))
 
-const helpers: Helpers = {
+export default {
   ...handlebarsHelpers(),
 
   //
@@ -99,6 +100,4 @@ const helpers: Helpers = {
       indent ? JSON.stringify(o, null, indent) : JSON.stringify(o),
     )
   },
-}
-
-export default helpers
+} as Helpers
