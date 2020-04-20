@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Data_1 = require("./Data");
-exports.FIELD_DATA = new Data_1.Data();
+let FIELD_DATA = {};
+exports.get = (field) => FIELD_DATA[`${field.entity}:${field.name}`];
+exports.set = (field, data) => void (FIELD_DATA[`${field.entity}:${field.name}`] = data);
+exports.reset = () => void (FIELD_DATA = {});
 class Field {
     constructor(entity, name, type, options) {
         this.entity = entity;
@@ -10,7 +12,7 @@ class Field {
         this.options = options;
     }
     data() {
-        return exports.FIELD_DATA.get(`${this.entity}:${this.name}`);
+        return exports.get(this);
     }
     static add(field) {
         Field.all.push(field);

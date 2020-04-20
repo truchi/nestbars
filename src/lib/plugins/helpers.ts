@@ -1,9 +1,22 @@
 import * as HandleBars from 'handlebars'
 import handlebarsHelpers from 'handlebars-helpers'
+import {
+  get,
+  set,
+  empty,
+  del,
+  has,
+  insert,
+  push,
+  ensureExists,
+  coalesce,
+} from 'object-path'
 import { Helpers } from '../../types/nestbars'
 import { uncapitalize } from '../utils'
 
-const SWITCHES: { value: any; break: boolean }[] = []
+let SWITCHES: { value: any; break: boolean }[] = []
+let VARS = {}
+export const reset = (): void => void ((SWITCHES = []), (VARS = {}))
 
 const helpers: Helpers = {
   ...handlebarsHelpers(),
@@ -17,7 +30,6 @@ const helpers: Helpers = {
     const ret = fn(this)
     SWITCHES.pop()
 
-    // TODO handle inverse
     return ret
   },
   case(...args: any[]): string {
@@ -36,8 +48,35 @@ const helpers: Helpers = {
   // Variables & Functions
   //
 
-  call(o: object, fn: string, ...args: any[]): any {
+  $call(o: object, fn: string, ...args: any[]): any {
     return o[fn](...args)
+  },
+  $get(path: string): any {
+    return get(VARS, path)
+  },
+  $set(path: string, data: any): void {
+    set(VARS, data)
+  },
+  $empty(path: string): void {
+    empty(VARS, path)
+  },
+  $del(path: string): void {
+    del(VARS, path)
+  },
+  $has(path: string): boolean {
+    return has(VARS, path)
+  },
+  $insert(path: string, data: any, index: number): void {
+    insert(VARS, path, data, index)
+  },
+  $push(path: string, data: any): void {
+    push(VARS, path, data)
+  },
+  $ensureExists(path: string, dft: any): void {
+    ensureExists(VARS, path, dft)
+  },
+  $coalesce(paths: string[], dft: any): void {
+    coalesce(VARS, paths, dft)
   },
 
   //

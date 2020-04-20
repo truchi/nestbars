@@ -99,10 +99,10 @@ class Plugin {
     static async generate() {
         Plugin.all.map(plugin => {
             Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
-            Entity_1.ENTITY_DATA.empty();
-            Field_1.FIELD_DATA.empty();
-            plugin.entities.map(entity => (Entity_1.ENTITY_DATA.set(plugin.entityData(entity), entity.name),
-                entity.fields.map(field => Field_1.FIELD_DATA.set(plugin.fieldData(field), `${entity.name}:${field.name}`))));
+            Entity_1.reset();
+            Field_1.reset();
+            plugin.entities.map(entity => (Entity_1.set(entity, plugin.entityData(entity)),
+                entity.fields.map(field => Field_1.set(field, plugin.fieldData(field)))));
             Plugin.load(plugin);
             plugin.generate();
             Plugin.unload(plugin);

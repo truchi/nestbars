@@ -12,8 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const HandleBars = __importStar(require("handlebars"));
 const handlebars_helpers_1 = __importDefault(require("handlebars-helpers"));
+const object_path_1 = require("object-path");
 const utils_1 = require("../utils");
-const SWITCHES = [];
+let SWITCHES = [];
+let VARS = {};
+exports.reset = () => void ((SWITCHES = []), (VARS = {}));
 const helpers = {
     ...handlebars_helpers_1.default(),
     switch(value, { fn }) {
@@ -32,8 +35,35 @@ const helpers = {
     default({ fn }) {
         return SWITCHES[SWITCHES.length - 1].break ? '' : fn(this);
     },
-    call(o, fn, ...args) {
+    $call(o, fn, ...args) {
         return o[fn](...args);
+    },
+    $get(path) {
+        return object_path_1.get(VARS, path);
+    },
+    $set(path, data) {
+        object_path_1.set(VARS, data);
+    },
+    $empty(path) {
+        object_path_1.empty(VARS, path);
+    },
+    $del(path) {
+        object_path_1.del(VARS, path);
+    },
+    $has(path) {
+        return object_path_1.has(VARS, path);
+    },
+    $insert(path, data, index) {
+        object_path_1.insert(VARS, path, data, index);
+    },
+    $push(path, data) {
+        object_path_1.push(VARS, path, data);
+    },
+    $ensureExists(path, dft) {
+        object_path_1.ensureExists(VARS, path, dft);
+    },
+    $coalesce(paths, dft) {
+        object_path_1.coalesce(VARS, paths, dft);
     },
     uncapitalize(str) {
         return utils_1.uncapitalize(str);

@@ -1,6 +1,7 @@
 import { FieldType, FieldOptions } from '../../types/decorators';
-import { Data } from './Data';
-export declare const FIELD_DATA: Data;
+export declare const get: (field: Field) => any;
+export declare const set: (field: Field, data: any) => void;
+export declare const reset: () => void;
 export declare class Field {
     readonly entity: string;
     readonly name: string;
