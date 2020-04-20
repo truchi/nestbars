@@ -2,6 +2,9 @@
 
 {{>imports}}
 
-{{>enums}}
+{{#each (enums) as |enum|}}
+  {{>enum enum=enum}}
+
+{{/each}}
 
 {{>entity}}
