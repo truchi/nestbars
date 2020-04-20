@@ -103,7 +103,6 @@ class Plugin {
             Field_1.FIELD_DATA.empty();
             plugin.entities.map(entity => (Entity_1.ENTITY_DATA.set(plugin.entityData(entity), entity.name),
                 entity.fields.map(field => Field_1.FIELD_DATA.set(plugin.fieldData(field), `${entity.name}:${field.name}`))));
-            console.log(Entity_1.ENTITY_DATA, Field_1.FIELD_DATA);
             Plugin.load(plugin);
             plugin.generate();
             Plugin.unload(plugin);

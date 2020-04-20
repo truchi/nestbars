@@ -11,5 +11,6 @@ export declare class Entity {
     fieldsByType(...types: FieldType[]): Field[];
     data(): any;
     static add(entity: Entity): void;
+    static find(name: string): Entity;
     static init(): Entity[];
 }

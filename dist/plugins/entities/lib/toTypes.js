@@ -33,6 +33,8 @@ exports.default = (type, name = '') => ({
     })(),
     dbType: (() => {
         switch (type) {
+            case decorators_1.FieldType.Uuid:
+                return 'uuid';
             case decorators_1.FieldType.Id:
             case decorators_1.FieldType.Int:
             case decorators_1.FieldType.Version:
@@ -40,7 +42,6 @@ exports.default = (type, name = '') => ({
             case decorators_1.FieldType.Float:
                 return 'float';
             case decorators_1.FieldType.String:
-            case decorators_1.FieldType.Uuid:
                 return 'varchar';
             case decorators_1.FieldType.Date:
             case decorators_1.FieldType.Created:

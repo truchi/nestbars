@@ -24,6 +24,9 @@ class Entity {
     static add(entity) {
         Entity.all.push(entity);
     }
+    static find(name) {
+        return Entity.all.find(entity => entity.name === name);
+    }
     static init() {
         const map = Entity.all.reduce((map, entity) => ({
             ...map,

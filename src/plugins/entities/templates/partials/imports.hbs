@@ -1,0 +1,5 @@
+import { {{dbImports}} } from 'typeorm'
+import { {{gqlImports}} } from '@nestjs/graphql'
+{{#each (dependencies) as |dependency|}}
+  import { {{dependency.name}} } from '{{dependency.from}}'
+{{/each}}

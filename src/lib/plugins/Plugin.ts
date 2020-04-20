@@ -195,12 +195,6 @@ export default class Plugin {
         ),
       )
 
-      console.log(
-        // JSON
-        ENTITY_DATA,
-        FIELD_DATA,
-      )
-
       // Run generation
       Plugin.load(plugin)
       plugin.generate()

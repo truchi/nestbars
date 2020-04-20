@@ -1,6 +1,6 @@
 import { PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { SetOptions, RelationOptions } from '../../types/decorators'
+import { SetOptions, RelationOptions, FieldType } from '../../types/decorators'
 import { pick } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { Field } from '../../lib/data/Field'
@@ -16,9 +16,22 @@ const entity: Plugin = (
   name: 'Nestbars Entities Plugin',
   templates: (__dirname + '/templates').replace('/dist/', '/src/'),
   helpers,
-  entityData: ({ name, options }: Entity) => {
+  entityData: (entity: Entity) => {
+    const { name, options } = entity
+
     const dbOptions = Object.assign(pick(options, ['name']), options.options)
     const gqlOptions = pick(options, ['description'])
+    const hasInt = !!entity.fieldsByType(FieldType.Int).length
+    const hasFloat = !!entity.fieldsByType(FieldType.Float).length
+    const hasEnum = !!entity.fieldsByType(FieldType.Enum, FieldType.Set).length
+    const hasJoinColumn = !!entity
+      .fieldsByType(FieldType.OneToOne, FieldType.ManyToOne)
+      .filter(({ options }) => !!(options as RelationOptions<any>).joinColumn)
+      .length
+    const hasJoinTable = !!entity
+      .fieldsByType(FieldType.ManyToMany)
+      .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
+      .length
 
     return {
       dbDecorator: 'Entity',
@@ -26,6 +39,11 @@ const entity: Plugin = (
       dbOptions,
       gqlOptions,
       dest: dest('entity', name),
+      hasInt,
+      hasFloat,
+      hasEnum,
+      hasJoinColumn,
+      hasJoinTable,
     }
   },
   fieldData: ({ type, options }: Field) => {
@@ -38,14 +56,15 @@ const entity: Plugin = (
 
     const { dbDecorator, gqlDecorator } = toDecorator(type)
     const { tsType, dbType, gqlType } = toTypes(type, name)
-    const { dbOptions, gqlOptions } = toOptions(options)
+    const { dbOptions, gqlOptions } = toOptions(options, dbType)
 
     return {
       dbDecorator,
       gqlDecorator,
       tsType,
+      dbType,
       gqlType,
-      dbOptions: { type: dbType, ...dbOptions },
+      dbOptions,
       gqlOptions,
     }
   },

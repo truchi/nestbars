@@ -1,0 +1,31 @@
+@{{lookup (entityData) 'dbDecorator'}}({{stringify (lookup (entityData) 'dbOptions')}})
+@{{lookup (entityData) 'gqlDecorator'}}({{stringify (lookup (entityData) 'gqlOptions')}})
+export class {{entity.name}} {
+{{#each entity.fields as |field|}}
+  {{!-- {{#switch field.type}}
+    {{#case 'one-to-one' 'one-to-many' 'many-to-one' 'many-to-many'}}
+      @{{lookup (fieldData field) 'dbDecorator'}}({{stringify (lookup (fieldData field) 'dbOptions')}})
+      @{{lookup (fieldData field) 'gqlDecorator'}}({{stringify (lookup (fieldData field) 'gqlOptions')}})
+    {{/case}}
+    {{#default}}
+      @{{lookup (fieldData field) 'dbDecorator'}}({{stringify (lookup (fieldData field) 'dbOptions')}})
+      @{{lookup (fieldData field) 'gqlDecorator'}}(
+      () => {{lookup (fieldData field) 'gqlType'}},
+      {{stringify (lookup (fieldData field) 'gqlOptions')}}
+      )
+    {{/default}}
+  {{/switch}} --}}
+  {{#switch field.type}}
+    {{#case 'one-to-one' 'one-to-many' 'many-to-one' 'many-to-many'}}
+      {{>field__relation_db_decorator .. field=field}}
+      {{>field__relation_gql_decorator .. field=field}}
+    {{/case}}
+    {{#default}}
+      {{>field__common_db_decorator .. field=field}}
+      {{>field__common_gql_decorator .. field=field}}
+    {{/default}}
+  {{/switch}}
+  {{field.name}}{{#if field.nullable}}?{{/if}}: {{lookup (fieldData field) 'tsType'}}
+
+{{/each}}
+}

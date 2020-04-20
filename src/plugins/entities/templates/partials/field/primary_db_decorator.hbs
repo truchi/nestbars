@@ -1,6 +1,0 @@
-@PrimaryGeneratedColumn(
-{{#if (eq field.type 'uuid')}}
-  'uuid',
-{{/if}}
-{{stringify (call field 'dbOptions') trap='{}'}}
-)

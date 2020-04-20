@@ -28,6 +28,9 @@ const helpers: Helpers = {
       ? ((_switch.break = true), fn(this))
       : ''
   },
+  default({ fn }): string {
+    return SWITCHES[SWITCHES.length - 1].break ? '' : fn(this)
+  },
 
   //
   // Variables & Functions
@@ -45,20 +48,14 @@ const helpers: Helpers = {
     return uncapitalize(str)
   },
   stringify(
-    o: string | object,
-    { hash: { except, trap } },
+    o: object,
+    { hash: { trap = true, indent = 2 } },
   ): HandleBars.SafeString {
-    except = !!except ? (Array.isArray(except) ? except : [except]) : []
-    trap = !!trap ? (Array.isArray(trap) ? trap : [trap]) : []
-    trap = trap.map(s => s.trim())
+    if (trap && !Object.keys(o).length) return new HandleBars.SafeString('')
 
-    let str = JSON.stringify(o)
-    except.map(key => {
-      str = str.replace(`\"${key}\":\"${o[key]}"`, `\"${key}\":${o[key]}`)
-    })
-    str = trap.includes(str.trim()) ? '' : str
-
-    return new HandleBars.SafeString(str)
+    return new HandleBars.SafeString(
+      indent ? JSON.stringify(o, null, indent) : JSON.stringify(o),
+    )
   },
 }
 

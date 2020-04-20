@@ -1,6 +1,0 @@
-@Entity(
-{{#if entity.options.name}}
-  '{{entity.options.name}}',
-{{/if}}
-{{stringify (call entity 'dbOptions') trap='{}'}}
-)

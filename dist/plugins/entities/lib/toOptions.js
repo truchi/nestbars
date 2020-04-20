@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../../types/decorators");
 const utils_1 = require("../../../lib/utils");
-exports.default = (options) => ({
+exports.default = (options, type) => ({
     dbOptions: (() => {
         if (options instanceof decorators_1.ScalarOptions) {
-            return Object.assign({}, utils_1.rename(utils_1.pick(options, [
+            return Object.assign({ type }, utils_1.rename(utils_1.pick(options, [
                 'primary',
                 'unique',
                 'nullable',
@@ -14,21 +14,21 @@ exports.default = (options) => ({
             ]), { description: 'comment' }), options.options);
         }
         else if (options instanceof decorators_1.PrimaryOptions) {
-            return Object.assign({}, utils_1.rename(utils_1.pick(options, ['description']), { description: 'comment' }), options.options);
+            return Object.assign({ type }, utils_1.rename(utils_1.pick(options, ['description']), { description: 'comment' }), options.options);
         }
         else if (options instanceof decorators_1.SpecialOptions) {
-            return Object.assign({}, utils_1.rename(utils_1.pick(options, ['primary', 'description']), {
+            return Object.assign({ type }, utils_1.rename(utils_1.pick(options, ['primary', 'description']), {
                 description: 'comment',
             }), options.options);
         }
         else if (options instanceof decorators_1.SetOptions) {
-            return Object.assign({}, utils_1.rename(utils_1.pick(options, ['name', 'primary', 'default', 'description']), {
+            return Object.assign({ type }, utils_1.rename(utils_1.pick(options, ['name', 'primary', 'default', 'description']), {
                 name: 'enum',
                 description: 'comment',
             }), options.options);
         }
         else if (options instanceof decorators_1.RelationOptions) {
-            return utils_1.pick(options, ['description']);
+            return {};
         }
         else {
             utils_1.assertNever(options, __filename, 'gqlOptions');
@@ -54,9 +54,7 @@ exports.default = (options) => ({
             });
         }
         else if (options instanceof decorators_1.RelationOptions) {
-            return utils_1.rename(utils_1.pick(options, ['description', 'deprecation']), {
-                deprecation: 'deprecationReason',
-            });
+            return {};
         }
         else {
             utils_1.assertNever(options, __filename, 'gqlOptions');

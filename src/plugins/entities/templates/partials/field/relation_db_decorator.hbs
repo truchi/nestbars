@@ -1,32 +1,27 @@
-@
-{{#switch field.type.type}}
-  {{#case 'one-to-one'}}OneToOne{{/case}}
-  {{#case 'one-to-many'}}OneToMany{{/case}}
-  {{#case 'many-to-one'}}ManyToOne{{/case}}
-  {{#case 'many-to-many'}}ManyToMany{{/case}}
-{{/switch}}
+@{{lookup (fieldData field) 'dbDecorator'}}(
+() => {{lookup (fieldData field) 'dbType'}},
 (
-() => {{call field 'dbType'}},
-{{!-- (
-{{uncapitalize (call field 'dbType')}}: {{call field 'dbType'}}
-) => {{uncapitalize (call field 'dbType')}}.{{field.withField}} --}}
+{{uncapitalize (lookup (fieldData field) 'dbType')}}: {{lookup (fieldData field) 'dbType'}}
+): {{entity.name~}}
+{{#switch field.type}}
+  {{#case 'many-to-one' 'many-to-many'}}
+    []
+  {{/case}}
+{{/switch}}
+=> {{uncapitalize (lookup (fieldData field) 'dbType')}}.{{field.options.withField}}
 )
-{{#switch field.type.type}}
+{{#switch field.type}}
   {{#case 'one-to-one' 'many-to-one'}}
-    {{#if field.options.options.joinColumn}}
+    {{#if field.options.joinColumn}}
       @JoinColumn(
-      {{#if (isObject field.options.options.joinColumn)}}
-        {{stringify field.options.options.joinColumn trap='{}'}}
-      {{/if}}
+      {{stringify field.options.joinColumn}}
       )
     {{/if}}
   {{/case}}
   {{#case 'many-to-many'}}
-    {{#if field.options.options.joinTable}}
+    {{#if field.options.joinTable}}
       @JoinTable(
-      {{#if (isObject field.options.options.joinTable)}}
-        {{stringify field.options.options.joinTable trap='{}'}}
-      {{/if}}
+      {{stringify field.options.joinTable}}
       )
     {{/if}}
   {{/case}}

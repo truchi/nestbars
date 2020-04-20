@@ -38,6 +38,8 @@ export default (type: FieldType, name = ''): Types => ({
   })(),
   dbType: (() => {
     switch (type) {
+      case FieldType.Uuid:
+        return 'uuid'
       case FieldType.Id:
       case FieldType.Int:
       case FieldType.Version:
@@ -45,7 +47,6 @@ export default (type: FieldType, name = ''): Types => ({
       case FieldType.Float:
         return 'float'
       case FieldType.String:
-      case FieldType.Uuid:
         return 'varchar'
       case FieldType.Date:
       case FieldType.Created:

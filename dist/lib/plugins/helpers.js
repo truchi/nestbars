@@ -29,22 +29,19 @@ const helpers = {
             ? ((_switch.break = true), fn(this))
             : '';
     },
+    default({ fn }) {
+        return SWITCHES[SWITCHES.length - 1].break ? '' : fn(this);
+    },
     call(o, fn, ...args) {
         return o[fn](...args);
     },
     uncapitalize(str) {
         return utils_1.uncapitalize(str);
     },
-    stringify(o, { hash: { except, trap } }) {
-        except = !!except ? (Array.isArray(except) ? except : [except]) : [];
-        trap = !!trap ? (Array.isArray(trap) ? trap : [trap]) : [];
-        trap = trap.map(s => s.trim());
-        let str = JSON.stringify(o);
-        except.map(key => {
-            str = str.replace(`\"${key}\":\"${o[key]}"`, `\"${key}\":${o[key]}`);
-        });
-        str = trap.includes(str.trim()) ? '' : str;
-        return new HandleBars.SafeString(str);
+    stringify(o, { hash: { trap = true, indent = 2 } }) {
+        if (trap && !Object.keys(o).length)
+            return new HandleBars.SafeString('');
+        return new HandleBars.SafeString(indent ? JSON.stringify(o, null, indent) : JSON.stringify(o));
     },
 };
 exports.default = helpers;

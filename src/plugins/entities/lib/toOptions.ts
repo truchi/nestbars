@@ -13,11 +13,11 @@ type Options = {
   gqlOptions: object
 }
 
-export default (options: FieldOptions): Options => ({
+export default (options: FieldOptions, type: string): Options => ({
   dbOptions: (() => {
     if (options instanceof ScalarOptions) {
       return Object.assign(
-        {},
+        { type },
         rename(
           pick(options, [
             'primary',
@@ -33,14 +33,14 @@ export default (options: FieldOptions): Options => ({
     } //
     else if (options instanceof PrimaryOptions) {
       return Object.assign(
-        {},
+        { type },
         rename(pick(options, ['description']), { description: 'comment' }),
         options.options,
       )
     } //
     else if (options instanceof SpecialOptions) {
       return Object.assign(
-        {},
+        { type },
         rename(pick(options, ['primary', 'description']), {
           description: 'comment',
         }),
@@ -49,7 +49,7 @@ export default (options: FieldOptions): Options => ({
     } //
     else if (options instanceof SetOptions) {
       return Object.assign(
-        {},
+        { type },
         rename(pick(options, ['name', 'primary', 'default', 'description']), {
           name: 'enum',
           description: 'comment',
@@ -58,7 +58,7 @@ export default (options: FieldOptions): Options => ({
       )
     } //
     else if (options instanceof RelationOptions) {
-      return pick(options, ['description'])
+      return {}
     } //
     else {
       assertNever(options, __filename, 'gqlOptions')
@@ -89,9 +89,7 @@ export default (options: FieldOptions): Options => ({
       })
     } //
     else if (options instanceof RelationOptions) {
-      return rename(pick(options, ['description', 'deprecation']), {
-        deprecation: 'deprecationReason',
-      })
+      return {}
     } //
     else {
       assertNever(options, __filename, 'gqlOptions')

@@ -17,6 +17,14 @@ export default (type: FieldType): Decorators => ({
         return 'UpdateDateColumn'
       case FieldType.Version:
         return 'VersionColumn'
+      case FieldType.OneToOne:
+        return 'OneToOne'
+      case FieldType.OneToMany:
+        return 'OneToMany'
+      case FieldType.ManyToOne:
+        return 'ManyToOne'
+      case FieldType.ManyToMany:
+        return 'ManyToMany'
       default:
         return 'Column'
     }

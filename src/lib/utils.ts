@@ -58,7 +58,7 @@ export const rename = <T extends object, K extends keyof T>(
   o: T,
   names: { [key in K]: string },
 ): object =>
-  Object.entries(o).reduce((o, [k, v]) => ({ o, [names[k] ?? k]: v }), {})
+  Object.entries(o).reduce((o, [k, v]) => ({ ...o, [names[k] ?? k]: v }), {})
 
 //
 // String

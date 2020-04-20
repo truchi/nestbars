@@ -13,6 +13,14 @@ exports.default = (type) => ({
                 return 'UpdateDateColumn';
             case decorators_1.FieldType.Version:
                 return 'VersionColumn';
+            case decorators_1.FieldType.OneToOne:
+                return 'OneToOne';
+            case decorators_1.FieldType.OneToMany:
+                return 'OneToMany';
+            case decorators_1.FieldType.ManyToOne:
+                return 'ManyToOne';
+            case decorators_1.FieldType.ManyToMany:
+                return 'ManyToMany';
             default:
                 return 'Column';
         }

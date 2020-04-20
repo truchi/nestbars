@@ -13,7 +13,7 @@ exports.unique = (xs) => xs.filter((x, i, xs) => xs.indexOf(x) === i);
 exports.uniqueBy = (key) => (xs) => xs.filter((x, i, xs) => xs.findIndex(y => x[key] === y[key]) === i);
 exports.assign = (x, ...xs) => Object.assign.apply(Object, [{}, x, ...xs]);
 exports.pick = (o, keys) => Object.entries(o).reduce((o, [k, v]) => (keys.includes(k) ? { ...o, [k]: v } : o), {});
-exports.rename = (o, names) => Object.entries(o).reduce((o, [k, v]) => { var _a; return ({ o, [(_a = names[k]) !== null && _a !== void 0 ? _a : k]: v }); }, {});
+exports.rename = (o, names) => Object.entries(o).reduce((o, [k, v]) => { var _a; return ({ ...o, [(_a = names[k]) !== null && _a !== void 0 ? _a : k]: v }); }, {});
 exports.uncapitalize = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 exports.toPathFunction = (o, { NAME, TYPE }) => {
     const fn = typeof o === 'string' ? (() => o) : o;

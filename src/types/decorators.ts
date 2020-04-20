@@ -143,8 +143,8 @@ export class RelationOptions<T extends Class> {
   withField: keyof InstanceType<T>
   joinColumn?: boolean | object
   joinTable?: boolean | object
-  description?: string
-  deprecation?: string
+  // description?: string // TODO
+  // deprecation?: string
 }
 
 // TODO description

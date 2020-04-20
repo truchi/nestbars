@@ -66,6 +66,4 @@ export declare class RelationOptions<T extends Class> {
     withField: keyof InstanceType<T>;
     joinColumn?: boolean | object;
     joinTable?: boolean | object;
-    description?: string;
-    deprecation?: string;
 }
