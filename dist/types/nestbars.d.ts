@@ -26,5 +26,5 @@ export declare type PluginOptions = {
     entityData?: (entity: Entity) => any;
     fieldData?: (field: Field) => any;
 };
-export declare type Plugin = (entities: Entity[], dest: PathFunction) => PluginOptions;
+export declare type Plugin = (entities: Entity[], path: PathFunction) => PluginOptions;
 export declare type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>;

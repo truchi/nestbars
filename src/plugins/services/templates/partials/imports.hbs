@@ -5,4 +5,4 @@ import {
 {{#each ($get 'entity.dependencies') as |dependency|}}
   {{dependency}},
 {{/each}}
-} from '{{relativeImport ($get 'entity.serviceDest') ($get 'entity.entityDest')}}'
+} from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.entityPath')}}'

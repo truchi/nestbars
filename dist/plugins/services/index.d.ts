@@ -3,5 +3,5 @@ import { PathFunction } from '../../types/utils';
 export declare type ServicePluginOptions = {
     entities: string | PathFunction;
 };
-declare const entity: ({ entities: entitiesDest }: ServicePluginOptions) => Plugin;
+declare const entity: ({ entities: entitiesPath }: ServicePluginOptions) => Plugin;
 export default entity;

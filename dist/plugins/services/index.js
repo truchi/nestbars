@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../../lib/utils");
 const Plugin_1 = require("../../lib/plugins/Plugin");
-const entity = ({ entities: entitiesDest }) => (entities, servicesDest) => ({
+const entity = ({ entities: entitiesPath }) => (entities, servicesPath) => ({
     name: 'Nestbars Services Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity) => ({
-        entityDest: utils_1.toPathFunction(entitiesDest, Plugin_1.ANCHORS)('entity', entity.name),
-        serviceDest: servicesDest('service', entity.name),
+        entityPath: utils_1.toPathFunction(entitiesPath, Plugin_1.ANCHORS)('entity', entity.name),
+        servicePath: servicesPath('service', entity.name),
         dependencies: [
             entity.name,
             ...entity

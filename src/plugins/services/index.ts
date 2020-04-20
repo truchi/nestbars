@@ -9,14 +9,14 @@ export type ServicePluginOptions = {
   entities: string | PathFunction
 }
 
-const entity = ({ entities: entitiesDest }: ServicePluginOptions): Plugin =>
+const entity = ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
   //
-  (entities: Entity[], servicesDest: PathFunction): PluginOptions => ({
+  (entities: Entity[], servicesPath: PathFunction): PluginOptions => ({
     name: 'Nestbars Services Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity: Entity): object => ({
-      entityDest: toPathFunction(entitiesDest, ANCHORS)('entity', entity.name),
-      serviceDest: servicesDest('service', entity.name),
+      entityPath: toPathFunction(entitiesPath, ANCHORS)('entity', entity.name),
+      servicePath: servicesPath('service', entity.name),
       dependencies: [
         entity.name,
         ...entity

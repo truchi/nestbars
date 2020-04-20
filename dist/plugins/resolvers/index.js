@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../../lib/utils");
 const Plugin_1 = require("../../lib/plugins/Plugin");
-const entity = ({ entities: entitiesDest, services: servicesDest, }) => (entities, resolversDest) => ({
+const entity = ({ entities: entitiesPath, services: servicesDest, }) => (entities, resolversPath) => ({
     name: 'Nestbars Resolvers Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity) => ({
-        entityDest: utils_1.toPathFunction(entitiesDest, Plugin_1.ANCHORS)('entity', entity.name),
-        serviceDest: utils_1.toPathFunction(servicesDest, Plugin_1.ANCHORS)('service', entity.name),
-        resolverDest: resolversDest('resolver', entity.name),
+        entityPath: utils_1.toPathFunction(entitiesPath, Plugin_1.ANCHORS)('entity', entity.name),
+        servicePath: utils_1.toPathFunction(servicesDest, Plugin_1.ANCHORS)('service', entity.name),
+        resolverPath: resolversPath('resolver', entity.name),
         gqlImports: [
             'Resolver',
             'Query',

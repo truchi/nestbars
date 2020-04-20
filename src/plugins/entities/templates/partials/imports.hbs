@@ -11,7 +11,7 @@ import {
 {{#each entity.dependencies as |dependency|}}
   import { {{dependency.name}} }
   from '{{relativeImport
-    ($get 'entity.dest')
-    (lookup (call dependency 'data') 'dest')
+    ($get 'entity.path')
+    (lookup (call dependency 'data') 'path')
   }}'
 {{/each}}

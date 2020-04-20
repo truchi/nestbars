@@ -7,7 +7,7 @@ const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../../lib/utils");
 const toOptions_1 = __importDefault(require("./lib/toOptions"));
 const toDecorators_1 = __importDefault(require("./lib/toDecorators"));
-const entity = (entities, dest) => ({
+const entity = (entities, path) => ({
     name: 'Nestbars Entities Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity) => {
@@ -20,7 +20,7 @@ const entity = (entities, dest) => ({
         const hasJoinColumn = !!joins.filter(({ options }) => !!options.joinColumn).length;
         const hasJoinTable = !!joins.filter(({ options }) => !!options.joinTable).length;
         return {
-            dest: dest('entity', name),
+            path: path('entity', name),
             dbDecorator: 'Entity',
             gqlDecorator: 'ObjectType',
             dbOptions: Object.assign(utils_1.pick(options, ['name']), options.options),

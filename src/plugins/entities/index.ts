@@ -9,7 +9,7 @@ import toDecorator from './lib/toDecorators'
 
 const entity: Plugin = (
   entities: Entity[],
-  dest: PathFunction,
+  path: PathFunction,
 ): PluginOptions => ({
   name: 'Nestbars Entities Plugin',
   templates: (__dirname + '/templates').replace('/dist/', '/src/'),
@@ -33,7 +33,7 @@ const entity: Plugin = (
     ).length
 
     return {
-      dest: dest('entity', name),
+      path: path('entity', name),
       dbDecorator: 'Entity',
       gqlDecorator: 'ObjectType',
       dbOptions: Object.assign(pick(options, ['name']), options.options),

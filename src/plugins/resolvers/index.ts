@@ -11,20 +11,20 @@ export type ResolverPluginOptions = {
 }
 
 const entity = ({
-  entities: entitiesDest,
+  entities: entitiesPath,
   services: servicesDest,
 }: ResolverPluginOptions): Plugin =>
   //
-  (entities: Entity[], resolversDest: PathFunction): PluginOptions => ({
+  (entities: Entity[], resolversPath: PathFunction): PluginOptions => ({
     name: 'Nestbars Resolvers Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity: Entity): object => ({
-      entityDest: toPathFunction(entitiesDest, ANCHORS)('entity', entity.name),
-      serviceDest: toPathFunction(servicesDest, ANCHORS)(
+      entityPath: toPathFunction(entitiesPath, ANCHORS)('entity', entity.name),
+      servicePath: toPathFunction(servicesDest, ANCHORS)(
         'service',
         entity.name,
       ),
-      resolverDest: resolversDest('resolver', entity.name),
+      resolverPath: resolversPath('resolver', entity.name),
       gqlImports: [
         'Resolver',
         'Query',

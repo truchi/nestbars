@@ -32,6 +32,6 @@ export type PluginOptions = {
   fieldData?: (field: Field) => any
 }
 
-export type Plugin = (entities: Entity[], dest: PathFunction) => PluginOptions
+export type Plugin = (entities: Entity[], path: PathFunction) => PluginOptions
 
 export type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>
