@@ -26,6 +26,9 @@ export class Field {
     readonly options: FieldOptions,
   ) {}
 
+  // NOTE: this function cannot be called
+  // before an `await`, due to eventual
+  // circular references in user's model
   relatesTo(): string {
     return this.options instanceof SetOptions
       ? this.options.name
