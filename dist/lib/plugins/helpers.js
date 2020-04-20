@@ -42,7 +42,7 @@ const helpers = {
         return object_path_1.get(VARS, path);
     },
     $set(path, data) {
-        object_path_1.set(VARS, data);
+        object_path_1.set(VARS, path, data);
     },
     $empty(path) {
         object_path_1.empty(VARS, path);

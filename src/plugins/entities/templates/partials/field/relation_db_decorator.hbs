@@ -1,14 +1,14 @@
-@{{lookup (fieldData field) 'dbDecorator'}}(
-() => {{lookup (fieldData field) 'dbType'}},
+@{{$get 'field.dbDecorator'}}(
+() => {{$get 'field.dbType'}},
 (
-{{uncapitalize (lookup (fieldData field) 'dbType')}}: {{lookup (fieldData field) 'dbType'}}
+{{uncapitalize ($get 'field.dbType')}}: {{$get 'field.dbType'}}
 ): {{entity.name~}}
 {{#switch field.type}}
   {{#case 'many-to-one' 'many-to-many'}}
     []
   {{/case}}
 {{/switch}}
-=> {{uncapitalize (lookup (fieldData field) 'dbType')}}.{{field.options.withField}}
+=> {{uncapitalize ($get 'field.dbType')}}.{{field.options.withField}}
 )
 {{#switch field.type}}
   {{#case 'one-to-one' 'many-to-one'}}

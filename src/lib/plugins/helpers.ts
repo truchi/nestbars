@@ -55,7 +55,7 @@ const helpers: Helpers = {
     return get(VARS, path)
   },
   $set(path: string, data: any): void {
-    set(VARS, data)
+    set(VARS, path, data)
   },
   $empty(path: string): void {
     empty(VARS, path)

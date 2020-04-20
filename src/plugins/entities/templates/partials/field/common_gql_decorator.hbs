@@ -1,4 +1,4 @@
-@{{lookup (fieldData field) 'gqlDecorator'}}(
-() => {{lookup (fieldData field) 'gqlType'}},
-{{stringify (lookup (fieldData field) 'gqlOptions')}}
+@{{$get 'field.gqlDecorator'}}(
+() => {{$get 'field.gqlType'}},
+{{stringify ($get 'field.gqlOptions')}}
 )
