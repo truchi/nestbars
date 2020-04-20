@@ -1,10 +1,10 @@
-{{$set 'entity' (entityData)}}
+{{$set 'entity' (call entity 'data')}}
 
 @{{$get 'entity.dbDecorator'}}({{stringify ($get 'entity.dbOptions')}})
 @{{$get 'entity.gqlDecorator'}}({{stringify ($get 'entity.gqlOptions')}})
 export class {{entity.name}} {
 {{#each entity.fields as |field|}}
-  {{$set 'field' (fieldData field)}}
+  {{$set 'field' (call field 'data')}}
   {{#switch field.type}}
     {{#case 'one-to-one' 'one-to-many' 'many-to-one' 'many-to-many'}}
       {{>field__relation_db_decorator .. field=field}}

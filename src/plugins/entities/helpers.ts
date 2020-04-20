@@ -5,10 +5,6 @@ import { Entity } from '../../lib/data/Entity'
 import { Field } from '../../lib/data/Field'
 
 export default {
-  //
-  // Entity
-  //
-
   dbImports(this: Context<Entity>): string {
     const { hasJoinColumn, hasJoinTable } = this.entity.data()
 
@@ -58,16 +54,5 @@ export default {
     return this.entity.fields.filter(
       ({ type }) => type === FieldType.Enum || type === FieldType.Set,
     )
-  },
-  entityData(this: Context<Entity>): object {
-    return this.entity.data()
-  },
-
-  //
-  // Field
-  //
-
-  fieldData(field: Field): object {
-    return field.data()
   },
 }

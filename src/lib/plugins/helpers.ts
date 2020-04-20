@@ -48,7 +48,7 @@ const helpers: Helpers = {
   // Variables & Functions
   //
 
-  $call(o: object, fn: string, ...args: any[]): any {
+  call(o: object, fn: string, ...args: any[]): any {
     return o[fn](...args)
   },
   $get(path: string): any {

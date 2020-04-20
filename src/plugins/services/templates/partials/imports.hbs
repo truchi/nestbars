@@ -1,19 +1,4 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { {{entity.name}} } from '{{
-  relative
-    (dirname 
-      (lookup 
-        (lookup context entity.name)
-        'dest'))
-    (dirname 
-      (lookup 
-        (lookup context entity.name)
-        'entityDest'))
-}}/{{
-  stem
-    (lookup
-      (lookup context entity.name)
-      'entityDest')
-}}'
+import { {{entity.name}} } from '{{$get 'entity.importPath'}}'

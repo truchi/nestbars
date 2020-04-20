@@ -1,5 +1,5 @@
 import { Plugin } from '../../types/nestbars';
-import { PathFunction } from 'src/types/utils';
+import { PathFunction } from '../../types/utils';
 export declare type ServiceOptions = {
     entities: string | PathFunction;
 };

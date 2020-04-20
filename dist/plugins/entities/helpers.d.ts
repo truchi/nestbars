@@ -9,7 +9,5 @@ declare const _default: {
         from: string;
     }[];
     enums(this: Context<Entity>): Field[];
-    entityData(this: Context<Entity>): object;
-    fieldData(field: Field): object;
 };
 export default _default;

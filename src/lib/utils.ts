@@ -5,7 +5,7 @@ import {
   writeFile as _writeFile,
   mkdir as _mkdir,
 } from 'fs'
-import { dirname, normalize, parse, relative, resolve } from 'path'
+import { dirname, normalize, parse, relative } from 'path'
 import { PathFunction } from '../types/utils'
 
 //
@@ -70,8 +70,9 @@ export const uncapitalize = (s: string): string =>
 export const relativeImport = (from: string, to: string): string => {
   const { dir: fromDir } = parse(from)
   const { dir: toDir, name: toName } = parse(to)
+  const rel = relative(fromDir, toDir)
 
-  return resolve(relative(fromDir, '/' + toDir), toName)
+  return (rel || '.') + '/' + toName
 }
 
 //

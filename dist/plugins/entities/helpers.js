@@ -39,11 +39,5 @@ exports.default = {
     enums() {
         return this.entity.fields.filter(({ type }) => type === decorators_1.FieldType.Enum || type === decorators_1.FieldType.Set);
     },
-    entityData() {
-        return this.entity.data();
-    },
-    fieldData(field) {
-        return field.data();
-    },
 };
 //# sourceMappingURL=helpers.js.map

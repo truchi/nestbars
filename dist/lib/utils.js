@@ -18,7 +18,8 @@ exports.uncapitalize = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 exports.relativeImport = (from, to) => {
     const { dir: fromDir } = path_1.parse(from);
     const { dir: toDir, name: toName } = path_1.parse(to);
-    return path_1.resolve(path_1.relative(fromDir, '/' + toDir), toName);
+    const rel = path_1.relative(fromDir, toDir);
+    return (rel || '.') + '/' + toName;
 };
 exports.toPathFunction = (o, { NAME, TYPE }) => {
     const fn = typeof o === 'string' ? (() => o) : o;

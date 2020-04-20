@@ -35,7 +35,7 @@ const helpers = {
     default({ fn }) {
         return SWITCHES[SWITCHES.length - 1].break ? '' : fn(this);
     },
-    $call(o, fn, ...args) {
+    call(o, fn, ...args) {
         return o[fn](...args);
     },
     $get(path) {
