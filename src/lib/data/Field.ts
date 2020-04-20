@@ -1,7 +1,11 @@
 import { FieldType, FieldOptions } from '../../types/decorators'
-import { Data } from './Data'
 
-export const FIELD_DATA = new Data()
+let FIELD_DATA = {}
+export const get = (field: Field): any =>
+  FIELD_DATA[`${field.entity}:${field.name}`]
+export const set = (field: Field, data: any): void =>
+  void (FIELD_DATA[`${field.entity}:${field.name}`] = data)
+export const empty = (): void => void (FIELD_DATA = {})
 
 export class Field {
   static all: Field[] = []
@@ -14,7 +18,7 @@ export class Field {
   ) {}
 
   data(): any {
-    return FIELD_DATA.get(`${this.entity}:${this.name}`)
+    return get(this)
   }
 
   static add(field: Field) {
