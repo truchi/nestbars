@@ -16,8 +16,16 @@ import {
   uniqueBy,
 } from '../utils'
 import helpers from './helpers'
-import { Entity, ENTITY_DATA } from '../data/Entity'
-import { Field, FIELD_DATA } from '../data/Field'
+import {
+  Entity,
+  set as setEntityData,
+  reset as resetEntityData,
+} from '../data/Entity'
+import {
+  Field,
+  set as setFieldData,
+  reset as resetFieldData,
+} from '../data/Field'
 
 export const PARTIALS = 'partials'
 export const ANCHORS = {
@@ -181,16 +189,13 @@ export default class Plugin {
       )
 
       // Register plugin data for entities and fields
-      ENTITY_DATA.empty()
-      FIELD_DATA.empty()
+      resetEntityData()
+      resetFieldData()
       plugin.entities.map(
         entity => (
-          ENTITY_DATA.set(plugin.entityData(entity), entity.name),
+          setEntityData(entity, plugin.entityData(entity)),
           entity.fields.map(field =>
-            FIELD_DATA.set(
-              plugin.fieldData(field),
-              `${entity.name}:${field.name}`,
-            ),
+            setFieldData(field, plugin.fieldData(field)),
           )
         ),
       )
