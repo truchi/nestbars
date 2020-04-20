@@ -4,8 +4,7 @@ import {
   FieldType,
   RelationOptions,
 } from '../../types/decorators'
-import { Class } from '../../types/utils'
-import { unique, uniqueBy } from '../utils'
+import { unique } from '../utils'
 import { Field } from './Field'
 
 let ENTITY_DATA = {}

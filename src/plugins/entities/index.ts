@@ -17,7 +17,11 @@ const entity: Plugin = (
     const { name, fields, options } = entity
 
     const enums = entity.byType(FieldType.Enum, FieldType.Set)
-    const joins = entity.byType(FieldType.OneToOne, FieldType.ManyToOne)
+    const joins = entity.byType(
+      FieldType.OneToOne,
+      FieldType.ManyToOne,
+      FieldType.ManyToMany,
+    )
     const hasInt = !!entity.byType(FieldType.Int).length
     const hasFloat = !!entity.byType(FieldType.Float).length
     const hasEnum = !!enums.length

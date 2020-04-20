@@ -13,7 +13,7 @@ const entity = (entities, dest) => ({
     entityData: (entity) => {
         const { name, fields, options } = entity;
         const enums = entity.byType(decorators_1.FieldType.Enum, decorators_1.FieldType.Set);
-        const joins = entity.byType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne);
+        const joins = entity.byType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany);
         const hasInt = !!entity.byType(decorators_1.FieldType.Int).length;
         const hasFloat = !!entity.byType(decorators_1.FieldType.Float).length;
         const hasEnum = !!enums.length;

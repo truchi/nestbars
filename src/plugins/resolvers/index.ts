@@ -1,7 +1,7 @@
 import { PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
 import { FieldType } from '../../types/decorators'
-import { toPathFunction, relativeImport, uniqueBy } from '../../lib/utils'
+import { toPathFunction } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { ANCHORS } from '../../lib/plugins/Plugin'
 
@@ -18,34 +18,22 @@ const entity = ({
   (entities: Entity[], resolversDest: PathFunction): PluginOptions => ({
     name: 'Nestbars Resolvers Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-    entityData: (entity: Entity): object => {
-      const entityDest = toPathFunction(entitiesDest, ANCHORS)(
-        'entity',
-        entity.name,
-      )
-      const serviceDest = toPathFunction(servicesDest, ANCHORS)(
+    entityData: (entity: Entity): object => ({
+      entityDest: toPathFunction(entitiesDest, ANCHORS)('entity', entity.name),
+      serviceDest: toPathFunction(servicesDest, ANCHORS)(
         'service',
         entity.name,
-      )
-      const resolverDest = resolversDest('resolver', entity.name)
-
-      const entityPath = relativeImport(resolverDest, entityDest)
-      const servicePath = relativeImport(resolverDest, serviceDest)
-      const gqlImports = [
+      ),
+      resolverDest: resolversDest('resolver', entity.name),
+      gqlImports: [
         'Resolver',
         'Query',
         'Mutation',
         'Args',
-        ...(entity.byType(FieldType.Int).length ? ['Int'] : ['']),
-        ...(entity.byType(FieldType.Float).length ? ['Float'] : ['']),
-      ]
-
-      return {
-        entityPath,
-        servicePath,
-        gqlImports,
-      }
-    },
+        ...(entity.byType(FieldType.Int).length ? ['Int'] : []),
+        ...(entity.byType(FieldType.Float).length ? ['Float'] : []),
+      ].sort(),
+    }),
   })
 
 export default entity
