@@ -19,6 +19,19 @@ var FieldType;
     FieldType["ManyToOne"] = "many-to-one";
     FieldType["ManyToMany"] = "many-to-many";
 })(FieldType = exports.FieldType || (exports.FieldType = {}));
+exports.GeneratedFields = [
+    FieldType.Id,
+    FieldType.Uuid,
+    FieldType.Created,
+    FieldType.Updated,
+    FieldType.Version,
+];
+exports.RelationFields = [
+    FieldType.OneToOne,
+    FieldType.OneToMany,
+    FieldType.ManyToOne,
+    FieldType.ManyToMany,
+];
 class ScalarOptions {
 }
 exports.ScalarOptions = ScalarOptions;

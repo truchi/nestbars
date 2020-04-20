@@ -9,7 +9,8 @@ export declare class Entity {
     static all: Entity[];
     fields: Field[];
     constructor(name: string, options: EntityOptions);
-    fieldsByType(...types: FieldType[]): Field[];
+    filter(fn: (field: Field) => boolean): Field[];
+    byType(...types: FieldType[]): Field[];
     data(): any;
     static add(entity: Entity): void;
     static find(name: string): Entity;

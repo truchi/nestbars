@@ -17,8 +17,11 @@ class Entity {
         this.fields = [];
         this.options.options = (_a = this.options.options) !== null && _a !== void 0 ? _a : {};
     }
-    fieldsByType(...types) {
-        return this.fields.filter(({ type }) => types.includes(type));
+    filter(fn) {
+        return this.fields.filter(fn);
+    }
+    byType(...types) {
+        return this.filter(({ type }) => types.includes(type));
     }
     data() {
         return exports.get(this);

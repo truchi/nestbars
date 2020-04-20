@@ -42,6 +42,21 @@ export enum FieldType {
   ManyToMany = 'many-to-many',
 }
 
+export const GeneratedFields = [
+  FieldType.Id,
+  FieldType.Uuid,
+  FieldType.Created,
+  FieldType.Updated,
+  FieldType.Version,
+]
+
+export const RelationFields = [
+  FieldType.OneToOne,
+  FieldType.OneToMany,
+  FieldType.ManyToOne,
+  FieldType.ManyToMany,
+]
+
 export type FieldOptions =
   | PrimaryOptions
   | ScalarOptions

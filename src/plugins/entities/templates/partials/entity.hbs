@@ -15,7 +15,7 @@ export class {{entity.name}} {
       {{>field__common_gql_decorator .. field=field}}
     {{/default}}
   {{/switch}}
-  {{field.name}}{{#if field.nullable}}?{{/if}}: {{$get 'field.tsType'}}
+  {{field.name}}{{#if field.nullable}}?{{/if}}: {{call field 'tsType'}}
 
 {{/each}}
 }

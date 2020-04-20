@@ -21,15 +21,15 @@ const entity: Plugin = (
 
     const dbOptions = Object.assign(pick(options, ['name']), options.options)
     const gqlOptions = pick(options, ['description'])
-    const hasInt = !!entity.fieldsByType(FieldType.Int).length
-    const hasFloat = !!entity.fieldsByType(FieldType.Float).length
-    const hasEnum = !!entity.fieldsByType(FieldType.Enum, FieldType.Set).length
+    const hasInt = !!entity.byType(FieldType.Int).length
+    const hasFloat = !!entity.byType(FieldType.Float).length
+    const hasEnum = !!entity.byType(FieldType.Enum, FieldType.Set).length
     const hasJoinColumn = !!entity
-      .fieldsByType(FieldType.OneToOne, FieldType.ManyToOne)
+      .byType(FieldType.OneToOne, FieldType.ManyToOne)
       .filter(({ options }) => !!(options as RelationOptions<any>).joinColumn)
       .length
     const hasJoinTable = !!entity
-      .fieldsByType(FieldType.ManyToMany)
+      .byType(FieldType.ManyToMany)
       .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
       .length
 
@@ -46,22 +46,17 @@ const entity: Plugin = (
       hasJoinTable,
     }
   },
-  fieldData: ({ type, options }: Field) => {
-    const name =
-      options instanceof SetOptions
-        ? options.name
-        : options instanceof RelationOptions
-        ? options.withEntity().name
-        : ''
+  fieldData: (field: Field) => {
+    const { type, options } = field
+    const name = field.relatesTo()
 
     const { dbDecorator, gqlDecorator } = toDecorator(type)
-    const { tsType, dbType, gqlType } = toTypes(type, name)
+    const { dbType, gqlType } = toTypes(type, name)
     const { dbOptions, gqlOptions } = toOptions(options, dbType)
 
     return {
       dbDecorator,
       gqlDecorator,
-      tsType,
       dbType,
       gqlType,
       dbOptions,

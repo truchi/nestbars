@@ -9,6 +9,8 @@ export declare class Field {
     readonly options: FieldOptions;
     static all: Field[];
     constructor(entity: string, name: string, type: FieldType, options: FieldOptions);
+    relatesTo(): string;
+    tsType(): string;
     data(): any;
     static add(field: Field): void;
 }

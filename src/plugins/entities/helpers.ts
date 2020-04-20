@@ -33,7 +33,7 @@ export default {
   dependencies(this: Context<Entity>): { name: string; from: string }[] {
     return uniqueBy('name')(
       this.entity
-        .fieldsByType(
+        .byType(
           FieldType.OneToOne,
           FieldType.OneToMany,
           FieldType.ManyToOne,

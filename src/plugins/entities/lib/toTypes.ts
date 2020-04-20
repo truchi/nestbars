@@ -2,40 +2,11 @@ import { FieldType } from '../../../types/decorators'
 import { assertNever } from '../../../lib/utils'
 
 type Types = {
-  tsType: string
   dbType: string
   gqlType: string
 }
 
 export default (type: FieldType, name = ''): Types => ({
-  tsType: (() => {
-    switch (type) {
-      case FieldType.Id:
-      case FieldType.Int:
-      case FieldType.Float:
-      case FieldType.Version:
-        return 'number'
-      case FieldType.String:
-      case FieldType.Uuid:
-        return 'string'
-      case FieldType.Date:
-      case FieldType.Created:
-      case FieldType.Updated:
-        return 'Date'
-      case FieldType.Boolean:
-        return 'boolean'
-      case FieldType.Enum:
-      case FieldType.OneToOne:
-      case FieldType.ManyToOne:
-        return name
-      case FieldType.Set:
-      case FieldType.OneToMany:
-      case FieldType.ManyToMany:
-        return `${name}[]`
-      default:
-        return assertNever(type, __filename, 'tsType')
-    }
-  })(),
   dbType: (() => {
     switch (type) {
       case FieldType.Uuid:

@@ -3,9 +3,12 @@ import { EntityOptions, FieldType } from '../../types/decorators'
 import { Field } from './Field'
 
 let ENTITY_DATA = {}
+
 export const get = (entity: Entity): any => ENTITY_DATA[entity.name]
+
 export const set = (entity: Entity, data: any): void =>
   void (ENTITY_DATA[entity.name] = data)
+
 export const reset = (): void => void (ENTITY_DATA = {})
 
 export class Entity {
@@ -17,8 +20,12 @@ export class Entity {
     this.options.options = this.options.options ?? {}
   }
 
-  fieldsByType(...types: FieldType[]): Field[] {
-    return this.fields.filter(({ type }) => types.includes(type))
+  filter(fn: (field: Field) => boolean): Field[] {
+    return this.fields.filter(fn)
+  }
+
+  byType(...types: FieldType[]): Field[] {
+    return this.filter(({ type }) => types.includes(type))
   }
 
   data(): any {

@@ -1,6 +1,5 @@
 import { FieldType } from '../../../types/decorators';
 declare type Types = {
-    tsType: string;
     dbType: string;
     gqlType: string;
 };

@@ -1,4 +1,5 @@
 import { Plugin, PluginOptions } from '../../types/nestbars'
+import { GeneratedFields } from '../../types/decorators'
 import { PathFunction } from '../../types/utils'
 import { toPathFunction, relativeImport } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
@@ -22,11 +23,13 @@ const entity: (options: ServiceOptions) => Plugin =
         )
         const serviceDest = servicesDest('service', entity.name)
         const importPath = relativeImport(serviceDest, entityDest)
+        const generatedFields = entity.byType(...GeneratedFields)
 
         return {
           entityDest,
           serviceDest,
           importPath,
+          generatedFields,
         }
       },
     })

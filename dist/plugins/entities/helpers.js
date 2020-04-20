@@ -29,7 +29,7 @@ exports.default = {
     },
     dependencies() {
         return utils_1.uniqueBy('name')(this.entity
-            .fieldsByType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.OneToMany, decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany)
+            .byType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.OneToMany, decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany)
             .map(field => {
             const name = field.options.withEntity().name;
             const from = utils_1.relativeImport(this.entity.data().dest, Entity_1.Entity.find(name).data().dest);

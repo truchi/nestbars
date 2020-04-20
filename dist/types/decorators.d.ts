@@ -23,6 +23,8 @@ export declare enum FieldType {
     ManyToOne = "many-to-one",
     ManyToMany = "many-to-many"
 }
+export declare const GeneratedFields: FieldType[];
+export declare const RelationFields: FieldType[];
 export declare type FieldOptions = PrimaryOptions | ScalarOptions | SetOptions | SpecialOptions | RelationOptions<any>;
 export declare type ScalarDecorator = (options?: ScalarOptions) => Function;
 export declare class ScalarOptions {
