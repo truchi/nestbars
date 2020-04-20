@@ -10,7 +10,7 @@ export type ResolverPluginOptions = {
   services: string | PathFunction
 }
 
-const entity = ({
+export default ({
   entities: entitiesPath,
   services: servicesDest,
 }: ResolverPluginOptions): Plugin =>
@@ -35,5 +35,3 @@ const entity = ({
       ].sort(),
     }),
   })
-
-export default entity

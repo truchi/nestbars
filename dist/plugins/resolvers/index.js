@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../../lib/utils");
 const Plugin_1 = require("../../lib/plugins/Plugin");
-const entity = ({ entities: entitiesPath, services: servicesDest, }) => (entities, resolversPath) => ({
+exports.default = ({ entities: entitiesPath, services: servicesDest, }) => (entities, resolversPath) => ({
     name: 'Nestbars Resolvers Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity) => ({
@@ -20,5 +20,4 @@ const entity = ({ entities: entitiesPath, services: servicesDest, }) => (entitie
         ].sort(),
     }),
 });
-exports.default = entity;
 //# sourceMappingURL=index.js.map

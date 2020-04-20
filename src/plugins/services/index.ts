@@ -9,7 +9,7 @@ export type ServicePluginOptions = {
   entities: string | PathFunction
 }
 
-const entity = ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
+export default ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
   //
   (entities: Entity[], servicesPath: PathFunction): PluginOptions => ({
     name: 'Nestbars Services Plugin',
@@ -30,5 +30,3 @@ const entity = ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
       dataFields: uniqueBy('name')(entity.byType(...DataFields)),
     }),
   })
-
-export default entity
