@@ -1,14 +1,14 @@
 @{{$get 'field.dbDecorator'}}(
-() => {{$get 'field.dbType'}},
+() => {{field.dbType}},
 (
-{{uncapitalize ($get 'field.dbType')}}: {{$get 'field.dbType'}}
+{{uncapitalize field.dbType}}: {{field.dbType}}
 ): {{entity.name~}}
 {{#switch field.type}}
   {{#case 'many-to-one' 'many-to-many'}}
     []
   {{/case}}
 {{/switch}}
-=> {{uncapitalize ($get 'field.dbType')}}.{{field.options.withField}}
+=> {{uncapitalize field.dbType}}.{{field.options.withField}}
 )
 {{#switch field.type}}
   {{#case 'one-to-one' 'many-to-one'}}

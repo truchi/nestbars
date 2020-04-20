@@ -1,0 +1,5 @@
+import {
+{{#each ($get 'entity.gqlImports') as |name|}}
+  {{name}},
+{{/each}}
+} from '@nestjs/graphql'

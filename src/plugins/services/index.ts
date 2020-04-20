@@ -5,50 +5,42 @@ import { toPathFunction, relativeImport, uniqueBy } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { ANCHORS } from '../../lib/plugins/Plugin'
 
-export type ServiceOptions = {
+export type ServicePluginOptions = {
   entities: string | PathFunction
 }
 
-const entity: (options: ServiceOptions) => Plugin =
+const entity = ({ entities: entitiesDest }: ServicePluginOptions): Plugin =>
   //
-  ({ entities: entitiesDest }: ServiceOptions) =>
-    //
-    (entities: Entity[], servicesDest: PathFunction): PluginOptions => ({
-      name: 'Nestbars Services Plugin',
-      templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-      entityData: (entity: Entity): object => {
-        const entityDest = toPathFunction(entitiesDest, ANCHORS)(
-          'entity',
-          entity.name,
-        )
-        const serviceDest = servicesDest('service', entity.name)
-        const importPath = relativeImport(serviceDest, entityDest)
-        const generatedFields = entity.byType(...GeneratedFields)
-        const primaryFields = uniqueBy('name')([
-          ...entity.byType(FieldType.Id, FieldType.Uuid),
-          ...entity.filter(({ options }) => (options as any).primary),
-        ])
-        const primaryObject =
-          '{' + primaryFields.map(({ name }) => name).join(',') + '}'
-        const dataFields = uniqueBy('name')(entity.byType(...DataFields))
-        const dependencies = [
-          entity.name,
-          ...entity
-            .byType(FieldType.Enum, FieldType.Set)
-            .map(field => (field.options as any).name),
-        ]
+  (entities: Entity[], servicesDest: PathFunction): PluginOptions => ({
+    name: 'Nestbars Services Plugin',
+    templates: (__dirname + '/templates').replace('/dist/', '/src/'),
+    entityData: (entity: Entity): object => {
+      const entityDest = toPathFunction(entitiesDest, ANCHORS)(
+        'entity',
+        entity.name,
+      )
+      const serviceDest = servicesDest('service', entity.name)
 
-        return {
-          entityDest,
-          serviceDest,
-          importPath,
-          dependencies,
-          generatedFields,
-          primaryFields,
-          // primaryObject,
-          dataFields,
-        }
-      },
-    })
+      const importPath = relativeImport(serviceDest, entityDest)
+      const dependencies = [
+        entity.name,
+        ...entity
+          .byType(FieldType.Enum, FieldType.Set)
+          .map(field => (field.options as any).name),
+      ]
+      const primaryFields = uniqueBy('name')([
+        ...entity.byType(FieldType.Id, FieldType.Uuid),
+        ...entity.filter(({ options }) => (options as any).primary),
+      ])
+      const dataFields = uniqueBy('name')(entity.byType(...DataFields))
+
+      return {
+        importPath,
+        dependencies,
+        primaryFields,
+        dataFields,
+      }
+    },
+  })
 
 export default entity

@@ -8,11 +8,13 @@ export declare class Entity {
     readonly options: EntityOptions;
     static all: Entity[];
     fields: Field[];
+    dependencies: Entity[];
     constructor(name: string, options: EntityOptions);
+    init(): Promise<this>;
     filter(fn: (field: Field) => boolean): Field[];
     byType(...types: FieldType[]): Field[];
     data(): any;
     static add(entity: Entity): void;
     static find(name: string): Entity;
-    static init(): Entity[];
+    static init(): Promise<Entity[]>;
 }

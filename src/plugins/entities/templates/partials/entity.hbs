@@ -1,5 +1,3 @@
-{{$set 'entity' (call entity 'data')}}
-
 @{{$get 'entity.dbDecorator'}}({{stringify ($get 'entity.dbOptions')}})
 @{{$get 'entity.gqlDecorator'}}({{stringify ($get 'entity.gqlOptions')}})
 export class {{entity.name}} {
@@ -15,7 +13,7 @@ export class {{entity.name}} {
       {{>field__common_gql_decorator .. field=field}}
     {{/default}}
   {{/switch}}
-  {{field.name}}{{#if field.nullable}}?{{/if}}: {{call field 'tsType'}}
+  {{field.name}}{{#if field.nullable}}?{{/if}}: {{field.tsType}}
 
 {{/each}}
 }

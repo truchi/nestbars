@@ -8,9 +8,11 @@ export declare class Field {
     readonly type: FieldType;
     readonly options: FieldOptions;
     static all: Field[];
+    tsType: string;
+    dbType: string;
+    gqlType: string;
     constructor(entity: string, name: string, type: FieldType, options: FieldOptions);
-    relatesTo(): string;
-    tsType(): string;
+    init(): Promise<this>;
     data(): any;
     static add(field: Field): void;
 }

@@ -4,7 +4,7 @@ import {
   SetOptions,
   RelationOptions,
 } from '../../types/decorators'
-import { assertNever } from '../utils'
+import { tsType, dbType, gqlType } from './utils'
 
 let FIELD_DATA = {}
 
@@ -19,6 +19,10 @@ export const reset = (): void => void (FIELD_DATA = {})
 export class Field {
   static all: Field[] = []
 
+  tsType: string
+  dbType: string
+  gqlType: string
+
   constructor(
     readonly entity: string,
     readonly name: string,
@@ -26,19 +30,21 @@ export class Field {
     readonly options: FieldOptions,
   ) {}
 
-  // NOTE: this function cannot be called
-  // before an `await`, due to eventual
-  // circular references in user's model
-  relatesTo(): string {
-    return this.options instanceof SetOptions
-      ? this.options.name
-      : this.options instanceof RelationOptions
-      ? this.options.withEntity().name
-      : ''
-  }
+  async init(): Promise<this> {
+    await 0 // Avoids circular dependencies undefineds
 
-  tsType(): string {
-    return tsType(this.type, this.relatesTo())
+    const name =
+      this.options instanceof SetOptions
+        ? this.options.name
+        : this.options instanceof RelationOptions
+        ? this.options.withEntity().name
+        : ''
+
+    this.tsType = tsType(this.type, name)
+    this.dbType = dbType(this.type, name)
+    this.gqlType = gqlType(this.type, name)
+
+    return this
   }
 
   data(): any {
@@ -47,35 +53,5 @@ export class Field {
 
   static add(field: Field) {
     Field.all.push(field)
-  }
-}
-
-const tsType = (type: FieldType, name: string) => {
-  switch (type) {
-    case FieldType.Id:
-    case FieldType.Int:
-    case FieldType.Float:
-    case FieldType.Version:
-      return 'number'
-    case FieldType.String:
-    case FieldType.Uuid:
-      return 'string'
-    case FieldType.Date:
-    case FieldType.Created:
-    case FieldType.Updated:
-      return 'Date'
-    case FieldType.Boolean:
-      return 'boolean'
-    case FieldType.Enum:
-      return name
-    case FieldType.OneToOne:
-    case FieldType.ManyToOne:
-      return name
-    case FieldType.Set:
-    case FieldType.OneToMany:
-    case FieldType.ManyToMany:
-      return `${name}[]`
-    default:
-      return assertNever(type, __filename, 'tsType')
   }
 }

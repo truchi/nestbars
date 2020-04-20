@@ -193,10 +193,10 @@ export default class Plugin {
       resetFieldData()
       plugin.entities.map(
         entity => (
-          setEntityData(entity, plugin.entityData(entity)),
           entity.fields.map(field =>
             setFieldData(field, plugin.fieldData(field)),
-          )
+          ),
+          setEntityData(entity, plugin.entityData(entity))
         ),
       )
 

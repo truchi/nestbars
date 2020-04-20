@@ -1,8 +1,10 @@
-{{>banner~}}
+{{$set 'entity' (call entity 'data')}}
+
+{{~>banner~}}
 
 {{>imports}}
 
-{{#each (enums) as |enum|}}
+{{#each ($get 'entity.enums') as |enum|}}
   {{>enum enum=enum}}
 
 {{/each}}

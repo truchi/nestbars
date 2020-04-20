@@ -12,7 +12,7 @@ import {
   coalesce,
 } from 'object-path'
 import { Helpers } from '../../types/nestbars'
-import { uncapitalize } from '../utils'
+import { uncapitalize, relativeImport } from '../utils'
 
 let SWITCHES: { value: any; break: boolean }[] = []
 let VARS = {}
@@ -85,6 +85,9 @@ const helpers: Helpers = {
 
   uncapitalize(str: string): string {
     return uncapitalize(str)
+  },
+  relativeImport(from: string, to: string): string {
+    return relativeImport(from, to)
   },
   stringify(
     o: object,

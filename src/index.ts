@@ -11,7 +11,7 @@ export { default as services } from './plugins/services'
 const nestbars: Nestbars = async (
   ...plugins: [PluginType, Options][]
 ): Promise<void> => {
-  Plugin.entities = Entity.init()
+  Plugin.entities = await Entity.init()
   await Promise.all(plugins.map(Plugin.register))
   await Plugin.generate()
 }

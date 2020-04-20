@@ -68,6 +68,9 @@ const helpers = {
     uncapitalize(str) {
         return utils_1.uncapitalize(str);
     },
+    relativeImport(from, to) {
+        return utils_1.relativeImport(from, to);
+    },
     stringify(o, { hash: { trap = true, indent = 2 } }) {
         if (trap && !Object.keys(o).length)
             return new HandleBars.SafeString('');

@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const deep_freeze_1 = __importDefault(require("deep-freeze"));
+const decorators_1 = require("../../types/decorators");
+const utils_1 = require("../utils");
 const Field_1 = require("./Field");
 let ENTITY_DATA = {};
 exports.get = (entity) => ENTITY_DATA[entity.name];
@@ -15,7 +17,13 @@ class Entity {
         this.name = name;
         this.options = options;
         this.fields = [];
+        this.dependencies = [];
         this.options.options = (_a = this.options.options) !== null && _a !== void 0 ? _a : {};
+    }
+    async init() {
+        await 0;
+        this.dependencies = utils_1.unique(this.byType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.OneToMany, decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany).map(field => field.options.withEntity().name)).map(Entity.find);
+        return this;
     }
     filter(fn) {
         return this.fields.filter(fn);
@@ -32,12 +40,13 @@ class Entity {
     static find(name) {
         return Entity.all.find(entity => entity.name === name);
     }
-    static init() {
+    static async init() {
         const map = Entity.all.reduce((map, entity) => ({
             ...map,
             [entity.name]: entity,
         }), {});
-        Field_1.Field.all.map(field => map[field.entity].fields.push(field));
+        await Promise.all(Field_1.Field.all.map(async (field) => map[field.entity].fields.push(await field.init())));
+        await Promise.all(Entity.all.map(async (entity) => await entity.init()));
         deep_freeze_1.default(Entity);
         return Entity.all;
     }

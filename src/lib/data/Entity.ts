@@ -1,5 +1,11 @@
 import deepFreeze from 'deep-freeze'
-import { EntityOptions, FieldType } from '../../types/decorators'
+import {
+  EntityOptions,
+  FieldType,
+  RelationOptions,
+} from '../../types/decorators'
+import { Class } from '../../types/utils'
+import { unique, uniqueBy } from '../utils'
 import { Field } from './Field'
 
 let ENTITY_DATA = {}
@@ -15,9 +21,25 @@ export class Entity {
   static all: Entity[] = []
 
   fields: Field[] = []
+  dependencies: Entity[] = []
 
   constructor(readonly name: string, readonly options: EntityOptions) {
     this.options.options = this.options.options ?? {}
+  }
+
+  async init(): Promise<this> {
+    await 0 // Avoids circular dependencies undefineds
+
+    this.dependencies = unique(
+      this.byType(
+        FieldType.OneToOne,
+        FieldType.OneToMany,
+        FieldType.ManyToOne,
+        FieldType.ManyToMany,
+      ).map(field => (field.options as RelationOptions<any>).withEntity().name),
+    ).map(Entity.find)
+
+    return this
   }
 
   filter(fn: (field: Field) => boolean): Field[] {
@@ -40,7 +62,7 @@ export class Entity {
     return Entity.all.find(entity => entity.name === name)
   }
 
-  static init() {
+  static async init() {
     const map = Entity.all.reduce(
       (map, entity) => ({
         ...map,
@@ -49,9 +71,15 @@ export class Entity {
       {},
     )
 
-    Field.all.map(field => map[field.entity].fields.push(field))
+    await Promise.all(
+      Field.all.map(async field =>
+        map[field.entity].fields.push(await field.init()),
+      ),
+    )
 
+    await Promise.all(Entity.all.map(async entity => await entity.init()))
     deepFreeze(Entity)
+
     return Entity.all
   }
 }

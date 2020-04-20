@@ -103,8 +103,8 @@ class Plugin {
             Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
             Entity_1.reset();
             Field_1.reset();
-            plugin.entities.map(entity => (Entity_1.set(entity, plugin.entityData(entity)),
-                entity.fields.map(field => Field_1.set(field, plugin.fieldData(field)))));
+            plugin.entities.map(entity => (entity.fields.map(field => Field_1.set(field, plugin.fieldData(field))),
+                Entity_1.set(entity, plugin.entityData(entity))));
             Plugin.load(plugin);
             plugin.generate();
             Plugin.unload(plugin);

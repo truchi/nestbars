@@ -32,14 +32,14 @@ export const mkdir = (path: string) =>
 
 export const flat = (xs: any[][]): any[] => [].concat(...xs)
 
-export const unique = (xs: any[]): any[] =>
+export const unique = <T>(xs: T[]): T[] =>
   xs.filter((x, i, xs) => xs.indexOf(x) === i)
 
 //
 // Object
 //
 
-export const uniqueBy = (key: string) => (xs: any[]): any[] =>
+export const uniqueBy = (key: string) => <T>(xs: T[]): T[] =>
   xs.filter((x, i, xs) => xs.findIndex(y => x[key] === y[key]) === i)
 
 export const assign = <T>(x: T, ...xs: object[]): T =>

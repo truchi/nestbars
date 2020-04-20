@@ -16,7 +16,7 @@ exports.resolvers = resolvers_1.default;
 var services_1 = require("./plugins/services");
 exports.services = services_1.default;
 const nestbars = async (...plugins) => {
-    Plugin_1.default.entities = Entity_1.Entity.init();
+    Plugin_1.default.entities = await Entity_1.Entity.init();
     await Promise.all(plugins.map(Plugin_1.default.register));
     await Plugin_1.default.generate();
 };

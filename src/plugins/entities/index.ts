@@ -1,11 +1,9 @@
 import { PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
 import { RelationOptions, FieldType } from '../../types/decorators'
-import { pick } from '../../lib/utils'
+import { pick, unique } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { Field } from '../../lib/data/Field'
-import helpers from './helpers'
-import toTypes from './lib/toTypes'
 import toOptions from './lib/toOptions'
 import toDecorator from './lib/toDecorators'
 
@@ -15,50 +13,52 @@ const entity: Plugin = (
 ): PluginOptions => ({
   name: 'Nestbars Entities Plugin',
   templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-  helpers,
   entityData: (entity: Entity) => {
-    const { name, options } = entity
+    const { name, fields, options } = entity
 
-    const dbOptions = Object.assign(pick(options, ['name']), options.options)
-    const gqlOptions = pick(options, ['description'])
+    const enums = entity.byType(FieldType.Enum, FieldType.Set)
+    const joins = entity.byType(FieldType.OneToOne, FieldType.ManyToOne)
     const hasInt = !!entity.byType(FieldType.Int).length
     const hasFloat = !!entity.byType(FieldType.Float).length
-    const hasEnum = !!entity.byType(FieldType.Enum, FieldType.Set).length
-    const hasJoinColumn = !!entity
-      .byType(FieldType.OneToOne, FieldType.ManyToOne)
-      .filter(({ options }) => !!(options as RelationOptions<any>).joinColumn)
-      .length
-    const hasJoinTable = !!entity
-      .byType(FieldType.ManyToMany)
-      .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
-      .length
+    const hasEnum = !!enums.length
+    const hasJoinColumn = !!joins.filter(
+      ({ options }) => !!(options as RelationOptions<any>).joinColumn,
+    ).length
+    const hasJoinTable = !!joins.filter(
+      ({ options }) => !!(options as RelationOptions<any>).joinTable,
+    ).length
 
     return {
+      dest: dest('entity', name),
       dbDecorator: 'Entity',
       gqlDecorator: 'ObjectType',
-      dbOptions,
-      gqlOptions,
-      dest: dest('entity', name),
-      hasInt,
-      hasFloat,
-      hasEnum,
-      hasJoinColumn,
-      hasJoinTable,
+      dbOptions: Object.assign(pick(options, ['name']), options.options),
+      gqlOptions: pick(options, ['description']),
+      enums,
+      dbImports: [
+        'Entity',
+        ...unique(fields.map(field => field.data().dbDecorator)),
+        ...(hasJoinColumn ? ['JoinColumn'] : []),
+        ...(hasJoinTable ? ['JoinTable'] : []),
+      ].sort(),
+      gqlImports: [
+        'ObjectType',
+        ...unique(fields.map(field => field.data().gqlDecorator)),
+        ...(hasInt ? ['Int'] : []),
+        ...(hasFloat ? ['Float'] : []),
+        ...(hasEnum ? ['registerEnumType'] : []),
+      ].sort(),
     }
   },
   fieldData: (field: Field) => {
     const { type, options } = field
-    const name = field.relatesTo()
 
     const { dbDecorator, gqlDecorator } = toDecorator(type)
-    const { dbType, gqlType } = toTypes(type, name)
-    const { dbOptions, gqlOptions } = toOptions(options, dbType)
+    const { dbOptions, gqlOptions } = toOptions(options, field.dbType)
 
     return {
       dbDecorator,
       gqlDecorator,
-      dbType,
-      gqlType,
       dbOptions,
       gqlOptions,
     }
