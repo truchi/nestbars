@@ -13,14 +13,14 @@ export default ((entities: Entity[], path: PathFunction): PluginOptions => ({
   entityData: (entity: Entity) => {
     const { name, fields, options } = entity
 
-    const enums = entity.byType(FieldType.Enum, FieldType.Set)
-    const joins = entity.byType(
+    const enums = entity.by(FieldType.Enum, FieldType.Set)
+    const joins = entity.by(
       FieldType.OneToOne,
       FieldType.ManyToOne,
       FieldType.ManyToMany,
     )
-    const hasInt = !!entity.byType(FieldType.Int).length
-    const hasFloat = !!entity.byType(FieldType.Float).length
+    const hasInt = !!entity.by(FieldType.Int).length
+    const hasFloat = !!entity.by(FieldType.Float).length
     const hasEnum = !!enums.length
     const hasJoinColumn = !!joins.filter(
       ({ options }) => !!(options as RelationOptions<any>).joinColumn,

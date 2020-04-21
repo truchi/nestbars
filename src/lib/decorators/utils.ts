@@ -21,14 +21,9 @@ export const makeFieldDecoratorFactory = (
   //
   (options: InstanceType<Class> = {}) =>
     //
-    ({ constructor: { name: entity } }: any, name: string): void =>
+    (_: any, name: string): void =>
       Field.add(
-        new Field(
-          entity,
-          name,
-          type,
-          Object.assign(new OptionsClass(), options),
-        ),
+        new Field(name, type, Object.assign(new OptionsClass(), options)),
       )
 
 export const makeSetFieldDecoratorFactory = (type: FieldType) =>
@@ -39,10 +34,9 @@ export const makeSetFieldDecoratorFactory = (type: FieldType) =>
     options: Omit<SetOptions, 'values' | 'name'> = {},
   ) =>
     //
-    ({ constructor: { name: entity } }: any, name: string): void =>
+    (_: any, name: string): void =>
       Field.add(
         new Field(
-          entity,
           name,
           type,
           Object.assign(new SetOptions(), options, { values, name: tsName }),
@@ -56,10 +50,9 @@ export const makeRelationDecoratorFactory = (type: FieldType) =>
     withField: RelationOptions<T>['withField'],
   ) =>
     //
-    ({ constructor: { name: entity } }: any, name: string): void =>
+    (_: any, name: string): void =>
       Field.add(
         new Field(
-          entity,
           name,
           type,
           Object.assign(new RelationOptions(), {
@@ -77,10 +70,9 @@ export const makeJoinColumnRelationDecoratorFactory = (type: FieldType) =>
     joinColumn: RelationOptions<T>['joinColumn'] = false,
   ) =>
     //
-    ({ constructor: { name: entity } }: any, name: string): void =>
+    (_: any, name: string): void =>
       Field.add(
         new Field(
-          entity,
           name,
           type,
           Object.assign(new RelationOptions(), {
@@ -99,10 +91,9 @@ export const makeJoinTableRelationDecoratorFactory = (type: FieldType) =>
     joinTable: RelationOptions<T>['joinTable'] = false,
   ) =>
     //
-    ({ constructor: { name: entity } }: any, name: string): void =>
+    (_: any, name: string): void =>
       Field.add(
         new Field(
-          entity,
           name,
           type,
           Object.assign(new RelationOptions(), {

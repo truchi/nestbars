@@ -12,14 +12,14 @@ exports.default = ({ entities: entitiesPath }) => (entities, servicesPath) => ({
         dependencies: [
             entity.name,
             ...entity
-                .byType(decorators_1.FieldType.Enum, decorators_1.FieldType.Set)
+                .by(decorators_1.FieldType.Enum, decorators_1.FieldType.Set)
                 .map(field => field.options.name),
         ],
         primaryFields: utils_1.uniqueBy('name')([
-            ...entity.byType(decorators_1.FieldType.Id, decorators_1.FieldType.Uuid),
+            ...entity.by(decorators_1.FieldType.Id, decorators_1.FieldType.Uuid),
             ...entity.filter(({ options }) => options.primary),
         ]),
-        dataFields: utils_1.uniqueBy('name')(entity.byType(...decorators_1.DataFields)),
+        dataFields: utils_1.uniqueBy('name')(entity.by(decorators_1.FieldType.Int)),
     }),
 });
 //# sourceMappingURL=index.js.map

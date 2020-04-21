@@ -6,26 +6,23 @@ export declare type EntityOptions = {
     options?: object;
 };
 export declare enum FieldType {
+    Id = "id",
+    Uuid = "uuid",
     Int = "int",
     Float = "float",
     String = "string",
     Date = "date",
     Boolean = "boolean",
-    Id = "id",
-    Uuid = "uuid",
+    Enum = "enum",
+    Set = "set",
     Created = "created",
     Updated = "updated",
     Version = "version",
-    Enum = "enum",
-    Set = "set",
     OneToOne = "one-to-one",
     OneToMany = "one-to-many",
     ManyToOne = "many-to-one",
     ManyToMany = "many-to-many"
 }
-export declare const GeneratedFields: FieldType[];
-export declare const RelationFields: FieldType[];
-export declare const DataFields: FieldType[];
 export declare type FieldOptions = PrimaryOptions | ScalarOptions | SetOptions | SpecialOptions | RelationOptions<any>;
 export declare type ScalarDecorator = (options?: ScalarOptions) => Function;
 export declare class ScalarOptions {

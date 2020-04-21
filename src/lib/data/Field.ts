@@ -1,10 +1,13 @@
 import {
   FieldType,
   FieldOptions,
+  PrimaryOptions,
   SetOptions,
+  SpecialOptions,
   RelationOptions,
 } from '../../types/decorators'
 import { tsType, dbType, gqlType } from './utils'
+import { Entity } from './Entity'
 
 let FIELD_DATA = {}
 
@@ -17,32 +20,50 @@ export const reset = (): void => void (FIELD_DATA = {})
 export class Field {
   static all: Field[] = []
 
+  entity: Entity
   tsType: string
   dbType: string
   gqlType: string
+  relation?: Entity
+  readonly isPrimary: boolean
+  readonly isGenerated: boolean
+  readonly isRelation: boolean
 
   constructor(
-    readonly entity: string,
     readonly name: string,
     readonly type: FieldType,
     readonly options: FieldOptions,
-  ) {}
+  ) {
+    this.isPrimary = this.is(PrimaryOptions) || !!(options as any).primary
+    this.isGenerated = this.is(PrimaryOptions, SpecialOptions)
+    this.isRelation = this.is(RelationOptions)
+  }
 
   async init(): Promise<this> {
-    await 0 // Avoids circular dependencies undefineds
+    let name = ''
 
-    const name =
-      this.options instanceof SetOptions
-        ? this.options.name
-        : this.options instanceof RelationOptions
-        ? this.options.withEntity().name
-        : ''
+    if (this.options instanceof SetOptions) {
+      name = this.options.name
+    }
+
+    if (this.options instanceof RelationOptions) {
+      name = this.options.withEntity().name
+      this.relation = Entity.find(name)
+    }
 
     this.tsType = tsType(this.type, name)
     this.dbType = dbType(this.type, name)
     this.gqlType = gqlType(this.type, name)
 
     return this
+  }
+
+  is(...args: (FieldType | (new () => FieldOptions))[]): boolean {
+    return args.some(arg =>
+      arg instanceof Function //
+        ? this.options instanceof arg
+        : this.type === arg,
+    )
   }
 
   data(): any {

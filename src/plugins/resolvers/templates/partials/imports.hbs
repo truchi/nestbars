@@ -3,3 +3,8 @@ import {
   {{name}},
 {{/each}}
 } from '@nestjs/graphql'
+import {
+{{#each ($get 'entity.dependencies') as |dependency|}}
+  {{dependency}},
+{{/each}}
+} from '{{relativeImport ($get 'entity.resolverPath') ($get 'entity.entityPath')}}'

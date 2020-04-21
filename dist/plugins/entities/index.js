@@ -12,10 +12,10 @@ exports.default = ((entities, path) => ({
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     entityData: (entity) => {
         const { name, fields, options } = entity;
-        const enums = entity.byType(decorators_1.FieldType.Enum, decorators_1.FieldType.Set);
-        const joins = entity.byType(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany);
-        const hasInt = !!entity.byType(decorators_1.FieldType.Int).length;
-        const hasFloat = !!entity.byType(decorators_1.FieldType.Float).length;
+        const enums = entity.by(decorators_1.FieldType.Enum, decorators_1.FieldType.Set);
+        const joins = entity.by(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany);
+        const hasInt = !!entity.by(decorators_1.FieldType.Int).length;
+        const hasFloat = !!entity.by(decorators_1.FieldType.Float).length;
         const hasEnum = !!enums.length;
         const hasJoinColumn = !!joins.filter(({ options }) => !!options.joinColumn).length;
         const hasJoinTable = !!joins.filter(({ options }) => !!options.joinTable).length;

@@ -15,9 +15,15 @@ exports.default = ({ entities: entitiesPath, services: servicesDest, }) => (enti
             'Query',
             'Mutation',
             'Args',
-            ...(entity.byType(decorators_1.FieldType.Int).length ? ['Int'] : []),
-            ...(entity.byType(decorators_1.FieldType.Float).length ? ['Float'] : []),
+            ...(entity.by(decorators_1.FieldType.Int).length ? ['Int'] : []),
+            ...(entity.by(decorators_1.FieldType.Float).length ? ['Float'] : []),
         ].sort(),
+        dependencies: [
+            entity.name,
+            ...entity
+                .by(decorators_1.FieldType.Enum, decorators_1.FieldType.Set)
+                .map(field => field.options.name),
+        ],
     }),
 });
 //# sourceMappingURL=index.js.map

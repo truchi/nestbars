@@ -8,10 +8,10 @@ import {
   {{name}},
 {{/each}}
 } from '@nestjs/graphql'
-{{#each entity.dependencies as |dependency|}}
-  import { {{dependency.name}} }
+{{#each entity.relations as |relation|}}
+  import { {{relation.name}} }
   from '{{relativeImport
     ($get 'entity.path')
-    (lookup (call dependency 'data') 'path')
+    (lookup (call relation 'data') 'path')
   }}'
 {{/each}}

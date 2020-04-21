@@ -1,5 +1,5 @@
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { FieldType, DataFields } from '../../types/decorators'
+import { FieldType } from '../../types/decorators'
 import { PathFunction } from '../../types/utils'
 import { toPathFunction, uniqueBy } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
@@ -20,13 +20,13 @@ export default ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
       dependencies: [
         entity.name,
         ...entity
-          .byType(FieldType.Enum, FieldType.Set)
+          .by(FieldType.Enum, FieldType.Set)
           .map(field => (field.options as any).name),
       ],
       primaryFields: uniqueBy('name')([
-        ...entity.byType(FieldType.Id, FieldType.Uuid),
+        ...entity.by(FieldType.Id, FieldType.Uuid),
         ...entity.filter(({ options }) => (options as any).primary),
       ]),
-      dataFields: uniqueBy('name')(entity.byType(...DataFields)),
+      dataFields: uniqueBy('name')(entity.by(FieldType.Int)), // FIXME
     }),
   })

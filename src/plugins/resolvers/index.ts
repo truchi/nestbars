@@ -1,6 +1,6 @@
 import { PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
-import { FieldType } from '../../types/decorators'
+import { FieldType, SetOptions } from '../../types/decorators'
 import { toPathFunction } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { ANCHORS } from '../../lib/plugins/Plugin'
@@ -30,8 +30,14 @@ export default ({
         'Query',
         'Mutation',
         'Args',
-        ...(entity.byType(FieldType.Int).length ? ['Int'] : []),
-        ...(entity.byType(FieldType.Float).length ? ['Float'] : []),
+        ...(entity.by(FieldType.Int).length ? ['Int'] : []),
+        ...(entity.by(FieldType.Float).length ? ['Float'] : []),
       ].sort(),
+      dependencies: [
+        entity.name,
+        ...entity
+          .by(FieldType.Enum, FieldType.Set)
+          .map(field => (field.options as any).name),
+      ],
     }),
   })

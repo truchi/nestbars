@@ -19,47 +19,28 @@ export type EntityOptions = {
 //
 
 export enum FieldType {
+  // Primary
+  Id = 'id',
+  Uuid = 'uuid',
   // Scalar
   Int = 'int',
   Float = 'float',
   String = 'string',
   Date = 'date',
   Boolean = 'boolean',
-  // Primary
-  Id = 'id',
-  Uuid = 'uuid',
+  // Set
+  Enum = 'enum',
+  Set = 'set',
   // Special
   Created = 'created',
   Updated = 'updated',
   Version = 'version',
-  // Set
-  Enum = 'enum',
-  Set = 'set',
   // Relation
   OneToOne = 'one-to-one',
   OneToMany = 'one-to-many',
   ManyToOne = 'many-to-one',
   ManyToMany = 'many-to-many',
 }
-
-export const GeneratedFields = [
-  FieldType.Id,
-  FieldType.Uuid,
-  FieldType.Created,
-  FieldType.Updated,
-  FieldType.Version,
-]
-
-export const RelationFields = [
-  FieldType.OneToOne,
-  FieldType.OneToMany,
-  FieldType.ManyToOne,
-  FieldType.ManyToMany,
-]
-
-export const DataFields = Object.values(FieldType).filter(
-  type => !GeneratedFields.includes(type) && !RelationFields.includes(type),
-)
 
 export type FieldOptions =
   | PrimaryOptions
@@ -159,7 +140,7 @@ export type ManyToManyDecorator<T extends Class> = (
 
 export class RelationOptions<T extends Class> {
   withEntity: () => T
-  withField: keyof InstanceType<T>
+  withField: keyof InstanceType<T> // TODO not type checking correctly
   joinColumn?: boolean | object
   joinTable?: boolean | object
   // description?: string // TODO

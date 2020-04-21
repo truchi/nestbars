@@ -2,6 +2,7 @@ import deepFreeze from 'deep-freeze'
 import {
   EntityOptions,
   FieldType,
+  FieldOptions,
   RelationOptions,
 } from '../../types/decorators'
 import { unique } from '../utils'
@@ -18,23 +19,17 @@ export class Entity {
   static all: Entity[] = []
 
   fields: Field[] = []
-  dependencies: Entity[] = []
+  relations: Entity[] = []
 
   constructor(readonly name: string, readonly options: EntityOptions) {
-    this.options.options = this.options.options ?? {}
+    this.fields = Field.all.map(field => ((field.entity = this), field))
+    Field.all = []
   }
 
   async init(): Promise<this> {
-    await 0 // Avoids circular dependencies undefineds
-
-    this.dependencies = unique(
-      this.byType(
-        FieldType.OneToOne,
-        FieldType.OneToMany,
-        FieldType.ManyToOne,
-        FieldType.ManyToMany,
-      ).map(field => (field.options as RelationOptions<any>).withEntity().name),
-    ).map(Entity.find)
+    this.relations = unique(
+      this.fields.map(({ relation }) => relation).filter(x => x),
+    )
 
     return this
   }
@@ -43,8 +38,8 @@ export class Entity {
     return this.fields.filter(fn)
   }
 
-  byType(...types: FieldType[]): Field[] {
-    return this.filter(({ type }) => types.includes(type))
+  by(...args: (FieldType | (new () => FieldOptions))[]): Field[] {
+    return this.filter(field => field.is(...args))
   }
 
   data(): any {
@@ -60,23 +55,21 @@ export class Entity {
   }
 
   static async init() {
-    const map = Entity.all.reduce(
-      (map, entity) => ({
-        ...map,
-        [entity.name]: entity,
-      }),
-      {},
-    )
+    await 0 // Let user modules' circular dependencies resolve
 
     await Promise.all(
-      Field.all.map(async field =>
-        map[field.entity].fields.push(await field.init()),
+      Entity.all.map(
+        async entity => (
+          await Promise.all(
+            entity.fields.map(async field => await field.init()),
+          ),
+          await entity.init()
+        ),
       ),
     )
 
-    await Promise.all(Entity.all.map(async entity => await entity.init()))
     deepFreeze(Entity)
-
+    console.log(Entity.all)
     return Entity.all
   }
 }
