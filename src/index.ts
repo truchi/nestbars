@@ -1,4 +1,4 @@
-import { Nestbars, Plugin as PluginType, Options } from './types/nestbars'
+import { Nestbars, Plugin as PluginType, UserOptions } from './types/nestbars'
 import { Entity } from './lib/data/Entity'
 import Plugin from './lib/plugins/Plugin'
 
@@ -9,9 +9,9 @@ export { default as resolvers } from './plugins/resolvers'
 export { default as services } from './plugins/services'
 
 const nestbars: Nestbars = async (
-  ...plugins: [PluginType, Options][]
+  ...plugins: [PluginType, UserOptions][]
 ): Promise<void> => {
-  Plugin.entities = await Entity.init()
+  await Entity.init()
   await Promise.all(plugins.map(Plugin.register))
   await Plugin.generate()
 }

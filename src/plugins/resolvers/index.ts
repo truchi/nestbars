@@ -3,7 +3,7 @@ import { Plugin, PluginOptions } from '../../types/nestbars'
 import { toPathFunction } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { ANCHORS } from '../../lib/plugins/Plugin'
-import entityData from './entityData'
+import entity from './entity'
 
 export type ResolverPluginOptions = {
   entities: string | PathFunction
@@ -16,11 +16,12 @@ export default ({
 }: ResolverPluginOptions): Plugin =>
   //
   (entities: Entity[], resolversPath: PathFunction): PluginOptions => ({
-    name: 'Nestbars Resolvers Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-    entityData: entityData(
-      toPathFunction(entitiesPath, ANCHORS),
-      toPathFunction(servicesPath, ANCHORS),
-      resolversPath,
-    ),
+    data: {
+      entity: entity(
+        toPathFunction(entitiesPath, ANCHORS),
+        toPathFunction(servicesPath, ANCHORS),
+        resolversPath,
+      ),
+    },
   })

@@ -1,6 +1,5 @@
-import { Plugin as PluginType, Options, PathFunction, Helpers } from '../../types/nestbars';
+import { Plugin as PluginType, UserOptions, PathFunction, Helpers, Data } from '../../types/nestbars';
 import { Entity } from '../data/Entity';
-import { Field } from '../data/Field';
 export declare const PARTIALS = "partials";
 export declare const ANCHORS: {
     NAME: string;
@@ -15,30 +14,27 @@ declare type Partial = {
     partial: string;
 };
 export default class Plugin {
-    name: string;
     entities: Entity[];
     dest: PathFunction;
     pluginTemplates: string;
-    userTemplates?: string;
+    userTemplates: string;
     pluginHelpers: Helpers;
     userHelpers: Helpers;
-    context: () => any;
-    entityData: (entity: Entity) => any;
-    fieldData: (field: Field) => any;
+    pluginContext: () => any;
+    userContext: () => any;
+    pluginData: Data;
+    userData: Data;
     static all: Plugin[];
-    static entities: Entity[];
     private templates;
     private partials;
     private helpers;
-    constructor(name: string, entities: Entity[], dest: PathFunction, pluginTemplates: string, userTemplates?: string, pluginHelpers?: Helpers, userHelpers?: Helpers, context?: () => any, entityData?: (entity: Entity) => any, fieldData?: (field: Field) => any);
+    constructor(entities: Entity[], dest: PathFunction, pluginTemplates: string, userTemplates: string, pluginHelpers: Helpers, userHelpers: Helpers, pluginContext: () => any, userContext: () => any, pluginData: Data, userData: Data);
     loadTemplates(): Promise<Template[]>;
     loadPartials(): Promise<Partial[]>;
     loadHelpers(): Helpers;
     init(): Promise<this>;
     generate(): Promise<void>;
-    static register([plugin, options]: [PluginType, Options]): Promise<void>;
+    static register([plugin, options]: [PluginType, UserOptions]): Promise<void>;
     static generate(): Promise<void>;
-    static load(plugin: Plugin): void;
-    static unload(plugin: Plugin): void;
 }
 export {};

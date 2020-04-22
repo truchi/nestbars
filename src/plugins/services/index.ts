@@ -3,7 +3,7 @@ import { PathFunction } from '../../types/utils'
 import { toPathFunction } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import { ANCHORS } from '../../lib/plugins/Plugin'
-import entityData from './entityData'
+import entity from './entity'
 
 export type ServicePluginOptions = {
   entities: string | PathFunction
@@ -12,7 +12,8 @@ export type ServicePluginOptions = {
 export default ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
   //
   (entities: Entity[], servicesPath: PathFunction): PluginOptions => ({
-    name: 'Nestbars Services Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-    entityData: entityData(toPathFunction(entitiesPath, ANCHORS), servicesPath),
+    data: {
+      entity: entity(toPathFunction(entitiesPath, ANCHORS), servicesPath),
+    },
   })

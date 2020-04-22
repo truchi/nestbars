@@ -3,11 +3,10 @@ import { Entity } from '../lib/data/Entity'
 import { Field } from '../lib/data/Field'
 
 export type Context<T> = {
-  plugin: string
   type: string
   entities: T[]
   entity: T
-  context: any
+  context: object
 }
 
 export type PathFunction = (type?: string, name?: string) => string
@@ -16,22 +15,27 @@ export type Helpers = {
   [key: string]: (...args: any[]) => any
 }
 
-export type Options = {
+export type Data = {
+  entity?: (entity: Entity) => object
+  field?: (field: Field) => object
+}
+
+export type UserOptions = {
   classes: Class[]
   dest: string | PathFunction
   templates?: string
   helpers?: Helpers
+  context?: () => object
+  data?: Data
 }
 
 export type PluginOptions = {
-  name: string
   templates: string
   helpers?: Helpers
-  context?: () => any
-  entityData?: (entity: Entity) => any
-  fieldData?: (field: Field) => any
+  context?: () => object
+  data?: Data
 }
 
 export type Plugin = (entities: Entity[], path: PathFunction) => PluginOptions
 
-export type Nestbars = (...plugins: [Plugin, Options][]) => Promise<void>
+export type Nestbars = (...plugins: [Plugin, UserOptions][]) => Promise<void>

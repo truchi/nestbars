@@ -3,10 +3,11 @@ import readDirRec from 'recursive-readdir'
 import * as HandleBars from 'handlebars'
 import {
   Plugin as PluginType,
-  Options,
+  UserOptions,
   PathFunction,
   Helpers,
   Context,
+  Data,
 } from '../../types/nestbars'
 import {
   toPathFunction,
@@ -21,11 +22,7 @@ import {
   set as setEntityData,
   reset as resetEntityData,
 } from '../data/Entity'
-import {
-  Field,
-  set as setFieldData,
-  reset as resetFieldData,
-} from '../data/Field'
+import { set as setFieldData, reset as resetFieldData } from '../data/Field'
 
 export const PARTIALS = 'partials'
 export const ANCHORS = {
@@ -38,23 +35,22 @@ type Partial = { name: string; partial: string }
 
 export default class Plugin {
   static all: Plugin[] = []
-  static entities: Entity[] = []
 
   private templates: Template[] = []
   private partials: Partial[] = []
   private helpers: Helpers = {}
 
   constructor(
-    public name: string,
     public entities: Entity[],
     public dest: PathFunction,
     public pluginTemplates: string,
-    public userTemplates?: string,
-    public pluginHelpers: Helpers = {},
-    public userHelpers: Helpers = {},
-    public context: () => any = () => null,
-    public entityData: (entity: Entity) => any = (entity: Entity) => null,
-    public fieldData: (field: Field) => any = (field: Field) => null,
+    public userTemplates: string,
+    public pluginHelpers: Helpers,
+    public userHelpers: Helpers,
+    public pluginContext: () => any,
+    public userContext: () => any,
+    public pluginData: Data,
+    public userData: Data,
   ) {}
 
   async loadTemplates(): Promise<Template[]> {
@@ -119,18 +115,18 @@ export default class Plugin {
   }
 
   async generate(): Promise<void> {
-    const context = this.context()
-
     const generate = (entity: Entity) => async ({ type, template }) => (
       resetHelpersData(),
       await writeFile(
         this.dest(type, entity.name),
         HandleBars.compile(template)({
-          plugin: this.name,
           type,
           entities: Entity.all,
           entity,
-          context,
+          context: {
+            ...this.pluginContext(),
+            ...this.userContext(),
+          },
         } as Context<Entity>),
       )
     )
@@ -142,7 +138,7 @@ export default class Plugin {
     )
   }
 
-  static async register([plugin, options]: [PluginType, Options]): Promise<
+  static async register([plugin, options]: [PluginType, UserOptions]): Promise<
     void
   > {
     const {
@@ -150,33 +146,39 @@ export default class Plugin {
       dest: _dest,
       templates: userTemplates,
       helpers: userHelpers,
+      context: userContext,
+      data: userData,
     } = options
 
     const names = classes.map(({ name }) => name)
-    const entities = Plugin.entities.filter(({ name }) => names.includes(name))
+    const entities = Entity.all.filter(({ name }) => names.includes(name))
     const dest = toPathFunction(_dest, ANCHORS)
 
     const {
-      name,
       templates: pluginTemplates,
       helpers: pluginHelpers,
-      context,
-      entityData,
-      fieldData,
+      context: pluginContext,
+      data: pluginData,
     } = plugin(entities, dest)
 
     Plugin.all.push(
       await new Plugin(
-        name,
         entities,
         dest,
         pluginTemplates,
-        userTemplates,
-        pluginHelpers,
-        userHelpers,
-        context,
-        entityData,
-        fieldData,
+        userTemplates || '',
+        pluginHelpers || {},
+        userHelpers || {},
+        pluginContext || (() => ({})),
+        userContext || (() => ({})),
+        {
+          entity: pluginData.entity ?? (() => ({})),
+          field: pluginData.field ?? (() => ({})),
+        },
+        {
+          entity: userData.entity ?? (() => ({})),
+          field: userData.field ?? (() => ({})),
+        },
       ).init(),
     )
   }
@@ -189,37 +191,37 @@ export default class Plugin {
       )
 
       // Register plugin data for entities and fields
-      resetEntityData()
-      resetFieldData()
       plugin.entities.map(
         entity => (
           entity.fields.map(field =>
-            setFieldData(field, plugin.fieldData(field)),
+            setFieldData(field, {
+              ...plugin.pluginData.field(field),
+              ...plugin.userData.field(field),
+            }),
           ),
-          setEntityData(entity, plugin.entityData(entity))
+          setEntityData(entity, {
+            ...plugin.pluginData.entity(entity),
+            ...plugin.userData.entity(entity),
+          })
         ),
       )
 
-      // Run generation
-      Plugin.load(plugin)
+      // Register helpers, partials, and run generation
+      Object.entries(plugin.helpers).map(([name, helper]) =>
+        HandleBars.registerHelper(name, helper),
+      )
+      plugin.partials.map(({ name, partial }) =>
+        HandleBars.registerPartial(name, partial),
+      )
       plugin.generate()
-      Plugin.unload(plugin)
+
+      // Resets
+      Object.entries(plugin.helpers).map(([name]) =>
+        HandleBars.unregisterHelper(name),
+      )
+      plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name))
+      resetEntityData()
+      resetFieldData()
     })
-  }
-
-  static load(plugin: Plugin): void {
-    Object.entries(plugin.helpers).map(([name, helper]) =>
-      HandleBars.registerHelper(name, helper),
-    )
-    plugin.partials.map(({ name, partial }) =>
-      HandleBars.registerPartial(name, partial),
-    )
-  }
-
-  static unload(plugin: Plugin): void {
-    Object.entries(plugin.helpers).map(([name]) =>
-      HandleBars.unregisterHelper(name),
-    )
-    plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name))
   }
 }
