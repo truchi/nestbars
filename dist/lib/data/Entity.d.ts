@@ -19,7 +19,7 @@ export declare class Entity {
     readonly options: EntityOptions;
     static all: Entity[];
     fields: Field[];
-    enums: string[];
+    enums: Field[];
     primaryFields: Field[];
     generatedFields: Field[];
     dataFields: Field[];

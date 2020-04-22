@@ -1,5 +1,5 @@
-@{{$get 'entity.dbDecorator'}}({{stringify ($get 'entity.dbOptions')}})
-@{{$get 'entity.gqlDecorator'}}({{stringify ($get 'entity.gqlOptions')}})
+@Entity({{stringify ($get 'entity.dbOptions')}})
+@ObjectType({{stringify ($get 'entity.gqlOptions')}})
 export class {{entity.name}} {
 {{#each entity.fields as |field|}}
   {{$set 'field' (call field 'data')}}

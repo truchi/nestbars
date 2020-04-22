@@ -92,18 +92,17 @@ class Plugin {
         await Promise.all(this.entities.map(async (entity) => Promise.all(this.templates.map(generate(entity)))));
     }
     static async register([plugin, options]) {
-        var _a, _b, _c, _d;
         const { classes, dest: _dest, templates: userTemplates, helpers: userHelpers, context: userContext, data: userData, } = options;
         const names = classes.map(({ name }) => name);
         const entities = Entity_1.Entity.all.filter(({ name }) => names.includes(name));
         const dest = utils_1.toPathFunction(_dest, exports.ANCHORS);
         const { templates: pluginTemplates, helpers: pluginHelpers, context: pluginContext, data: pluginData, } = plugin(entities, dest);
         Plugin.all.push(await new Plugin(entities, dest, pluginTemplates, userTemplates || '', pluginHelpers || {}, userHelpers || {}, pluginContext || (() => ({})), userContext || (() => ({})), {
-            entity: (_a = pluginData.entity) !== null && _a !== void 0 ? _a : (() => ({})),
-            field: (_b = pluginData.field) !== null && _b !== void 0 ? _b : (() => ({})),
+            entity: (pluginData === null || pluginData === void 0 ? void 0 : pluginData.entity) || (() => ({})),
+            field: (pluginData === null || pluginData === void 0 ? void 0 : pluginData.field) || (() => ({})),
         }, {
-            entity: (_c = userData.entity) !== null && _c !== void 0 ? _c : (() => ({})),
-            field: (_d = userData.field) !== null && _d !== void 0 ? _d : (() => ({})),
+            entity: (userData === null || userData === void 0 ? void 0 : userData.entity) || (() => ({})),
+            field: (userData === null || userData === void 0 ? void 0 : userData.field) || (() => ({})),
         }).init());
     }
     static async generate() {

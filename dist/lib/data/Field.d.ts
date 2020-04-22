@@ -11,7 +11,6 @@ export declare class Field {
     static all: Field[];
     entity: Entity;
     relation?: Entity;
-    enum?: string;
     tsType: string;
     dbType: string;
     gqlType: string;

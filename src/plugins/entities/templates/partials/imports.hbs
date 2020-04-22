@@ -1,14 +1,19 @@
 import {
-{{#each ($get 'entity.dbImports') as |name|}}
-  {{name}},
+Entity,
+{{#each ($get 'entity.fieldDbDecorators') as |decorator|}}
+  {{decorator}},
 {{/each}}
+{{#if ($get 'entity.hasJoinColumn')}} JoinColumn, {{/if}}
+{{#if ($get 'entity.hasJoinTable')}} JoinTable, {{/if}}
 } from 'typeorm'
 import {
-{{#each ($get 'entity.gqlImports') as |name|}}
-  {{name}},
-{{/each}}
+ObjectType,
+{{#if ($get 'entity.hasFields')}} Field, {{/if}}
+{{#if ($get 'entity.hasInt')}} Int, {{/if}}
+{{#if ($get 'entity.hasFloat')}} Float, {{/if}}
+{{#if ($get 'entity.hasEnums')}} registerEnumType, {{/if}}
 } from '@nestjs/graphql'
-{{#each entity.relations as |relation|}}
+{{#each entity.relations.all as |relation|}}
   import { {{relation.name}} }
   from '{{relativeImport
     ($get 'entity.path')

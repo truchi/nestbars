@@ -35,7 +35,7 @@ class Entity {
     }
     async init() {
         const relations = (...types) => utils_1.unique(this.by(...types).map(({ relation }) => relation));
-        this.enums = utils_1.unique(this.by(decorators_1.SetOptions).map(({ enum: e }) => e));
+        this.enums = this.by(decorators_1.SetOptions);
         this.primaryFields = this.fields.filter(({ isPrimary }) => isPrimary);
         this.generatedFields = this.fields.filter(({ isGenerated }) => isGenerated);
         this.dataFields = this.fields.filter(({ isData }) => isData);

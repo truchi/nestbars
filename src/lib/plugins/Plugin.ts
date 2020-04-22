@@ -172,12 +172,12 @@ export default class Plugin {
         pluginContext || (() => ({})),
         userContext || (() => ({})),
         {
-          entity: pluginData.entity ?? (() => ({})),
-          field: pluginData.field ?? (() => ({})),
+          entity: pluginData?.entity || (() => ({})),
+          field: pluginData?.field || (() => ({})),
         },
         {
-          entity: userData.entity ?? (() => ({})),
-          field: userData.field ?? (() => ({})),
+          entity: userData?.entity || (() => ({})),
+          field: userData?.field || (() => ({})),
         },
       ).init(),
     )

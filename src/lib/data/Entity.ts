@@ -44,7 +44,7 @@ export class Entity {
   static all: Entity[] = []
 
   fields: Field[] = []
-  enums: string[] = []
+  enums: Field[] = []
   primaryFields: Field[] = []
   generatedFields: Field[] = []
   dataFields: Field[] = []
@@ -56,7 +56,7 @@ export class Entity {
     const relations = (...types: (FieldType | (new () => FieldOptions))[]) =>
       unique(this.by(...types).map(({ relation }) => relation))
 
-    this.enums = unique(this.by(SetOptions).map(({ enum: e }) => e))
+    this.enums = this.by(SetOptions)
     this.primaryFields = this.fields.filter(({ isPrimary }) => isPrimary)
     this.generatedFields = this.fields.filter(({ isGenerated }) => isGenerated)
     this.dataFields = this.fields.filter(({ isData }) => isData)

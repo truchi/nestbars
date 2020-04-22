@@ -27,7 +27,7 @@ class Field {
     async init() {
         let name = '';
         if (this.options instanceof decorators_1.SetOptions) {
-            this.enum = name = this.options.name;
+            name = this.options.name;
         }
         else if (this.options instanceof decorators_1.RelationOptions) {
             this.relation = Entity_1.Entity.find((name = this.options.withEntity().name));

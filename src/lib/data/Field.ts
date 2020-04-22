@@ -22,7 +22,6 @@ export class Field {
 
   entity: Entity
   relation?: Entity
-  enum?: string
   tsType: string
   dbType: string
   gqlType: string
@@ -53,7 +52,7 @@ export class Field {
     let name = ''
 
     if (this.options instanceof SetOptions) {
-      this.enum = name = this.options.name
+      name = this.options.name
     } else if (this.options instanceof RelationOptions) {
       this.relation = Entity.find((name = this.options.withEntity().name))
     }

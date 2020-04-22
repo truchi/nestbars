@@ -4,7 +4,7 @@
 
 {{>imports}}
 
-{{#each ($get 'entity.enums') as |enum|}}
+{{#each entity.enums as |enum|}}
   {{>enum enum=enum}}
 
 {{/each}}

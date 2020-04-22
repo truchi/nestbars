@@ -8,11 +8,9 @@ export default (path: PathFunction) =>
   //
   (entity: Entity) => ({
     path: path('entity', entity.name),
-    dbOptions: Object.assign(
-      pick(entity.options, ['name']),
-      entity.options.options,
+    fieldDbDecorators: unique(
+      entity.fields.map(field => toDecorator(field).dbDecorator),
     ),
-    gqlOptions: pick(entity.options, ['description']),
     hasEnums: !!entity.enums.length,
     hasInt: !!entity.by(FieldType.Int).length,
     hasFloat: !!entity.by(FieldType.Float).length,
@@ -24,7 +22,10 @@ export default (path: PathFunction) =>
       .by(RelationOptions)
       .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
       .length,
-    fieldDbDecorators: unique(
-      entity.fields.map(field => toDecorator(field).dbDecorator),
+    hasFields: entity.fields.length,
+    dbOptions: Object.assign(
+      pick(entity.options, ['name']),
+      entity.options.options,
     ),
+    gqlOptions: pick(entity.options, ['description']),
   })
