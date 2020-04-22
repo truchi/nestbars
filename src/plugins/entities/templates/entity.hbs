@@ -4,9 +4,18 @@
 
 {{>imports}}
 
+{{>type__primary}}
+
+{{>type__data}}
+
 {{#each entity.enums as |enum|}}
   {{>enum enum=enum}}
 
 {{/each}}
 
 {{>entity}}
+
+{{#each entity.enums as |enum|}}
+  {{>register enum=enum}}
+
+{{/each}}

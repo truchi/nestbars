@@ -1,8 +1,5 @@
-const isDefined = (x: any): boolean => x !== null && x !== undefined
-
-const filterValues = <T>(predicateFn: (o: T) => boolean) =>
-  (o: T): Partial<T> =>
-    Object.entries(o).reduce(
-    (o, [k, v]) => Object.assign(o, predicateFn(v) && { [k]: v }),
-    {},
-    )
+const coalesce = <T>(o: T): Partial<T> =>
+        Object.entries(o).reduce(
+        (o, [k, v]) => (v === null || v === undefined ? o : { ...o, [k]: v }),
+        {},
+        )

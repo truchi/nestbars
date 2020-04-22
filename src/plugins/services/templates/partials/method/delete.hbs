@@ -1,5 +1,5 @@
 // Deletes an entity by id from the database
-async delete(primary: {{entity.name}}Primary): Promise<{{entity.name}}Primary> {
+async delete(primary: {{entity.name}}PrimaryFields): Promise<{{entity.name}}PrimaryFields> {
   await this.repository.delete(primary)
 
   return primary

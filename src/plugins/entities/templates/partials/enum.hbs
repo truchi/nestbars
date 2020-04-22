@@ -3,10 +3,3 @@ export enum {{enum.options.name}} {
   {{value}} = '{{value}}',
 {{/each}}
 }
-
-registerEnumType({{enum.options.name}}, {
-name: '{{enum.options.name}}',
-{{#if enum.options.description}}
-  description: '{{enum.options.description}}',
-{{/if}}
-})
