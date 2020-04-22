@@ -4,9 +4,34 @@ import {
   FieldType,
   FieldOptions,
   RelationOptions,
+  SetOptions,
 } from '../../types/decorators'
 import { unique } from '../utils'
 import { Field } from './Field'
+
+type Relations = {
+  oneToOne: Entity[]
+  oneToMany: Entity[]
+  manyToOne: Entity[]
+  manyToMany: Entity[]
+  one: Entity[]
+  many: Entity[]
+  toOne: Entity[]
+  toMany: Entity[]
+  all: Entity[]
+}
+
+const relations: Relations = {
+  oneToOne: [],
+  oneToMany: [],
+  manyToOne: [],
+  manyToMany: [],
+  one: [],
+  many: [],
+  toOne: [],
+  toMany: [],
+  all: [],
+}
 
 let ENTITY_DATA = {}
 
@@ -19,17 +44,33 @@ export class Entity {
   static all: Entity[] = []
 
   fields: Field[] = []
-  relations: Entity[] = []
+  enums: string[] = []
+  primaryFields: Field[] = []
+  generatedFields: Field[] = []
+  dataFields: Field[] = []
+  relations: Relations = relations
 
-  constructor(readonly name: string, readonly options: EntityOptions) {
-    this.fields = Field.all.map(field => ((field.entity = this), field))
-    Field.all = []
-  }
+  constructor(readonly name: string, readonly options: EntityOptions) {}
 
   async init(): Promise<this> {
-    this.relations = unique(
-      this.fields.map(({ relation }) => relation).filter(x => x),
-    )
+    const relations = (...types: (FieldType | (new () => FieldOptions))[]) =>
+      unique(this.by(...types).map(({ relation }) => relation))
+
+    this.enums = unique(this.by(SetOptions).map(({ enum: e }) => e))
+    this.primaryFields = this.fields.filter(({ isPrimary }) => isPrimary)
+    this.generatedFields = this.fields.filter(({ isGenerated }) => isGenerated)
+    this.dataFields = this.fields.filter(({ isData }) => isData)
+    this.relations = {
+      oneToOne: relations(FieldType.OneToOne),
+      oneToMany: relations(FieldType.OneToMany),
+      manyToOne: relations(FieldType.ManyToOne),
+      manyToMany: relations(FieldType.ManyToMany),
+      one: relations(FieldType.OneToOne, FieldType.OneToMany),
+      many: relations(FieldType.ManyToOne, FieldType.ManyToMany),
+      toOne: relations(FieldType.OneToOne, FieldType.ManyToOne),
+      toMany: relations(FieldType.OneToMany, FieldType.ManyToMany),
+      all: relations(RelationOptions),
+    }
 
     return this
   }
@@ -57,19 +98,15 @@ export class Entity {
   static async init() {
     await 0 // Let user modules' circular dependencies resolve
 
-    await Promise.all(
-      Entity.all.map(
-        async entity => (
-          await Promise.all(
-            entity.fields.map(async field => await field.init()),
-          ),
-          await entity.init()
-        ),
+    Field.init()
+    Entity.all.map(
+      entity => (
+        (entity.fields = Field.all.filter(field => field.entity === entity)),
+        entity.init()
       ),
     )
 
     deepFreeze(Entity)
-    console.log(Entity.all)
     return Entity.all
   }
 }

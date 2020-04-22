@@ -21,15 +21,18 @@ export class Field {
   static all: Field[] = []
 
   entity: Entity
+  relation?: Entity
+  enum?: string
   tsType: string
   dbType: string
   gqlType: string
-  relation?: Entity
   readonly isPrimary: boolean
   readonly isGenerated: boolean
   readonly isRelation: boolean
+  readonly isData: boolean
 
   constructor(
+    readonly _entity: string,
     readonly name: string,
     readonly type: FieldType,
     readonly options: FieldOptions,
@@ -37,20 +40,25 @@ export class Field {
     this.isPrimary = this.is(PrimaryOptions) || !!(options as any).primary
     this.isGenerated = this.is(PrimaryOptions, SpecialOptions)
     this.isRelation = this.is(RelationOptions)
+    this.isData =
+      !this.isGenerated &&
+      (!this.is(FieldType.OneToOne) ||
+        !!(this.options as RelationOptions<any>).joinColumn) &&
+      !this.is(FieldType.OneToMany) &&
+      (!this.is(FieldType.ManyToMany) ||
+        !!(this.options as RelationOptions<any>).joinTable)
   }
 
   async init(): Promise<this> {
     let name = ''
 
     if (this.options instanceof SetOptions) {
-      name = this.options.name
+      this.enum = name = this.options.name
+    } else if (this.options instanceof RelationOptions) {
+      this.relation = Entity.find((name = this.options.withEntity().name))
     }
 
-    if (this.options instanceof RelationOptions) {
-      name = this.options.withEntity().name
-      this.relation = Entity.find(name)
-    }
-
+    this.entity = Entity.find(this._entity)
     this.tsType = tsType(this.type, name)
     this.dbType = dbType(this.type, name)
     this.gqlType = gqlType(this.type, name)
@@ -72,5 +80,9 @@ export class Field {
 
   static add(field: Field) {
     Field.all.push(field)
+  }
+
+  static init(): void {
+    Field.all.map(field => field.init())
   }
 }

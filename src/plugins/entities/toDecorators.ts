@@ -1,11 +1,12 @@
-import { FieldType } from '../../../types/decorators'
+import { FieldType } from '../../types/decorators'
+import { Field } from '../../lib/data/Field'
 
 type Decorators = {
   dbDecorator: string
   gqlDecorator: string
 }
 
-export default (type: FieldType): Decorators => ({
+export default ({ type }: Field): Decorators => ({
   dbDecorator: (() => {
     switch (type) {
       case FieldType.Id:

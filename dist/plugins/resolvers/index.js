@@ -1,29 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../../lib/utils");
 const Plugin_1 = require("../../lib/plugins/Plugin");
-exports.default = ({ entities: entitiesPath, services: servicesDest, }) => (entities, resolversPath) => ({
+const entityData_1 = __importDefault(require("./entityData"));
+exports.default = ({ entities: entitiesPath, services: servicesPath, }) => (entities, resolversPath) => ({
     name: 'Nestbars Resolvers Plugin',
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
-    entityData: (entity) => ({
-        entityPath: utils_1.toPathFunction(entitiesPath, Plugin_1.ANCHORS)('entity', entity.name),
-        servicePath: utils_1.toPathFunction(servicesDest, Plugin_1.ANCHORS)('service', entity.name),
-        resolverPath: resolversPath('resolver', entity.name),
-        gqlImports: [
-            'Resolver',
-            'Query',
-            'Mutation',
-            'Args',
-            ...(entity.by(decorators_1.FieldType.Int).length ? ['Int'] : []),
-            ...(entity.by(decorators_1.FieldType.Float).length ? ['Float'] : []),
-        ].sort(),
-        dependencies: [
-            entity.name,
-            ...entity
-                .by(decorators_1.FieldType.Enum, decorators_1.FieldType.Set)
-                .map(field => field.options.name),
-        ],
-    }),
+    entityData: entityData_1.default(utils_1.toPathFunction(entitiesPath, Plugin_1.ANCHORS), utils_1.toPathFunction(servicesPath, Plugin_1.ANCHORS), resolversPath),
 });
 //# sourceMappingURL=index.js.map

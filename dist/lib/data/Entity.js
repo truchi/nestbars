@@ -4,8 +4,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const deep_freeze_1 = __importDefault(require("deep-freeze"));
+const decorators_1 = require("../../types/decorators");
 const utils_1 = require("../utils");
 const Field_1 = require("./Field");
+const relations = {
+    oneToOne: [],
+    oneToMany: [],
+    manyToOne: [],
+    manyToMany: [],
+    one: [],
+    many: [],
+    toOne: [],
+    toMany: [],
+    all: [],
+};
 let ENTITY_DATA = {};
 exports.get = (entity) => ENTITY_DATA[entity.name];
 exports.set = (entity, data) => void (ENTITY_DATA[entity.name] = data);
@@ -15,12 +27,29 @@ class Entity {
         this.name = name;
         this.options = options;
         this.fields = [];
-        this.relations = [];
-        this.fields = Field_1.Field.all.map(field => ((field.entity = this), field));
-        Field_1.Field.all = [];
+        this.enums = [];
+        this.primaryFields = [];
+        this.generatedFields = [];
+        this.dataFields = [];
+        this.relations = relations;
     }
     async init() {
-        this.relations = utils_1.unique(this.fields.map(({ relation }) => relation).filter(x => x));
+        const relations = (...types) => utils_1.unique(this.by(...types).map(({ relation }) => relation));
+        this.enums = utils_1.unique(this.by(decorators_1.SetOptions).map(({ enum: e }) => e));
+        this.primaryFields = this.fields.filter(({ isPrimary }) => isPrimary);
+        this.generatedFields = this.fields.filter(({ isGenerated }) => isGenerated);
+        this.dataFields = this.fields.filter(({ isData }) => isData);
+        this.relations = {
+            oneToOne: relations(decorators_1.FieldType.OneToOne),
+            oneToMany: relations(decorators_1.FieldType.OneToMany),
+            manyToOne: relations(decorators_1.FieldType.ManyToOne),
+            manyToMany: relations(decorators_1.FieldType.ManyToMany),
+            one: relations(decorators_1.FieldType.OneToOne, decorators_1.FieldType.OneToMany),
+            many: relations(decorators_1.FieldType.ManyToOne, decorators_1.FieldType.ManyToMany),
+            toOne: relations(decorators_1.FieldType.OneToOne, decorators_1.FieldType.ManyToOne),
+            toMany: relations(decorators_1.FieldType.OneToMany, decorators_1.FieldType.ManyToMany),
+            all: relations(decorators_1.RelationOptions),
+        };
         return this;
     }
     filter(fn) {
@@ -40,10 +69,10 @@ class Entity {
     }
     static async init() {
         await 0;
-        await Promise.all(Entity.all.map(async (entity) => (await Promise.all(entity.fields.map(async (field) => await field.init())),
-            await entity.init())));
+        Field_1.Field.init();
+        Entity.all.map(entity => ((entity.fields = Field_1.Field.all.filter(field => field.entity === entity)),
+            entity.init()));
         deep_freeze_1.default(Entity);
-        console.log(Entity.all);
         return Entity.all;
     }
 }

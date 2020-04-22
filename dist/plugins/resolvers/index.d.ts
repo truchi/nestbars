@@ -4,5 +4,5 @@ export declare type ResolverPluginOptions = {
     entities: string | PathFunction;
     services: string | PathFunction;
 };
-declare const _default: ({ entities: entitiesPath, services: servicesDest, }: ResolverPluginOptions) => Plugin;
+declare const _default: ({ entities: entitiesPath, services: servicesPath, }: ResolverPluginOptions) => Plugin;
 export default _default;
