@@ -1,10 +1,20 @@
 import {
-{{#each ($get 'entity.gqlImports') as |name|}}
-  {{name}},
-{{/each}}
+Resolver,
+Query,
+Args,
+{{#if (length entity.relations.toMany)}}
+  ResolveField,
+  Parent
+{{/if}}
 } from '@nestjs/graphql'
 import {
-{{#each ($get 'entity.dependencies') as |dependency|}}
-  {{dependency}},
+{{entity.name}},
+{{#each entity.enums as |enum|}}
+  {{enum.options.name}},
 {{/each}}
-} from '{{relativeImport ($get 'entity.resolverPath') ($get 'entity.entityPath')}}'
+}
+from '{{relativeImport ($get 'entity.resolverPath') ($get 'entity.entityPath')}}'
+{{#each entity.relations.toMany as |toMany|}}
+  import { {{toMany.name}} }
+  from '{{relativeImport ($get 'entity.resolverPath') (lookup (call toMany 'data') 'entityPath')}}'
+{{/each}}

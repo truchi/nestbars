@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import {
-{{#each ($get 'entity.dependencies') as |dependency|}}
-  {{dependency}},
+{{entity.name}},
+{{#each entity.enums as |enum|}}
+  {{enum.options.name}},
 {{/each}}
-} from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.entityPath')}}'
+}
+from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.entityPath')}}'
