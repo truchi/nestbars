@@ -4,16 +4,16 @@ import {
   SpecialOptions,
   SetOptions,
   RelationOptions,
-} from '../../types/decorators'
-import { pick, rename, assertNever } from '../../lib/utils'
-import { Field } from '../../lib/data/Field'
+} from '../../../types/decorators'
+import { pick, rename, assertNever } from '../../../lib/utils'
+import { Field } from '../../../lib/data/Field'
 
 type Options = {
   dbOptions: object
   gqlOptions: object
 }
 
-export default ({ dbType: type, options }: Field): Options => ({
+export default ({ options }: Field, type: string): Options => ({
   dbOptions: (() => {
     if (options instanceof ScalarOptions) {
       return Object.assign(

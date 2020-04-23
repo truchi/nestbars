@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../../../types/decorators");
 const utils_1 = require("../../../lib/utils");
-exports.default = (options, type) => ({
+exports.default = ({ options }, type) => ({
     dbOptions: (() => {
         if (options instanceof decorators_1.ScalarOptions) {
             return Object.assign({ type }, utils_1.rename(utils_1.pick(options, [

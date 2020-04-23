@@ -10,15 +10,6 @@ export declare class Field {
     readonly options: FieldOptions;
     static all: Field[];
     entity: Entity;
-    relation?: Entity;
-    tsType: string;
-    dbType: string;
-    gqlType: string;
-    readonly isPrimary: boolean;
-    readonly isGenerated: boolean;
-    readonly hasJoinColumn: boolean;
-    readonly hasJoinTable: boolean;
-    readonly isData: boolean;
     constructor(_entity: string, name: string, type: FieldType, options: FieldOptions);
     init(): Promise<this>;
     is(...args: (FieldType | (new () => FieldOptions))[]): boolean;

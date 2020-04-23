@@ -1,4 +1,4 @@
 @{{$get 'field.gqlDecorator'}}(
-() => {{field.gqlType}},
+() => {{$get 'field.gqlType'}},
 {{stringify ($get 'field.gqlOptions')}}
 )

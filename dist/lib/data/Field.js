@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const decorators_1 = require("../../types/decorators");
-const utils_1 = require("./utils");
 const Entity_1 = require("./Entity");
 let FIELD_DATA = {};
 exports.get = (field) => FIELD_DATA[`${field.entity}:${field.name}`];
@@ -13,30 +11,9 @@ class Field {
         this.name = name;
         this.type = type;
         this.options = options;
-        this.isPrimary = this.is(decorators_1.PrimaryOptions) || !!options.primary;
-        this.isGenerated = this.is(decorators_1.PrimaryOptions, decorators_1.SpecialOptions);
-        this.hasJoinColumn = !!this.options.joinColumn;
-        this.hasJoinTable = !!this.options.joinTable;
-        this.isData =
-            !this.isPrimary &&
-                !this.isGenerated &&
-                (!this.is(decorators_1.FieldType.OneToOne) || this.hasJoinColumn) &&
-                !this.is(decorators_1.FieldType.OneToMany) &&
-                (!this.is(decorators_1.FieldType.ManyToMany) || this.hasJoinTable);
     }
     async init() {
-        let name = '';
-        if (this.options instanceof decorators_1.SetOptions) {
-            name = this.options.name;
-        }
-        else if (this.options instanceof decorators_1.RelationOptions) {
-            name = this.options.withEntity().name;
-            this.relation = Entity_1.Entity.find(name);
-        }
         this.entity = Entity_1.Entity.find(this._entity);
-        this.tsType = utils_1.tsType(this.type, name);
-        this.dbType = utils_1.dbType(this.type, name);
-        this.gqlType = utils_1.gqlType(this.type, name);
         return this;
     }
     is(...args) {

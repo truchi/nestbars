@@ -3,10 +3,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const toOptions_1 = __importDefault(require("./toOptions"));
-const toDecorators_1 = __importDefault(require("./toDecorators"));
-exports.default = (type, field) => ({
-    ...toDecorators_1.default(field),
-    ...toOptions_1.default(field),
-});
+const decorators_1 = require("../../types/decorators");
+const Entity_1 = require("../../lib/data/Entity");
+const toTypes_1 = __importDefault(require("./lib/toTypes"));
+const toDecorators_1 = __importDefault(require("./lib/toDecorators"));
+const toOptions_1 = __importDefault(require("./lib/toOptions"));
+exports.default = (type, field) => {
+    let name = '';
+    let relation;
+    if (field.options instanceof decorators_1.SetOptions) {
+        name = field.options.name;
+    }
+    else if (field.options instanceof decorators_1.RelationOptions) {
+        name = field.options.withEntity().name;
+        relation = Entity_1.Entity.find(name);
+    }
+    const types = toTypes_1.default(field, name);
+    const decorators = toDecorators_1.default(field);
+    const options = toOptions_1.default(field, types.dbType);
+    const isPrimary = field.is(decorators_1.PrimaryOptions) || !!options.primary;
+    const isGenerated = field.is(decorators_1.PrimaryOptions, decorators_1.SpecialOptions);
+    const hasJoinColumn = !!field.options.joinColumn;
+    const hasJoinTable = !!field.options.joinTable;
+    const isData = !isPrimary &&
+        !isGenerated &&
+        (!field.is(decorators_1.FieldType.OneToOne) || hasJoinColumn) &&
+        !field.is(decorators_1.FieldType.OneToMany) &&
+        (!field.is(decorators_1.FieldType.ManyToMany) || hasJoinTable);
+    return {
+        ...types,
+        ...decorators,
+        ...options,
+        relation,
+        isPrimary,
+        isGenerated,
+        hasJoinColumn,
+        hasJoinTable,
+        isData,
+    };
+};
 //# sourceMappingURL=field.js.map

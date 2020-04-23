@@ -1,7 +1,7 @@
-import { FieldType } from '../../../types/decorators';
+import { Field } from '../../../lib/data/Field';
 declare type Decorators = {
     dbDecorator: string;
     gqlDecorator: string;
 };
-declare const _default: (type: FieldType) => Decorators;
+declare const _default: ({ type }: Field) => Decorators;
 export default _default;

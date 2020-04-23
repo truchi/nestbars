@@ -9,4 +9,4 @@ exports.default = (entitiesPath, dtosPath) => (type, entity) => {
         ...entity_1.default(entitiesPath)('entity', entity),
     };
 };
-//# sourceMappingURL=entity.js.map
+//# sourceMappingURL=entity copy.js.map

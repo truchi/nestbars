@@ -11,7 +11,6 @@ export const reset = (): void => void (ENTITY_DATA = {})
 
 export class Entity {
   static all: Entity[] = []
-
   fields: Field[] = []
 
   constructor(readonly name: string, readonly options: EntityOptions) {}

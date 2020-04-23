@@ -1,5 +1,5 @@
-import { FieldType } from '../../types/decorators'
-import { Field } from '../../lib/data/Field'
+import { FieldType } from '../../../types/decorators'
+import { Field } from '../../../lib/data/Field'
 
 type Decorators = {
   dbDecorator: string

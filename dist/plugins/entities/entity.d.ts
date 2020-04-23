@@ -1,15 +1,16 @@
 import { PathFunction } from '../../types/utils';
 import { Entity } from '../../lib/data/Entity';
-declare const _default: (path: PathFunction) => (type: string, entity: Entity) => {
-    path: string;
-    fieldDbDecorators: string[];
+declare const _default: (entitiesPath: PathFunction) => (type: string, entity: Entity) => {
+    entityPath: string;
     enums: import("../../lib/data/Field").Field[];
-    relations: Entity[];
+    relations: any[];
+    fieldDbDecorators: any[];
+    hasFields: number;
+    hasEnums: number;
     hasInt: boolean;
     hasFloat: boolean;
     hasJoinColumn: boolean;
     hasJoinTable: boolean;
-    hasFields: number;
     dbOptions: Partial<import("../../types/decorators").EntityOptions> & object;
     gqlOptions: Partial<import("../../types/decorators").EntityOptions>;
 };
