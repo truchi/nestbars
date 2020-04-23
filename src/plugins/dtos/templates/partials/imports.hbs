@@ -7,7 +7,7 @@ Field,
 {{#if enums}}
   import {
   {{#each enums as |enum|}} {{enum}}, {{/each}}
-  } from '{{relativeImport dtoPath entityPath}}'
+  } from '{{relativeImport dtoPath ($get 'entity.entityPath')}}'
 {{/if}}
 {{#each relations as |relation|}}
   import { {{relation.name}} }
