@@ -2,6 +2,16 @@
 
 {{~>banner~}}
 
-{{>create__imports}}
+{{>imports
+  entityPath=($get 'entity.entityPath')
+  dtoPath=($get 'entity.createDtoPath')
+  hasInt=($get 'entity.createHasInt')
+  hasFloat=($get 'entity.createHasFloat')
+  enums=($get 'entity.createEnums')
+  relations=($get 'entity.createRelations')
+}}
 
-{{>create__dto}}
+{{>dto
+  name='Create'
+  fields=($get 'entity.createFields')
+}}

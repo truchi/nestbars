@@ -1,0 +1,13 @@
+@ArgsType()
+export class {{name}}{{entity.name}}Args {
+{{#each fields as |field|}}
+  {{$set 'field' (call field 'data')}}
+  {{>field
+    tsType=($get 'field.tsType')
+    gqlType=($get 'field.gqlType')
+    gqlOptions=($get 'field.gqlOptions')
+    nullable=field.options.nullable
+  }}
+
+{{/each}}
+}

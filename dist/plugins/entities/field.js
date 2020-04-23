@@ -21,25 +21,19 @@ exports.default = (type, field) => {
     const types = toTypes_1.default(field, name);
     const decorators = toDecorators_1.default(field);
     const options = toOptions_1.default(field, types.dbType);
-    const isPrimary = field.is(decorators_1.PrimaryOptions) || !!options.primary;
-    const isGenerated = field.is(decorators_1.PrimaryOptions, decorators_1.SpecialOptions);
+    const isGqlInt = types.gqlType === 'Int';
+    const isGqlFloat = types.gqlType === 'Float';
     const hasJoinColumn = !!field.options.joinColumn;
     const hasJoinTable = !!field.options.joinTable;
-    const isData = !isPrimary &&
-        !isGenerated &&
-        (!field.is(decorators_1.FieldType.OneToOne) || hasJoinColumn) &&
-        !field.is(decorators_1.FieldType.OneToMany) &&
-        (!field.is(decorators_1.FieldType.ManyToMany) || hasJoinTable);
     return {
         ...types,
         ...decorators,
         ...options,
         relation,
-        isPrimary,
-        isGenerated,
         hasJoinColumn,
         hasJoinTable,
-        isData,
+        isGqlInt,
+        isGqlFloat,
     };
 };
 //# sourceMappingURL=field.js.map

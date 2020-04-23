@@ -5,8 +5,8 @@ declare const _default: (entitiesPath: PathFunction) => (type: string, entity: E
     enums: import("../../lib/data/Field").Field[];
     relations: any[];
     fieldDbDecorators: any[];
-    hasFields: number;
-    hasEnums: number;
+    hasFields: boolean;
+    hasEnums: boolean;
     hasInt: boolean;
     hasFloat: boolean;
     hasJoinColumn: boolean;

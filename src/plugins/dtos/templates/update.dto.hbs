@@ -1,0 +1,17 @@
+{{$set 'entity' (call entity 'data')}}
+
+{{~>banner~}}
+
+{{>imports
+  entityPath=($get 'entity.entityPath')
+  dtoPath=($get 'entity.updateDtoPath')
+  hasInt=($get 'entity.updateHasInt')
+  hasFloat=($get 'entity.updateHasFloat')
+  enums=($get 'entity.updateEnums')
+  relations=($get 'entity.updateRelations')
+}}
+
+{{>dto
+  name='Update'
+  fields=($get 'entity.updateFields')
+}}

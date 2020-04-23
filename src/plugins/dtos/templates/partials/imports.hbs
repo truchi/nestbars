@@ -1,0 +1,18 @@
+import {
+ArgsType,
+Field,
+{{#if hasInt}} Int, {{/if}}
+{{#if hasFloat}} Float, {{/if}}
+} from '@nestjs/graphql'
+{{#if enums}}
+  import {
+  {{#each enums as |enum|}} {{enum}}, {{/each}}
+  } from '{{relativeImport dtoPath entityPath}}'
+{{/if}}
+{{#each relations as |relation|}}
+  import { {{relation.name}} }
+  from '{{relativeImport
+    ../dtoPath
+    (lookup (call relation 'data') 'entityPath')
+  }}'
+{{/each}}

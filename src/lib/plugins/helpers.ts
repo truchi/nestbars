@@ -88,7 +88,7 @@ export default {
     return uncapitalize(str)
   },
   relativeImport(from: string, to: string): string {
-    return relativeImport(from, to)
+    return relativeImport(from.slice(0), to.slice(0))
   },
   stringify(
     o: object,

@@ -1,6 +1,7 @@
 import { PathFunction } from '../../types/utils'
 import { Plugin, PluginOptions } from '../../types/nestbars'
 import { Entity } from '../../lib/data/Entity'
+import { Field } from '../../lib/data/Field'
 import entity from './entity'
 import field from './field'
 

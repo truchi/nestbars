@@ -1,10 +1,4 @@
-import {
-  SetOptions,
-  RelationOptions,
-  PrimaryOptions,
-  SpecialOptions,
-  FieldType,
-} from '../../types/decorators'
+import { SetOptions, RelationOptions } from '../../types/decorators'
 import { Entity } from '../../lib/data/Entity'
 import { Field } from '../../lib/data/Field'
 import toTypes from './lib/toTypes'
@@ -26,26 +20,19 @@ export default (type: string, field: Field) => {
   const decorators = toDecorators(field)
   const options = toOptions(field, types.dbType)
 
-  const isPrimary = field.is(PrimaryOptions) || !!(options as any).primary
-  const isGenerated = field.is(PrimaryOptions, SpecialOptions)
+  const isGqlInt = types.gqlType === 'Int'
+  const isGqlFloat = types.gqlType === 'Float'
   const hasJoinColumn = !!(field.options as RelationOptions<any>).joinColumn
   const hasJoinTable = !!(field.options as RelationOptions<any>).joinTable
-  const isData =
-    !isPrimary &&
-    !isGenerated &&
-    (!field.is(FieldType.OneToOne) || hasJoinColumn) &&
-    !field.is(FieldType.OneToMany) &&
-    (!field.is(FieldType.ManyToMany) || hasJoinTable)
 
   return {
     ...types,
     ...decorators,
     ...options,
     relation,
-    isPrimary,
-    isGenerated,
     hasJoinColumn,
     hasJoinTable,
-    isData,
+    isGqlInt,
+    isGqlFloat,
   }
 }
