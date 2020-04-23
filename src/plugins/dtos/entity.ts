@@ -7,26 +7,26 @@ import entitiesEntity from '../entities/entity'
 export default (entitiesPath: PathFunction, dtosPath: PathFunction) =>
   //
   (type: string, entity: Entity): object => {
+    const createDtoPath = dtosPath('create.dto', entity.name)
+    const updateDtoPath = dtosPath('update.dto', entity.name)
+
+    const dataRelations = unique(
+      entity.fields
+        .filter(field => field.is(RelationOptions) && field.data().isData)
+        .map(field => field.data().relation),
+    )
+    const dataEnums = unique(
+      entity
+        .by(SetOptions)
+        .filter(field => field.data().isData)
+        .map(({ options }) => (options as SetOptions).name),
+    )
+
     return {
       ...entitiesEntity(entitiesPath)('entity', entity),
+      createDtoPath,
+      updateDtoPath,
+      dataRelations,
+      dataEnums,
     }
   }
-
-// export default (entitiesPath: PathFunction, dtosPath: PathFunction) =>
-//   //
-//   (type: string, entity: Entity): object => ({
-//     entityPath: entitiesPath('entity', entity.name),
-//     createDtoPath: dtosPath('create.dto', entity.name),
-//     updateDtoPath: dtosPath('update.dto', entity.name),
-//     dataRelations: unique(
-//       entity.fields
-//         .filter(field => field.is(RelationOptions) && field.isData)
-//         .map(({ relation }) => relation),
-//     ),
-//     dataEnums: unique(
-//       entity
-//         .by(SetOptions)
-//         .filter(({ isData }) => isData)
-//         .map(({ options }) => (options as SetOptions).name),
-//     ),
-//   })
