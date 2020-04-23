@@ -1,0 +1,8 @@
+{{#each ($get 'entity.enums') as |enum|}}
+  export enum {{enum.options.name}} {
+  {{#each enum.options.values as |value|}}
+    {{value}} = '{{value}}',
+  {{/each}}
+  }
+
+{{/each}}

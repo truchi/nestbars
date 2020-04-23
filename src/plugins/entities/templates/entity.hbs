@@ -4,14 +4,8 @@
 
 {{>imports}}
 
-{{#each ($get 'entity.enums') as |enum|}}
-  {{>enum enum=enum}}
-
-{{/each}}
+{{>enums}}
 
 {{>entity}}
 
-{{#each ($get 'entity.enums') as |enum|}}
-  {{>register enum=enum}}
-
-{{/each}}
+{{>registers}}

@@ -1,0 +1,9 @@
+{{#each ($get 'entity.enums') as |enum|}}
+  registerEnumType({{enum.options.name}}, {
+  name: '{{enum.options.name}}',
+  {{#if enum.options.description}}
+    description: '{{enum.options.description}}',
+  {{/if}}
+  })
+
+{{/each}}
