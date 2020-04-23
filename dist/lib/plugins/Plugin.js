@@ -79,17 +79,28 @@ class Plugin {
         return this;
     }
     async generate() {
-        const generate = (entity) => async ({ type, template }) => (helpers_1.reset(),
+        const setData = ({ type }) => void this.entities.map(entity => (entity.fields.map(field => Field_1.set(field, {
+            ...this.pluginData.field(type, field),
+            ...this.userData.field(type, field),
+        })),
+            Entity_1.set(entity, {
+                ...this.pluginData.entity(type, entity),
+                ...this.userData.entity(type, entity),
+            })));
+        const generate = ({ type, template }) => async (entity) => (helpers_1.reset(),
             await utils_1.writeFile(this.dest(type, entity.name), HandleBars.compile(template)({
                 type,
                 entities: Entity_1.Entity.all,
                 entity,
                 context: {
-                    ...this.pluginContext(),
-                    ...this.userContext(),
+                    ...this.pluginContext(type, entity),
+                    ...this.userContext(type, entity),
                 },
             })));
-        await Promise.all(this.entities.map(async (entity) => Promise.all(this.templates.map(generate(entity)))));
+        await Promise.all(this.templates.map(async (template) => (setData(template),
+            await Promise.all(this.entities.map(generate(template))),
+            Entity_1.reset(),
+            Field_1.reset())));
     }
     static async register([plugin, options]) {
         const { classes, dest: _dest, templates: userTemplates, helpers: userHelpers, context: userContext, data: userData, } = options;
@@ -108,21 +119,11 @@ class Plugin {
     static async generate() {
         Plugin.all.map(plugin => {
             Object.entries(helpers_1.default).map(([name, helper]) => HandleBars.registerHelper(name, helper));
-            plugin.entities.map(entity => (entity.fields.map(field => Field_1.set(field, {
-                ...plugin.pluginData.field(field),
-                ...plugin.userData.field(field),
-            })),
-                Entity_1.set(entity, {
-                    ...plugin.pluginData.entity(entity),
-                    ...plugin.userData.entity(entity),
-                })));
             Object.entries(plugin.helpers).map(([name, helper]) => HandleBars.registerHelper(name, helper));
             plugin.partials.map(({ name, partial }) => HandleBars.registerPartial(name, partial));
             plugin.generate();
             Object.entries(plugin.helpers).map(([name]) => HandleBars.unregisterHelper(name));
             plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name));
-            Entity_1.reset();
-            Field_1.reset();
         });
     }
 }

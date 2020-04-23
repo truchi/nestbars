@@ -1,5 +1,0 @@
-export type {{entity.name}}PrimaryFields = {
-{{#each entity.primaryFields as |field|}}
-  {{field.name}}{{#if field.nullable}}?{{/if}}:{{field.tsType}}
-{{/each}}
-}

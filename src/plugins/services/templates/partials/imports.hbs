@@ -3,7 +3,5 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import {
 {{entity.name}},
-{{entity.name}}PrimaryFields,
-{{entity.name}}DataFields,
 }
 from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.entityPath')}}'

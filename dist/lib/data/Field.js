@@ -15,14 +15,14 @@ class Field {
         this.options = options;
         this.isPrimary = this.is(decorators_1.PrimaryOptions) || !!options.primary;
         this.isGenerated = this.is(decorators_1.PrimaryOptions, decorators_1.SpecialOptions);
-        this.isRelation = this.is(decorators_1.RelationOptions);
+        this.hasJoinColumn = !!this.options.joinColumn;
+        this.hasJoinTable = !!this.options.joinTable;
         this.isData =
-            !this.isGenerated &&
-                (!this.is(decorators_1.FieldType.OneToOne) ||
-                    !!this.options.joinColumn) &&
+            !this.isPrimary &&
+                !this.isGenerated &&
+                (!this.is(decorators_1.FieldType.OneToOne) || this.hasJoinColumn) &&
                 !this.is(decorators_1.FieldType.OneToMany) &&
-                (!this.is(decorators_1.FieldType.ManyToMany) ||
-                    !!this.options.joinTable);
+                (!this.is(decorators_1.FieldType.ManyToMany) || this.hasJoinTable);
     }
     async init() {
         let name = '';
@@ -30,7 +30,8 @@ class Field {
             name = this.options.name;
         }
         else if (this.options instanceof decorators_1.RelationOptions) {
-            this.relation = Entity_1.Entity.find((name = this.options.withEntity().name));
+            name = this.options.withEntity().name;
+            this.relation = Entity_1.Entity.find(name);
         }
         this.entity = Entity_1.Entity.find(this._entity);
         this.tsType = utils_1.tsType(this.type, name);

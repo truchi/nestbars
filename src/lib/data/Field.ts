@@ -27,7 +27,8 @@ export class Field {
   gqlType: string
   readonly isPrimary: boolean
   readonly isGenerated: boolean
-  readonly isRelation: boolean
+  readonly hasJoinColumn: boolean
+  readonly hasJoinTable: boolean
   readonly isData: boolean
 
   constructor(
@@ -38,14 +39,14 @@ export class Field {
   ) {
     this.isPrimary = this.is(PrimaryOptions) || !!(options as any).primary
     this.isGenerated = this.is(PrimaryOptions, SpecialOptions)
-    this.isRelation = this.is(RelationOptions)
+    this.hasJoinColumn = !!(this.options as RelationOptions<any>).joinColumn
+    this.hasJoinTable = !!(this.options as RelationOptions<any>).joinTable
     this.isData =
+      !this.isPrimary &&
       !this.isGenerated &&
-      (!this.is(FieldType.OneToOne) ||
-        !!(this.options as RelationOptions<any>).joinColumn) &&
+      (!this.is(FieldType.OneToOne) || this.hasJoinColumn) &&
       !this.is(FieldType.OneToMany) &&
-      (!this.is(FieldType.ManyToMany) ||
-        !!(this.options as RelationOptions<any>).joinTable)
+      (!this.is(FieldType.ManyToMany) || this.hasJoinTable)
   }
 
   async init(): Promise<this> {
@@ -54,7 +55,8 @@ export class Field {
     if (this.options instanceof SetOptions) {
       name = this.options.name
     } else if (this.options instanceof RelationOptions) {
-      this.relation = Entity.find((name = this.options.withEntity().name))
+      name = this.options.withEntity().name
+      this.relation = Entity.find(name)
     }
 
     this.entity = Entity.find(this._entity)

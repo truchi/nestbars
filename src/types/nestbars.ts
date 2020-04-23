@@ -16,8 +16,8 @@ export type Helpers = {
 }
 
 export type Data = {
-  entity?: (entity: Entity) => object
-  field?: (field: Field) => object
+  entity?: (type: string, entity: Entity) => object
+  field?: (type: string, field: Field) => object
 }
 
 export type UserOptions = {
@@ -25,14 +25,14 @@ export type UserOptions = {
   dest: string | PathFunction
   templates?: string
   helpers?: Helpers
-  context?: () => object
+  context?: (type: string, entity: Entity) => object
   data?: Data
 }
 
 export type PluginOptions = {
   templates: string
   helpers?: Helpers
-  context?: () => object
+  context?: (type: string, entity: Entity) => object
   data?: Data
 }
 

@@ -11,9 +11,9 @@ ObjectType,
 {{#if ($get 'entity.hasFields')}} Field, {{/if}}
 {{#if ($get 'entity.hasInt')}} Int, {{/if}}
 {{#if ($get 'entity.hasFloat')}} Float, {{/if}}
-{{#if ($get 'entity.hasEnums')}} registerEnumType, {{/if}}
+{{#if (length ($get 'entity.enums'))}} registerEnumType, {{/if}}
 } from '@nestjs/graphql'
-{{#each entity.relations.all as |relation|}}
+{{#each ($get 'entity.relations') as |relation|}}
   import { {{relation.name}} }
   from '{{relativeImport
     ($get 'entity.path')

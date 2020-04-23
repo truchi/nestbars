@@ -8,7 +8,7 @@ export default (
   resolversPath: PathFunction,
 ) =>
   //
-  (entity: Entity): object => ({
+  (type: string, entity: Entity): object => ({
     entityPath: entitiesPath('entity', entity.name),
     servicePath: servicesPath('service', entity.name),
     resolverPath: resolversPath('resolver', entity.name),

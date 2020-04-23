@@ -1,26 +1,25 @@
 import { PathFunction } from '../../types/utils'
-import { RelationOptions, FieldType } from '../../types/decorators'
+import { FieldType, SetOptions, RelationOptions } from '../../types/decorators'
 import { pick, unique } from '../../lib/utils'
 import { Entity } from '../../lib/data/Entity'
 import toDecorator from './toDecorators'
 
 export default (path: PathFunction) =>
   //
-  (entity: Entity) => ({
+  (type: string, entity: Entity) => ({
     path: path('entity', entity.name),
     fieldDbDecorators: unique(
       entity.fields.map(field => toDecorator(field).dbDecorator),
     ),
-    hasEnums: !!entity.enums.length,
+    enums: entity.by(SetOptions),
+    relations: unique(
+      entity.by(RelationOptions).map(({ relation }) => relation),
+    ),
     hasInt: !!entity.by(FieldType.Int).length,
     hasFloat: !!entity.by(FieldType.Float).length,
-    hasJoinColumn: !!entity
-      .by(RelationOptions)
-      .filter(({ options }) => !!(options as RelationOptions<any>).joinColumn)
+    hasJoinColumn: !!entity.fields.filter(({ hasJoinColumn }) => hasJoinColumn)
       .length,
-    hasJoinTable: !!entity
-      .by(RelationOptions)
-      .filter(({ options }) => !!(options as RelationOptions<any>).joinTable)
+    hasJoinTable: !!entity.fields.filter(({ hasJoinTable }) => hasJoinTable)
       .length,
     hasFields: entity.fields.length,
     dbOptions: Object.assign(

@@ -47,8 +47,8 @@ export default class Plugin {
     public userTemplates: string,
     public pluginHelpers: Helpers,
     public userHelpers: Helpers,
-    public pluginContext: () => any,
-    public userContext: () => any,
+    public pluginContext: (type: string, entity: Entity) => any,
+    public userContext: (type: string, entity: Entity) => any,
     public pluginData: Data,
     public userData: Data,
   ) {}
@@ -115,25 +115,48 @@ export default class Plugin {
   }
 
   async generate(): Promise<void> {
-    const generate = (entity: Entity) => async ({ type, template }) => (
-      resetHelpersData(),
-      await writeFile(
-        this.dest(type, entity.name),
-        HandleBars.compile(template)({
-          type,
-          entities: Entity.all,
-          entity,
-          context: {
-            ...this.pluginContext(),
-            ...this.userContext(),
-          },
-        } as Context<Entity>),
+    const setData = ({ type }: Template): void =>
+      void this.entities.map(
+        entity => (
+          entity.fields.map(field =>
+            setFieldData(field, {
+              ...this.pluginData.field(type, field),
+              ...this.userData.field(type, field),
+            }),
+          ),
+          setEntityData(entity, {
+            ...this.pluginData.entity(type, entity),
+            ...this.userData.entity(type, entity),
+          })
+        ),
       )
-    )
+
+    const generate = ({ type, template }: Template) =>
+      //
+      async (entity: Entity) => (
+        resetHelpersData(),
+        await writeFile(
+          this.dest(type, entity.name),
+          HandleBars.compile(template)({
+            type,
+            entities: Entity.all,
+            entity,
+            context: {
+              ...this.pluginContext(type, entity),
+              ...this.userContext(type, entity),
+            },
+          } as Context<Entity>),
+        )
+      )
 
     await Promise.all(
-      this.entities.map(async entity =>
-        Promise.all(this.templates.map(generate(entity))),
+      this.templates.map(
+        async template => (
+          setData(template),
+          await Promise.all(this.entities.map(generate(template))),
+          resetEntityData(),
+          resetFieldData()
+        ),
       ),
     )
   }
@@ -190,29 +213,15 @@ export default class Plugin {
         HandleBars.registerHelper(name, helper),
       )
 
-      // Register plugin data for entities and fields
-      plugin.entities.map(
-        entity => (
-          entity.fields.map(field =>
-            setFieldData(field, {
-              ...plugin.pluginData.field(field),
-              ...plugin.userData.field(field),
-            }),
-          ),
-          setEntityData(entity, {
-            ...plugin.pluginData.entity(entity),
-            ...plugin.userData.entity(entity),
-          })
-        ),
-      )
-
-      // Register helpers, partials, and run generation
+      // Register helpers, partials
       Object.entries(plugin.helpers).map(([name, helper]) =>
         HandleBars.registerHelper(name, helper),
       )
       plugin.partials.map(({ name, partial }) =>
         HandleBars.registerPartial(name, partial),
       )
+
+      // Run generation
       plugin.generate()
 
       // Resets
@@ -220,8 +229,6 @@ export default class Plugin {
         HandleBars.unregisterHelper(name),
       )
       plugin.partials.map(({ name }) => HandleBars.unregisterPartial(name))
-      resetEntityData()
-      resetFieldData()
     })
   }
 }

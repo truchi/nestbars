@@ -20,15 +20,15 @@ export default class Plugin {
     userTemplates: string;
     pluginHelpers: Helpers;
     userHelpers: Helpers;
-    pluginContext: () => any;
-    userContext: () => any;
+    pluginContext: (type: string, entity: Entity) => any;
+    userContext: (type: string, entity: Entity) => any;
     pluginData: Data;
     userData: Data;
     static all: Plugin[];
     private templates;
     private partials;
     private helpers;
-    constructor(entities: Entity[], dest: PathFunction, pluginTemplates: string, userTemplates: string, pluginHelpers: Helpers, userHelpers: Helpers, pluginContext: () => any, userContext: () => any, pluginData: Data, userData: Data);
+    constructor(entities: Entity[], dest: PathFunction, pluginTemplates: string, userTemplates: string, pluginHelpers: Helpers, userHelpers: Helpers, pluginContext: (type: string, entity: Entity) => any, userContext: (type: string, entity: Entity) => any, pluginData: Data, userData: Data);
     loadTemplates(): Promise<Template[]>;
     loadPartials(): Promise<Partial[]>;
     loadHelpers(): Helpers;

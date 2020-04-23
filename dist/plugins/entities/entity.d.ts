@@ -1,9 +1,10 @@
 import { PathFunction } from '../../types/utils';
 import { Entity } from '../../lib/data/Entity';
-declare const _default: (path: PathFunction) => (entity: Entity) => {
+declare const _default: (path: PathFunction) => (type: string, entity: Entity) => {
     path: string;
     fieldDbDecorators: string[];
-    hasEnums: boolean;
+    enums: import("../../lib/data/Field").Field[];
+    relations: Entity[];
     hasInt: boolean;
     hasFloat: boolean;
     hasJoinColumn: boolean;

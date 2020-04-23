@@ -16,7 +16,8 @@ export declare class Field {
     gqlType: string;
     readonly isPrimary: boolean;
     readonly isGenerated: boolean;
-    readonly isRelation: boolean;
+    readonly hasJoinColumn: boolean;
+    readonly hasJoinTable: boolean;
     readonly isData: boolean;
     constructor(_entity: string, name: string, type: FieldType, options: FieldOptions);
     init(): Promise<this>;

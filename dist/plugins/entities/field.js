@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const toOptions_1 = __importDefault(require("./toOptions"));
 const toDecorators_1 = __importDefault(require("./toDecorators"));
-exports.default = (field) => ({
+exports.default = (type, field) => ({
     ...toDecorators_1.default(field),
     ...toOptions_1.default(field),
 });

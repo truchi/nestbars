@@ -1,0 +1,11 @@
+@ArgsType()
+export class Create{{Entity.name}}Dto {
+{{#each entity.dataFields as |field|}}
+  {{!-- {{$set 'field' (call field 'data')}} --}}
+  @Field(
+  () => {{field.gqlType}}
+  )
+  {{field.name}}{{#if field.nullable}}?{{/if}}: {{field.tsType}}
+
+{{/each}}
+}

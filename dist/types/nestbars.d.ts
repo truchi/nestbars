@@ -12,21 +12,21 @@ export declare type Helpers = {
     [key: string]: (...args: any[]) => any;
 };
 export declare type Data = {
-    entity?: (entity: Entity) => object;
-    field?: (field: Field) => object;
+    entity?: (type: string, entity: Entity) => object;
+    field?: (type: string, field: Field) => object;
 };
 export declare type UserOptions = {
     classes: Class[];
     dest: string | PathFunction;
     templates?: string;
     helpers?: Helpers;
-    context?: () => object;
+    context?: (type: string, entity: Entity) => object;
     data?: Data;
 };
 export declare type PluginOptions = {
     templates: string;
     helpers?: Helpers;
-    context?: () => object;
+    context?: (type: string, entity: Entity) => object;
     data?: Data;
 };
 export declare type Plugin = (entities: Entity[], path: PathFunction) => PluginOptions;
