@@ -1,6 +1,5 @@
-// Stores an entity with data in the database
 async create(
-data: {{entity.name}}DataFields,
+args: Create{{entity.name}}Args,
 ): Promise<{{entity.name}}> {
-  return this.get(await this.repository.save(data as any))
+  return this.get(await this.repository.save(args))
   }

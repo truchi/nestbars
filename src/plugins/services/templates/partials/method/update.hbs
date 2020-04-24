@@ -1,14 +1,9 @@
-// Updates an entity by id with data in the database
 async update(
-data: {{entity.name}}PrimaryFields & Partial<{{entity.name}}DataFields>,
-  ): Promise<{{entity.name}}> {
-    const primary = {
-    {{#each entity.primaryFields as |field|}}
-      {{field.name}}: data.{{field.name}},
-    {{/each}}
-    }
+args: Update{{entity.name}}Args,
+): Promise<{{entity.name}}> {
+  const primary = args.primary()
+  const data = args.data()
 
-    await this.repository.update(primary, coalesce(data))
-
-    return this.get(primary)
-    }
+  await this.repository.update(primary, data)
+  return this.get(primary)
+  }

@@ -23,6 +23,11 @@ export default (entitiesPath: PathFunction, dtosPath: PathFunction) =>
     const primaryRelations = relations(primaryFields)
     const primaryEnums = enums(primaryFields)
 
+    const dataHasInt = has('isGqlInt', dataFields)
+    const dataHasFloat = has('isGqlFloat', dataFields)
+    const dataRelations = relations(dataFields)
+    const dataEnums = enums(dataFields)
+
     const bothRelations = relations(bothFields)
     const bothHasInt = has('isGqlInt', bothFields)
     const bothHasFloat = has('isGqlFloat', bothFields)
@@ -35,11 +40,14 @@ export default (entitiesPath: PathFunction, dtosPath: PathFunction) =>
       updateDtoPath,
       primaryFields,
       dataFields,
-      bothFields,
       primaryHasInt,
       primaryHasFloat,
       primaryRelations,
       primaryEnums,
+      dataHasInt,
+      dataHasFloat,
+      dataRelations,
+      dataEnums,
       bothHasInt,
       bothHasFloat,
       bothRelations,

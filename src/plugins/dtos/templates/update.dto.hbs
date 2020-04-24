@@ -10,7 +10,10 @@
   relations=($get 'entity.bothRelations')
 }}
 
+{{>functions}}
+
 {{>dto
   name='Update'
+  fields=($get 'entity.primaryFields')
   partialFields=($get 'entity.dataFields')
 }}

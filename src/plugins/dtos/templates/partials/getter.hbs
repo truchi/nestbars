@@ -1,0 +1,7 @@
+{{name}}(){
+return {{#if coalesce}}coalesce{{/if}}({
+{{#each fields as |field|}}
+  {{field.name}}: this.{{field.name}},
+{{/each}}
+})
+}

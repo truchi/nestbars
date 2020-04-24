@@ -18,4 +18,19 @@ export class {{name}}{{entity.name}}Args {
   {{field.name}}?: {{$get 'field.tsType'}}
 
 {{/each}}
+
+{{#switch type}}
+  {{#case 'update.dto'}}
+    {{>getter
+      name='primary'
+      fields=($get 'entity.primaryFields')
+    }}
+
+    {{>getter
+      name='data'
+      coalesce=true
+      fields=($get 'entity.dataFields')
+    }}
+  {{/case}}
+{{/switch}}
 }

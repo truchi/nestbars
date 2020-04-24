@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { {{entity.name}} }
 from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.entityPath')}}'
+import { Get{{entity.name}}Args }
+from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.getDtoPath')}}'
 import { Create{{entity.name}}Args }
 from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.createDtoPath')}}'
 import { Update{{entity.name}}Args }

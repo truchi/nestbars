@@ -1,5 +1,0 @@
-const coalesce = <T>(o: T): Partial<T> =>
-        Object.entries(o).reduce(
-        (o, [k, v]) => (v === null || v === undefined ? o : { ...o, [k]: v }),
-        {},
-        )
