@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import {
-{{entity.name}},
-}
+import { {{entity.name}} }
 from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.entityPath')}}'
+import { Create{{entity.name}}Args }
+from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.createDtoPath')}}'
+import { Update{{entity.name}}Args }
+from '{{relativeImport ($get 'entity.servicePath') ($get 'entity.updateDtoPath')}}'

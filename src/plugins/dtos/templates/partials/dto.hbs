@@ -9,4 +9,13 @@ export class {{name}}{{entity.name}}Args {
   {{field.name}}{{#if field.options.nullable}}?{{/if}}: {{$get 'field.tsType'}}
 
 {{/each}}
+{{#each partialFields as |field|}}
+  {{$set 'field' (call field 'data')}}
+  @Field(
+  () => {{$get 'field.gqlType'}},
+  {{stringify ($get 'field.partialGqlOptions')}}
+  )
+  {{field.name}}?: {{$get 'field.tsType'}}
+
+{{/each}}
 }

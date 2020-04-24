@@ -10,37 +10,40 @@ export default (entitiesPath: PathFunction, dtosPath: PathFunction) =>
   (type: string, entity: Entity): object => {
     const data = entitiesEntityData(entitiesPath)('entity', entity)
 
+    const getDtoPath = dtosPath('get.dto', entity.name)
     const createDtoPath = dtosPath('create.dto', entity.name)
     const updateDtoPath = dtosPath('update.dto', entity.name)
 
-    const createFields = entity.fields.filter(field => field.data().isData)
-    const updateFields = [
-      ...entity.fields.filter(field => field.data().isPrimary),
-      ...createFields,
-    ]
-    const createHasInt = has('isGqlInt', createFields)
-    const createHasFloat = has('isGqlFloat', createFields)
-    const updateHasInt = has('isGqlInt', updateFields)
-    const updateHasFloat = has('isGqlFloat', updateFields)
-    const createRelations = relations(createFields)
-    const updateRelations = relations(updateFields)
-    const createEnums = enums(createFields)
-    const updateEnums = enums(updateFields)
+    const primaryFields = entity.fields.filter(field => field.data().isPrimary)
+    const dataFields = entity.fields.filter(field => field.data().isData)
+    const bothFields = [...primaryFields, ...dataFields]
+
+    const primaryHasInt = has('isGqlInt', primaryFields)
+    const primaryHasFloat = has('isGqlFloat', primaryFields)
+    const primaryRelations = relations(primaryFields)
+    const primaryEnums = enums(primaryFields)
+
+    const bothRelations = relations(bothFields)
+    const bothHasInt = has('isGqlInt', bothFields)
+    const bothHasFloat = has('isGqlFloat', bothFields)
+    const bothEnums = enums(bothFields)
 
     return {
       ...data,
+      getDtoPath,
       createDtoPath,
       updateDtoPath,
-      createFields,
-      updateFields,
-      createHasInt,
-      createHasFloat,
-      updateHasInt,
-      updateHasFloat,
-      createRelations,
-      updateRelations,
-      createEnums,
-      updateEnums,
+      primaryFields,
+      dataFields,
+      bothFields,
+      primaryHasInt,
+      primaryHasFloat,
+      primaryRelations,
+      primaryEnums,
+      bothHasInt,
+      bothHasFloat,
+      bothRelations,
+      bothEnums,
     }
   }
 

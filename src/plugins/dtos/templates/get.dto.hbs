@@ -1,0 +1,16 @@
+{{$set 'entity' (call entity 'data')}}
+
+{{~>banner~}}
+
+{{>imports
+  dtoPath=($get 'entity.getDtoPath')
+  hasInt=($get 'entity.primaryHasInt')
+  hasFloat=($get 'entity.primaryHasFloat')
+  enums=($get 'entity.primaryEnums')
+  relations=($get 'entity.primaryRelations')
+}}
+
+{{>dto
+  name='Get'
+  fields=($get 'entity.primaryFields')
+}}

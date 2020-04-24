@@ -4,13 +4,13 @@
 
 {{>imports
   dtoPath=($get 'entity.createDtoPath')
-  hasInt=($get 'entity.createHasInt')
-  hasFloat=($get 'entity.createHasFloat')
-  enums=($get 'entity.createEnums')
-  relations=($get 'entity.createRelations')
+  hasInt=($get 'entity.bothHasInt')
+  hasFloat=($get 'entity.bothHasFloat')
+  enums=($get 'entity.bothEnums')
+  relations=($get 'entity.bothRelations')
 }}
 
 {{>dto
   name='Create'
-  fields=($get 'entity.createFields')
+  fields=($get 'entity.bothFields')
 }}

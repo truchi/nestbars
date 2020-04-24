@@ -18,9 +18,16 @@ export default (type: string, field: Field): object => {
     !field.is(FieldType.OneToMany) &&
     (!field.is(FieldType.ManyToMany) || data.hasJoinTable)
 
+  const partialGqlOptions = {
+    ...data.gqlOptions,
+    nullable: true,
+    defaultValue: undefined,
+  }
+
   return {
     ...data,
     isPrimary,
     isData,
+    partialGqlOptions,
   }
 }

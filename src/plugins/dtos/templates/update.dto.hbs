@@ -4,13 +4,13 @@
 
 {{>imports
   dtoPath=($get 'entity.updateDtoPath')
-  hasInt=($get 'entity.updateHasInt')
-  hasFloat=($get 'entity.updateHasFloat')
-  enums=($get 'entity.updateEnums')
-  relations=($get 'entity.updateRelations')
+  hasInt=($get 'entity.bothHasInt')
+  hasFloat=($get 'entity.bothHasFloat')
+  enums=($get 'entity.bothEnums')
+  relations=($get 'entity.bothRelations')
 }}
 
 {{>dto
   name='Update'
-  fields=($get 'entity.updateFields')
+  partialFields=($get 'entity.dataFields')
 }}

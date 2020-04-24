@@ -7,13 +7,21 @@ import entity from './entity'
 
 export type ServicePluginOptions = {
   entities: string | PathFunction
+  dtos: string | PathFunction
 }
 
-export default ({ entities: entitiesPath }: ServicePluginOptions): Plugin =>
+export default ({
+  entities: entitiesPath,
+  dtos: dtosPath,
+}: ServicePluginOptions): Plugin =>
   //
   (entities: Entity[], servicesPath: PathFunction): PluginOptions => ({
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     data: {
-      entity: entity(toPathFunction(entitiesPath, ANCHORS), servicesPath),
+      entity: entity(
+        toPathFunction(entitiesPath, ANCHORS),
+        toPathFunction(dtosPath, ANCHORS),
+        servicesPath,
+      ),
     },
   })

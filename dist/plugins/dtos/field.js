@@ -14,10 +14,16 @@ exports.default = (type, field) => {
         (!field.is(decorators_1.FieldType.OneToOne) || data.hasJoinColumn) &&
         !field.is(decorators_1.FieldType.OneToMany) &&
         (!field.is(decorators_1.FieldType.ManyToMany) || data.hasJoinTable);
+    const partialGqlOptions = {
+        ...data.gqlOptions,
+        nullable: true,
+        defaultValue: undefined,
+    };
     return {
         ...data,
         isPrimary,
         isData,
+        partialGqlOptions,
     };
 };
 //# sourceMappingURL=field.js.map
