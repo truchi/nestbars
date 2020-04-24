@@ -6,10 +6,7 @@ exports.default = (entitiesPath) => (type, entity) => {
     const has = (type) => !!entity.fields.filter(field => field.data()[type]).length;
     const entityPath = entitiesPath(type, entity.name);
     const enums = entity.by(decorators_1.SetOptions);
-    const relations = utils_1.unique(entity
-        .by(decorators_1.RelationOptions)
-        .map(field => field.data().relation)
-        .filter(x => x));
+    const relations = utils_1.unique(entity.by(decorators_1.RelationOptions).map(field => field.data().relation));
     const fieldDbDecorators = utils_1.unique(entity.fields.map(field => field.data().dbDecorator));
     const hasFields = !!entity.fields.length;
     const hasEnums = !!enums.length;

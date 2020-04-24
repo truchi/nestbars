@@ -13,10 +13,7 @@ export default (entitiesPath: PathFunction) =>
     const entityPath = entitiesPath(type, entity.name)
     const enums = entity.by(SetOptions)
     const relations = unique(
-      entity
-        .by(RelationOptions)
-        .map(field => field.data().relation)
-        .filter(x => x),
+      entity.by(RelationOptions).map(field => field.data().relation),
     )
 
     const fieldDbDecorators = unique(

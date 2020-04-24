@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Entity_1 = require("./Entity");
 let FIELD_DATA = {};
-exports.get = (field) => FIELD_DATA[`${field.entity}:${field.name}`];
-exports.set = (field, data) => void (FIELD_DATA[`${field.entity}:${field.name}`] = data);
+exports.get = (field) => FIELD_DATA[`${field.entity.name}:${field.name}`];
+exports.set = (field, data) => void (FIELD_DATA[`${field.entity.name}:${field.name}`] = data);
 exports.reset = () => void (FIELD_DATA = {});
 class Field {
     constructor(_entity, name, type, options) {
