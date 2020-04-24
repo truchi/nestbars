@@ -8,10 +8,6 @@ import {
   PrimaryOptions,
   SpecialOptions,
   SetDecorator,
-  OneToOneDecorator,
-  OneToManyDecorator,
-  ManyToOneDecorator,
-  ManyToManyDecorator,
 } from '../../types/decorators'
 import {
   makeFieldDecoratorFactory,
@@ -102,18 +98,18 @@ export const Set: SetDecorator = makeSetFieldDecoratorFactory(FieldType.Set)
 // Relation
 //
 
-export const OneToOne: OneToOneDecorator<any> = makeJoinColumnRelationDecoratorFactory(
+export const OneToOne /*: OneToOneDecorator<any>*/ = makeJoinColumnRelationDecoratorFactory(
   FieldType.OneToOne,
 )
 
-export const OneToMany: OneToManyDecorator<any> = makeRelationDecoratorFactory(
+export const OneToMany /*: OneToManyDecorator<any>*/ = makeRelationDecoratorFactory(
   FieldType.OneToMany,
 )
 
-export const ManyToOne: ManyToOneDecorator<any> = makeJoinColumnRelationDecoratorFactory(
+export const ManyToOne /*: ManyToOneDecorator<any>*/ = makeJoinColumnRelationDecoratorFactory(
   FieldType.ManyToOne,
 )
 
-export const ManyToMany: ManyToManyDecorator<any> = makeJoinTableRelationDecoratorFactory(
+export const ManyToMany /*: ManyToManyDecorator<any>*/ = makeJoinTableRelationDecoratorFactory(
   FieldType.ManyToMany,
 )

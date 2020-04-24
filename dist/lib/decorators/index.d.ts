@@ -1,4 +1,4 @@
-import { EntityDecorator, ScalarDecorator, PrimaryDecorator, SpecialDecorator, SetDecorator, OneToOneDecorator, OneToManyDecorator, ManyToOneDecorator, ManyToManyDecorator } from '../../types/decorators';
+import { EntityDecorator, ScalarDecorator, PrimaryDecorator, SpecialDecorator, SetDecorator } from '../../types/decorators';
 export declare const Entity: EntityDecorator;
 export declare const Int: ScalarDecorator;
 export declare const Float: ScalarDecorator;
@@ -12,7 +12,7 @@ export declare const Updated: SpecialDecorator;
 export declare const Version: SpecialDecorator;
 export declare const Enum: SetDecorator;
 export declare const Set: SetDecorator;
-export declare const OneToOne: OneToOneDecorator<any>;
-export declare const OneToMany: OneToManyDecorator<any>;
-export declare const ManyToOne: ManyToOneDecorator<any>;
-export declare const ManyToMany: ManyToManyDecorator<any>;
+export declare const OneToOne: <T extends import("../../types/utils").Class>(withEntity: () => T, withField: keyof InstanceType<T>, joinColumn?: boolean | object) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const OneToMany: <T extends import("../../types/utils").Class>(withEntity: () => T, withField: keyof InstanceType<T>) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const ManyToOne: <T extends import("../../types/utils").Class>(withEntity: () => T, withField: keyof InstanceType<T>, joinColumn?: boolean | object) => ({ constructor: { name: entity } }: any, name: string) => void;
+export declare const ManyToMany: <T extends import("../../types/utils").Class>(withEntity: () => T, withField: keyof InstanceType<T>, joinTable?: boolean | object) => ({ constructor: { name: entity } }: any, name: string) => void;
