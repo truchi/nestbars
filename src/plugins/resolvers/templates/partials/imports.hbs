@@ -9,8 +9,5 @@ Args,
 } from '@nestjs/graphql'
 import {
 {{entity.name}},
-{{!-- {{#each entity.enums as |enum|}}
-  {{enum.options.name}},
-{{/each}} --}}
 }
 from '{{relativeImport ($get 'entity.resolverPath') ($get 'entity.entityPath')}}'

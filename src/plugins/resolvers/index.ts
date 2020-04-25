@@ -7,11 +7,13 @@ import entity from './entity'
 
 export type ResolverPluginOptions = {
   entities: string | PathFunction
+  dtos: string | PathFunction
   services: string | PathFunction
 }
 
 export default ({
   entities: entitiesPath,
+  dtos: dtosPath,
   services: servicesPath,
 }: ResolverPluginOptions): Plugin =>
   //
@@ -20,6 +22,7 @@ export default ({
     data: {
       entity: entity(
         toPathFunction(entitiesPath, ANCHORS),
+        toPathFunction(dtosPath, ANCHORS),
         toPathFunction(servicesPath, ANCHORS),
         resolversPath,
       ),

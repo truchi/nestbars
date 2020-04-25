@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("../../lib/utils");
 const Plugin_1 = require("../../lib/plugins/Plugin");
 const entity_1 = __importDefault(require("./entity"));
-exports.default = ({ entities: entitiesPath, services: servicesPath, }) => (entities, resolversPath) => ({
+exports.default = ({ entities: entitiesPath, dtos: dtosPath, services: servicesPath, }) => (entities, resolversPath) => ({
     templates: (__dirname + '/templates').replace('/dist/', '/src/'),
     data: {
-        entity: entity_1.default(utils_1.toPathFunction(entitiesPath, Plugin_1.ANCHORS), utils_1.toPathFunction(servicesPath, Plugin_1.ANCHORS), resolversPath),
+        entity: entity_1.default(utils_1.toPathFunction(entitiesPath, Plugin_1.ANCHORS), utils_1.toPathFunction(dtosPath, Plugin_1.ANCHORS), utils_1.toPathFunction(servicesPath, Plugin_1.ANCHORS), resolversPath),
     },
 });
 //# sourceMappingURL=index.js.map
