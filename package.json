@@ -20,7 +20,7 @@
     "handlebars-helpers": "^0.10.0",
     "object-path": "^0.11.4",
     "recursive-readdir": "^2.2.2",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/node": "^13.9.1",
@@ -37,6 +37,6 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/graphql": "^7.2.1",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.25"
   }
 }
